@@ -1,5 +1,5 @@
-function checkAuthOrAdmin(user, username){
-    return(user && (user.username == username || user.isAdmin));
+function checkAuthOrAdmin(user, id){
+    return(user && (user.id == id || user.isAdmin));
 };
 
 export default checkAuthOrAdmin;

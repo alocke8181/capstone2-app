@@ -22,7 +22,7 @@ const Login = ({login}) =>{
     };
 
     //Login and navigate to their profile page
-    async function handleSumbit(e){
+    async function handleSubmit(e){
         e.preventDefault();
         setLoading(true);
         const id = await login(formData);

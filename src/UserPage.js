@@ -10,13 +10,14 @@ const UserPage = () =>{
     const {id} = useParams();
     const nav = useNavigate()
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false); //Change to true once chars are implemented
 
     //const [userJobs, setUserJobs] = useState([])
 
 
     useEffect(()=>{
-        if(!checkAuthOrAdmin(user, username)){
+        console.log(checkAuthOrAdmin(user,id));
+        if(!checkAuthOrAdmin(user, id)){
             nav('/403');
         }
         //Repurpose to load characters

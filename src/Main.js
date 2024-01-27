@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { Routes, Route, redirect } from "react-router";
 
 import UserContext from './UserContext';
+import Api from "./Api";
 
 import HeaderMenu from './HeaderMenu';
 import FooterMenu from "./FooterMenu";
@@ -11,6 +12,8 @@ import Login from './Login';
 import Logout from './Logout';
 import Register from './Register';
 import UserPage from "./UserPage";
+import UserEdit from './UserEdit';
+import UserDelete from './UserDelete';
 import NotFound from './NotFound';
 import Forbidden from './Forbidden';
 
@@ -58,7 +61,7 @@ const Main = () =>{
 
     //Send a patch request to the backend, update user and localStorage
     async function editUser(data, id){
-        const resp = await Api.patchUser(data, token);
+        const resp = await Api.patchUser(data, id, token);
         const user = resp.data.user;
         setUser(user);
         localStorage.setItem('user', JSON.stringify(user));
@@ -81,9 +84,9 @@ const Main = () =>{
                 <Route path="/logout" element={<Logout logout={logout}/>}/>
                 <Route path="/register" element={<Register register={register}/>}/>
                 <Route path="/users/:id" element={<UserPage />}/>
-                {/* <Route path="/users/:id/edit" element={<UserEdit userEdit={userEdit}/>}/>
-                <Route path="/users/:id/delete" element={<UserDelete userDelete={userDelete}/>}/>
-                <Route path="/characters/:id" element={<CharacterSheet />}/> */}
+                <Route path="/users/:id/edit" element={<UserEdit editUser={editUser}/>}/>
+                <Route path="/users/:id/delete" element={<UserDelete deleteUser={deleteUser}/>}/>
+                {/* <Route path="/characters/:id" element={<CharacterSheet />}/> */}
                 <Route path="/403" element={<Forbidden />}/>
                 <Route path="*" element={<NotFound />}/>
             </Routes>
