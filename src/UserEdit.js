@@ -63,7 +63,7 @@ const UserEdit = ({editUser}) =>{
                     />
                     <button>Submit</button>
                 </form>
-                <Link to={`/users/${user.username}/delete`} >Delete Profile</Link>
+                <Link to={`/users/${user.id}/delete`} >Delete Profile</Link>
             </CardBody>
         </Card>
     )

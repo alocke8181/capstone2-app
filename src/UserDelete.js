@@ -10,7 +10,6 @@ const UserDelete = ({deleteUser}) =>{
     const nav = useNavigate();
 
     useEffect(()=>{
-        console.log(checkAuthOrAdmin(user,id));
         if(!checkAuthOrAdmin(user, id)){
             nav('/403');
         };
