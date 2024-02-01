@@ -11,6 +11,9 @@ const Login = ({login}) =>{
         password : ''
     });
 
+    const [errorMsg, setErrorMsg] = useState('');
+    const [isError, setIsError] = useState(false);
+
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e)=>{
@@ -22,17 +25,24 @@ const Login = ({login}) =>{
     };
 
     //Login and navigate to their profile page
-    async function handleSubmit(e){
-        e.preventDefault();
-        setLoading(true);
-        const id = await login(formData);
-        nav(`/users/${id}`);
+    async function handleSubmit(evt){
+        try{
+            evt.preventDefault();
+            setLoading(true);
+            const id = await login(formData);
+            nav(`/users/${id}`);
+        }catch(err){
+            setLoading(false)
+            setIsError(true);
+            setErrorMsg(err)
+        }
     };
 
     return (
         <Card>
             <CardHeader>
                 {loading ? <p><b>Logging In...</b></p> : <p>Login</p>}
+                {isError ? <p>{errorMsg.join('! ')}</p> : <></>}
             </CardHeader>
             <CardBody>
                 <form onSubmit={handleSubmit}>

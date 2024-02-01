@@ -11,6 +11,9 @@ const UserEdit = ({editUser}) =>{
 
     const [loading, setLoading] = useState(false);
 
+    const [errorMsg, setErrorMsg] = useState('');
+    const [isError, setIsError] = useState(false);
+
     useEffect(()=>{
         console.log(checkAuthOrAdmin(user,id));
         if(!checkAuthOrAdmin(user, id)){
@@ -31,17 +34,24 @@ const UserEdit = ({editUser}) =>{
         }));
     }
 
-    async function handleSubmit(e){
-        e.preventDefault();
-        setLoading(true);
-        const userIDReturn = await editUser(formData, id);
-        nav(`/users/${userIDReturn}`);
+    async function handleSubmit(evt){
+        try{
+            evt.preventDefault();
+            setLoading(true);
+            const userIDReturn = await editUser(formData, id);
+            nav(`/users/${userIDReturn}`);
+        }catch(err){
+            setLoading(false)
+            setIsError(true);
+            setErrorMsg(err)
+        }
     };
 
     return (
         <Card>
             <CardHeader>
                 {loading ? <p><b>Updating...</b></p> : <p>Edit Profile</p>}
+                {isError ? <p>{errorMsg.join('! ')}</p> : <></>}
             </CardHeader>
             <CardBody>
                 <form onSubmit={handleSubmit}>
