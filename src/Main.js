@@ -14,6 +14,7 @@ import Register from './Register';
 import UserPage from "./UserPage";
 import UserEdit from './UserEdit';
 import UserDelete from './UserDelete';
+import Character from "./Character";
 import NotFound from './NotFound';
 import Forbidden from './Forbidden';
 
@@ -81,6 +82,12 @@ const Main = () =>{
         return resp;
     }
 
+    //Get a character from the backend
+    async function getCharacter(charID){
+        const resp = await Api.getCharacter(charID, token);
+        return resp;
+    }
+
     return(
         <UserContext.Provider value={{user, setUser}}>
             <HeaderMenu />
@@ -92,7 +99,7 @@ const Main = () =>{
                 <Route path="/users/:id" element={<UserPage getCharacters={getCharacters}/>}/>
                 <Route path="/users/:id/edit" element={<UserEdit editUser={editUser}/>}/>
                 <Route path="/users/:id/delete" element={<UserDelete deleteUser={deleteUser}/>}/>
-                {/* <Route path="/characters/:id" element={<CharacterSheet />}/> */}
+                <Route path="/characters/:id" element={<Character getCharacter={getCharacter} />}/>
                 <Route path="/403" element={<Forbidden />}/>
                 <Route path="*" element={<NotFound />}/>
             </Routes>

@@ -80,6 +80,21 @@ class Api{
         };
     };
 
+    //Get a character
+    static async getCharacter(id, token){
+        console.debug('GET','/characters', id);
+        try{
+            let resp = await axios.get(`${BASE_URL}/characters/${id}`,{
+                headers : {Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    };
+
 };
 
 export default Api;

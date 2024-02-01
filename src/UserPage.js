@@ -16,7 +16,7 @@ const UserPage = ({getCharacters}) =>{
 
 
     useEffect(()=>{
-        console.log(checkAuthOrAdmin(user,id));
+
         if(!checkAuthOrAdmin(user, id)){
             nav('/403');
         }
@@ -24,7 +24,6 @@ const UserPage = ({getCharacters}) =>{
             setLoading(true);
             const resp = await getCharacters(userID);
             setCharacters(resp.data.characters);
-            console.log(resp.data.characters);
             setLoading(false);
         }
         fetchCharacters(id);
@@ -47,15 +46,11 @@ const UserPage = ({getCharacters}) =>{
                         </ListGroupItem>
                         {loading ? <p><b>Loading Characters...</b></p> : 
                         <ListGroup>
-                            {console.log(loading)}
-                            {console.log(characters)}
                             {characters.map((character)=>(
                                 <ListGroupItem key={character.id}>
-                                    <p>{character.name}</p>
-                                    {console.log(character)}
                                     <Card>
                                         <CardHeader>
-                                            {character.charname}
+                                            <Link to={`/characters/${character.id}`}><h3>{character.charname}</h3></Link>
                                         </CardHeader>
                                         <CardBody>
                                             <p>Level {character.level} {character.race} {character.classname}</p>
