@@ -4,15 +4,15 @@ import { Navigate, useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import checkAuthOrAdmin from "./Helpers";
 
-const UserPage = () =>{
+const UserPage = ({getCharacters}) =>{
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
     const {id} = useParams();
     const nav = useNavigate()
 
-    const [loading, setLoading] = useState(false); //Change to true once chars are implemented
+    const [loading, setLoading] = useState(true); 
 
-    //const [userJobs, setUserJobs] = useState([])
+    const [characters, setCharacters] = useState([]);
 
 
     useEffect(()=>{
@@ -20,21 +20,14 @@ const UserPage = () =>{
         if(!checkAuthOrAdmin(user, id)){
             nav('/403');
         }
-        //Repurpose to load characters
-        // setLoading(true);
-        // console.log(loading);
-        // let userJobs = []
-        // let promises = [];
-        // user.jobs.forEach((jobID)=>{
-        //     promises.push(JoblyApi.get(`/jobs/${jobID}`,{}, localStorage.getItem('token')))
-        // })
-        // Promise.allSettled(promises).then((results)=>{
-        //     results.forEach((result)=>{
-        //         userJobs.push(result.value.data.job);
-        //     });
-        //     setLoading(false);
-        //     setUserJobs(userJobs);
-        // });
+        const fetchCharacters = async (userID) =>{
+            setLoading(true);
+            const resp = await getCharacters(userID);
+            setCharacters(resp.data.characters);
+            console.log(resp.data.characters);
+            setLoading(false);
+        }
+        fetchCharacters(id);
     },[])
 
 
@@ -52,15 +45,26 @@ const UserPage = () =>{
                         <ListGroupItem key='editLink'>
                             <Link to={`/users/${user.id}/edit`}>Edit Profile</Link>
                         </ListGroupItem>
-                        {/* <ListGroupItem>
-                            {loading ? <p><b>Loading Jobs...</b></p> :
-                                <>{userJobs.map((job)=>(
-                                    <ListGroupItem key={job.id} style={{border:'2px solid black'}}>
-                                        <JobCard job={job} />
-                                    </ListGroupItem>))}
-                                </> 
-                            }
-                        </ListGroupItem> */}
+                        {loading ? <p><b>Loading Characters...</b></p> : 
+                        <ListGroup>
+                            {console.log(loading)}
+                            {console.log(characters)}
+                            {characters.map((character)=>(
+                                <ListGroupItem key={character.id}>
+                                    <p>{character.name}</p>
+                                    {console.log(character)}
+                                    <Card>
+                                        <CardHeader>
+                                            {character.charname}
+                                        </CardHeader>
+                                        <CardBody>
+                                            <p>Level {character.level} {character.race} {character.classname}</p>
+                                        </CardBody>
+                                    </Card>
+                                </ListGroupItem>
+                            ))}
+                        </ListGroup>
+                        }
                     </ListGroup>
                 </CardBody>
             </Card>

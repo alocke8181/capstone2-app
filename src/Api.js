@@ -65,6 +65,21 @@ class Api{
         };
     };
 
+    //Get all the characters belonging to a user
+    static async getCharacters(id, token){
+        console.debug('GET','/characters/user', id);
+        try{
+            let resp = await axios.get(`${BASE_URL}/characters/user/${id}`,{
+                headers : {Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    };
+
 };
 
 export default Api;
