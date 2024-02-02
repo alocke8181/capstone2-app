@@ -1,0 +1,67 @@
+#character-basic-cont{
+    margin: auto;
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.character-basic-box{
+    border: 2px solid black;
+    padding: 5px;
+}
+
+.character-basic-box p{
+    margin: 5px;
+}
+
+#character-core-stat-cont{
+    margin: auto;
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.character-core-stat-box{
+    border: 2px solid black;
+}
+
+.character-core-stat-input{
+    width: 25%;
+    text-align: center;
+    font-size: larger;
+}
+
+#character-skill-cont{
+    margin: auto;
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+}
+
+.character-skill-box-small{
+    border: 2px solid black;
+}
+.character-skill-box-subbox{
+    width: 100%;
+    border: 2px solid black;
+}
+
+.character-skill-box-subbox p{
+    margin: 5px;
+}
+
+#character-saving-profs-list{
+    text-align: left;
+}
+
+.character-skill-box-large{
+    border: 2px solid black;
+}
+
+#character-skill-list{
+    column-count: 3;
+}
+
+#character-skill-list li{
+    text-align: left;
+}

@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useParams } from "react-router";
 import { Card, CardBody, CardHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import CharacterContext from "./CharacterContext";
 
-const CharacterBasic = ({character}) =>{
+const CharacterBasic = () =>{
+
+    let character = useContext(CharacterContext)
 
     const [formData, setFormData] = useState({
         charName : character.charName,
@@ -30,7 +33,7 @@ const CharacterBasic = ({character}) =>{
         <form>
             <Card>
                 <CardBody>
-                    <ListGroup horizontal='xxl'>
+                    <ListGroup horizontal>
                         <ListGroup.Item key='charName'>
                             <Card>
                                 <CardBody>

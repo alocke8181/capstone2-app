@@ -91,6 +91,7 @@ const Main = () =>{
     return(
         <UserContext.Provider value={{user, setUser}}>
             <HeaderMenu />
+            <br/>
             <Routes>
                 <Route path="/" element={<Home />}/>
                 <Route path="/login" element={<Login login={login}/>}/>
@@ -103,6 +104,7 @@ const Main = () =>{
                 <Route path="/403" element={<Forbidden />}/>
                 <Route path="*" element={<NotFound />}/>
             </Routes>
+            <br/>
             <FooterMenu />
         </UserContext.Provider>
     )
