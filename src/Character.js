@@ -45,6 +45,10 @@ const Character = ({getCharacter})=>{
             ...data,
             [name] : value
         }));
+        setCharacter((data)=>({
+            ...data,
+            [name] : value
+        }));
     };
 
     //Special handler to update the core stat modifiers when the core stats change
@@ -127,6 +131,7 @@ const Character = ({getCharacter})=>{
                         <div className="character-basic-box">
                             <p><label htmlFor="level"><b>Level</b></label></p>
                             <p><input
+                                className="character-input-num-med"
                                 type="number"
                                 id="level"
                                 name="level"
@@ -139,6 +144,7 @@ const Character = ({getCharacter})=>{
                         <div className="character-basic-box">
                             <p><label htmlFor="exp"><b>Exp</b></label></p>
                             <p><input
+                                className="character-input-num-med"
                                 type="number"
                                 id="exp"
                                 name="exp"
@@ -150,11 +156,11 @@ const Character = ({getCharacter})=>{
                     </div>
                     <div id="character-core-stat-cont">
                         {CORESTATS.map((stat)=>(
-                            <div className="character-core-stat-box">
+                            <div className="character-core-stat-box" key={stat}>
                                 <label htmlFor={stat.slice(0,3)}><b>{capFirstLetter(stat)}</b></label>
                                 <br/>
                                 <input
-                                    className="character-core-stat-input"
+                                    className="character-input-num-big"
                                     type="number"
                                     id={stat.slice(0,3)}
                                     name={stat.slice(0,3)}
@@ -165,6 +171,130 @@ const Character = ({getCharacter})=>{
                                 <p>{character[(stat.slice(0,3)+'Mod')]}</p>
                             </div>
                         ))}
+                    </div>
+                    <div id="character-combat-stats-cont">
+                        <div className="character-combat-stat-box">
+                            <p><label htmlFor="armorClass"><b>AC</b></label></p>
+                            <p>
+                                <input
+                                    className="character-input-num-big"
+                                    type="number"
+                                    id="armorClass"
+                                    name="armorClass"
+                                    min="0"
+                                    value={formData.armorClass}
+                                    onChange={handleChange}
+                                />
+                            </p>
+                        </div>
+                        <div className="character-combat-stat-box">
+                            <p><b>Initiative</b></p>
+                            <p>
+                                {character.initiative}
+                            </p>
+                        </div>
+                        <div className="character-combat-stat-box">
+                            <p><b>Speed</b></p>
+                            <p>
+                                {character.speed}
+                            </p>
+                        </div>
+                        <div className="character-combat-stat-box">
+                            <p><label htmlFor="hpMax">Max HP</label></p>
+                            <p>
+                                <input
+                                    type="number"
+                                    id="hpMax"
+                                    name="hpMax"
+                                    min="0"
+                                    className="character-input-num-small"
+                                    value={formData.hpMax}
+                                    onChange={handleChange}
+                                />
+                            </p>
+                            <p><label htmlFor="hpCurr">Current HP</label></p>
+                            <p>
+                                <input
+                                    type="number"
+                                    id="hpCurr"
+                                    name="hpCurr"
+                                    min="0"
+                                    className="character-input-num-small"
+                                    value={formData.hpCurr}
+                                    onChange={handleChange}
+                                />
+                            </p>
+                        </div>
+                        <div className="character-combat-stat-box">
+                            <p><label htmlFor="hpTemp">Temporary HP</label></p>
+                            <p>
+                                <input
+                                    type="number"
+                                    id="hpTemp"
+                                    name="hpTemp"
+                                    min="0"
+                                    className="character-input-num-small"
+                                    value={formData.hpTemp}
+                                    onChange={handleChange}
+                                />
+                            </p>
+                        </div>
+                        <div className="character-combat-stat-box">
+                            <p><b>Hit Dice Type : D{character.hitDice}</b></p>
+                            <p>
+                                <label htmlFor="hitDiceMax">Max : </label>
+                                <input
+                                    type="number"
+                                    id="hitDiceMax"
+                                    name="hitDiceMax"
+                                    min="0"
+                                    className="character-input-num-small"
+                                    value={formData.hitDiceMax}
+                                    onChange={handleChange}
+                                />
+                            </p>
+                            <p>
+                                <label htmlFor="hitDiceCurr">Current : </label>
+                                <input
+                                    type="number"
+                                    id="hitDiceCurr"
+                                    name="hitDiceCurr"
+                                    min="0"
+                                    className="character-input-num-small"
+                                    value={formData.hitDiceCurr}
+                                    onChange={handleChange}
+                                />
+                            </p>
+                        </div>
+                        <div className="character-combat-stat-box">
+                            <p><b>Death Saves</b></p>
+                            <p>
+                                <label htmlFor="deathSaveSuccess">Successes : </label>
+                                <input
+                                    type="number"
+                                    id="deathSaveSuccess"
+                                    name="deathSaveSuccess"
+                                    min="0"
+                                    max="3"
+                                    className="character-input-num-small"
+                                    value={formData.deathSaveSuccess}
+                                    onChange={handleChange}
+                                />
+                            </p>
+                            <p>
+                                <label htmlFor="deathSaveFail">Fails : </label>
+                                <input
+                                    type="number"
+                                    id="deathSaveFail"
+                                    name="deathSaveFail"
+                                    min="0"
+                                    max="3"
+                                    className="character-input-num-small"
+                                    value={formData.deathSaveFail}
+                                    onChange={handleChange}
+                                />
+                            </p>
+                        </div>
                     </div>
                     <div id="character-skill-cont">
                         <div className="character-skill-box-small">
