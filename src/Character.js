@@ -85,7 +85,6 @@ const Character = ({getCharacter})=>{
     //Special handle to update the character skill proficiencies
     const handleSkillChange = (evt)=>{
         const {name, value} = evt.target;
-        console.log(name,value);
         let currSkillProfs = character.skillProfs;
         if(currSkillProfs.includes(value)){
             const idx = currSkillProfs.indexOf(value)
@@ -131,7 +130,7 @@ const Character = ({getCharacter})=>{
                         <div className="character-basic-box">
                             <p><label htmlFor="level"><b>Level</b></label></p>
                             <p><input
-                                className="character-input-num-med"
+                                className="character-input-num-small"
                                 type="number"
                                 id="level"
                                 name="level"
@@ -199,7 +198,7 @@ const Character = ({getCharacter})=>{
                                 {character.speed}
                             </p>
                         </div>
-                        <div className="character-combat-stat-box">
+                        <div className="character-combat-stat-box" id="character-hp-box">
                             <p><label htmlFor="hpMax">Max HP</label></p>
                             <p>
                                 <input
@@ -388,6 +387,62 @@ const Character = ({getCharacter})=>{
                                     </li>
                                 ))}
                             </ul>
+                        </div>
+                    </div>
+                    <div id="character-attack-big-cont">
+                        <p>
+                            <b>Attacks </b>
+                            <button >Add Attack</button>
+                        </p>
+                        <div id="character-attack-cont">
+                            {character.attacks.map((attack)=>(
+                                <div className="character-attack-box">
+                                    {attack.id ? 
+                                    <>
+                                        <h3>{attack.name}</h3>
+                                        <ul>
+                                            <li key="roll">
+                                                Attack Roll : {attack.isProf ? 
+                                                (character[attack.attackSkill + "Mod"] + character.profBonus + attack.attackMod):
+                                                (character[attack.attackSkill + "Mod"] + attack.attackMod)}
+                                            </li>
+                                            <li key="dmg">
+                                                Damage : {attack.numDice}D{attack.dmgDice}+{character[attack.dmgSkill+"Mod"] + attack.dmgMod} {attack.dmgType}
+                                            </li>
+                                            {attack.altDmgDice!= 0 ? 
+                                            <li key="altdmg">
+                                                Alt Damage : 1D{attack.altDmgDice}+{character[attack.altDmgSkill+"Mod"] + attack.altDmgMod} {attack.altDmgType}
+                                            </li>
+                                            :<></> }
+                                            {attack.savingSkill ? 
+                                            <>
+                                            <li key="svgskill">
+                                                Saving Skill : {capFirstLetter(attack.savingSkill)}
+                                            </li>
+                                            <li key="svgEffect">
+                                                Saving Effect : {attack.savingEffect}
+                                            </li>
+                                            </> 
+                                            : <></>}
+                                        </ul>
+                                        <p className="character-centertext">
+                                            {attack.description}
+                                        </p>
+                                        <p className="character-centertext">
+                                            <button>Edit</button>
+                                            <button>Delete</button>
+                                        </p>
+                                        
+                                    </> 
+                                    : 
+                                    <>
+                                        <h3>{attack.name}</h3>
+                                        <ul>
+                                            <li></li>
+                                        </ul>
+                                    </>}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </form>

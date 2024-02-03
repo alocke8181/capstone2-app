@@ -3,6 +3,10 @@
     text-align: center;
 }
 
+.character-centertext{
+    text-align: center;
+}
+
 .character-input-num-big{
     width: 25%;
     text-align: center;
@@ -40,8 +44,6 @@
 .character-core-stat-box{
     border: 2px solid black;
 }
-
-
 
 #character-combat-stats-cont{
     margin: auto;
@@ -92,4 +94,25 @@
 
 #character-skill-list li{
     text-align: left;
+}
+
+#character-attack-big-cont{
+    border: 2px solid black;
+    text-align: center;
+    margin: auto;
+    width: 80%;
+}
+
+#character-attack-cont{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.character-attack-box{
+    border: 2px solid black;
+    text-align: left;
+}
+
+.character-attack-box h3{
+    text-align: center;
 }
