@@ -1,0 +1,7 @@
+.new-attack-form-cont{
+    border: 2px solid black;
+}
+
+.new-attack-form-cont ul{
+    column-count: 2;
+}

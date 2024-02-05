@@ -1,12 +1,15 @@
 import React, {useState, useEffect, useContext} from "react";
 import { Card, CardBody, CardHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router";
-import checkAuthOrAdmin from "./Helpers";
+import {checkAuthOrAdmin} from "./Helpers";
 import { CORESTATS, SKILLS } from "./data";
+import { capFirstLetter } from "./Helpers";
+import NewAttackForm from "./NewAttackForm";
+import NewTraitForm from "./NewTraitForm";
 
 import "./Character.css"
 
-const Character = ({getCharacter})=>{
+const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, postTrait, deleteTrait})=>{
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
     const {id} = useParams();
@@ -14,9 +17,31 @@ const Character = ({getCharacter})=>{
 
     const [loading, setLoading] = useState(true);
 
+    const [saving, setSaving] = useState(false);
+
     const [character, setCharacter] = useState({});
 
     const [formData, setFormData] = useState({});
+
+    const [showNewAttackForm, setShowNewAttackForm] = useState(false);
+    const [showNewTraitForm, setShowNewTraitForm] = useState(false);
+
+    const showAttackForm = () =>{
+        setShowNewAttackForm(true);
+    }
+    const showTraitForm = ()=>{
+        setShowNewTraitForm(true);
+    };
+
+    //Set starter form data based on a character
+    const resetFormData = (character)=>{
+        let startFormData = {};
+        const keys = Object.keys(character);
+        keys.forEach((key)=>{
+            startFormData[key] = character[key];
+        });
+        setFormData(startFormData);
+    };
 
     //Fetch character data, add to state, and generate form fields from character keys
     useEffect(()=>{
@@ -27,16 +52,19 @@ const Character = ({getCharacter})=>{
                 nav('/403');
             };
             setCharacter(resp.data.character);
-            let startFormData = {};
-            const keys = Object.keys(resp.data.character);
-            keys.forEach((key)=>{
-                startFormData[key] = resp.data.character[key];
-            });
-            setFormData(startFormData);
+            resetFormData(resp.data.character);
             setLoading(false);
         }
         fetchCharacter(id);   
     },[]);
+
+    const saveCharacter = async ()=>{
+        setSaving(true);
+        let resp = await patchCharacter(character);
+        setCharacter(resp.data.character);
+        resetFormData(resp.data.character);
+        setSaving(false);
+    }
 
     //Generic handler for form changes
     const handleChange = (evt)=>{
@@ -62,6 +90,7 @@ const Character = ({getCharacter})=>{
         }));
         setCharacter((data)=>({
             ...data,
+            [name] : value,
             [nameMod] : modValue
         }));
     };
@@ -98,15 +127,54 @@ const Character = ({getCharacter})=>{
         }));
     };
 
-    //Helper to capitalize the first letter of strings
-    function capFirstLetter(string){
-        return (string.slice(0,1).toUpperCase() + string.slice(1));
+    const handleNewAttackSubmit = async (data)=>{
+        data.charID = character.id;
+        let resp = await postAttack(data);
+        character.attacks.push(resp.data.attack);
+        await saveCharacter();
+        return resp;
     }
+
+    const handleDeleteAttack = async (evt)=>{
+        const attackID = parseInt(evt.target.dataset.attackid)
+        let newCharacterAttacks = character.attacks.filter((attack) => (attack.id !== attackID));
+        character.attacks = newCharacterAttacks;
+        await saveCharacter();
+        let resp = await deleteAttack(attackID);
+    }
+
+    const handleNewTraitSubmit = async (data, isCustom)=>{
+        if(isCustom){
+            data.charID = character.id;
+        }
+        let resp = await postTrait(data, isCustom);
+        character.traits.push(resp);
+        await saveCharacter();
+        return resp;
+    }
+
+    const handleDeleteTrait = async (evt)=>{
+        if(evt.target.dataset.traitid){
+            const traitID = parseInt(evt.target.dataset.traitid);
+            let newCharacterTraits = character.traits.filter((trait) =>(!trait.id || (trait.id && trait.id !== traitID)));
+            character.traits = newCharacterTraits;
+            await saveCharacter();
+            await deleteTrait(traitID);
+        }else if(evt.target.dataset.traitindex){
+            const traitIndex = evt.target.dataset.traitindex;
+            let newCharacterTraits = character.traits.filter((trait)=>(!trait.index || (trait.index && trait.index !== traitIndex)));
+            character.traits = newCharacterTraits;
+            await saveCharacter();
+        }
+    }
+    
 
     return(
         <>
             {loading ? <p><b>Loading Character...</b></p> : 
-            
+            <>
+                <p>Character is auto-saved when adding, changing, or deleting attacks, traits, features, and spells.</p>
+                {saving ? <p><button disabled>Saving Character</button></p> : <p><button onClick={saveCharacter}>Save Character</button></p>}
                 <form>
                     <div id="character-basic-cont">
                         <div className="character-basic-box">
@@ -389,65 +457,103 @@ const Character = ({getCharacter})=>{
                             </ul>
                         </div>
                     </div>
+                </form>
                     <div id="character-attack-big-cont">
                         <p>
                             <b>Attacks </b>
-                            <button >Add Attack</button>
+                            <button onClick={showAttackForm}>Add Attack</button>
                         </p>
+                        {showNewAttackForm ? <NewAttackForm setShowAttackForm={setShowNewAttackForm} handleNewAttackSubmit={handleNewAttackSubmit}/> : <></>}
                         <div id="character-attack-cont">
                             {character.attacks.map((attack)=>(
                                 <div className="character-attack-box">
-                                    {attack.id ? 
-                                    <>
-                                        <h3>{attack.name}</h3>
-                                        <ul>
-                                            <li key="roll">
-                                                Attack Roll : {attack.isProf ? 
-                                                (character[attack.attackSkill + "Mod"] + character.profBonus + attack.attackMod):
-                                                (character[attack.attackSkill + "Mod"] + attack.attackMod)}
-                                            </li>
-                                            <li key="dmg">
-                                                Damage : {attack.numDice}D{attack.dmgDice}+{character[attack.dmgSkill+"Mod"] + attack.dmgMod} {attack.dmgType}
-                                            </li>
-                                            {attack.altDmgDice!= 0 ? 
-                                            <li key="altdmg">
-                                                Alt Damage : 1D{attack.altDmgDice}+{character[attack.altDmgSkill+"Mod"] + attack.altDmgMod} {attack.altDmgType}
-                                            </li>
-                                            :<></> }
-                                            {attack.savingSkill ? 
-                                            <>
-                                            <li key="svgskill">
-                                                Saving Skill : {capFirstLetter(attack.savingSkill)}
-                                            </li>
-                                            <li key="svgEffect">
-                                                Saving Effect : {attack.savingEffect}
-                                            </li>
-                                            </> 
-                                            : <></>}
-                                        </ul>
-                                        <p className="character-centertext">
-                                            {attack.description}
-                                        </p>
-                                        <p className="character-centertext">
-                                            <button>Edit</button>
-                                            <button>Delete</button>
-                                        </p>
-                                        
-                                    </> 
-                                    : 
-                                    <>
-                                        <h3>{attack.name}</h3>
-                                        <ul>
-                                            <li></li>
-                                        </ul>
-                                    </>}
+                                    <h3>{attack.name}</h3>
+                                    <ul>
+                                        <li key="roll">
+                                            Attack Roll : {attack.isProf ? 
+                                            (character[attack.attackSkill + "Mod"] + character.profBonus + attack.attackMod + '★'):
+                                            (character[attack.attackSkill + "Mod"] + attack.attackMod)}
+                                        </li>
+                                        <li key="range">
+                                                Range : {attack.range}
+                                        </li>
+                                        <li key="dmg">
+                                            Damage : {attack.numDice}D{attack.dmgDice}+{character[attack.dmgSkill+"Mod"] + attack.dmgMod} {attack.dmgType}
+                                        </li>
+                                        {attack.altNumDice!= 0 ? 
+                                        <li key="altdmg">
+                                            Alt Damage : {attack.altNumDice}D{attack.altDmgDice}+{character[attack.altDmgSkill+"Mod"] + attack.altDmgMod} {attack.altDmgType}
+                                        </li>
+                                        :<></> }
+                                        {attack.savingSkill ? 
+                                        <>
+                                        <li key="svgskill">
+                                            Saving Skill : {capFirstLetter(attack.savingSkill)}
+                                        </li>
+                                        <li key="svgEffect">
+                                            Saving Effect : {attack.savingEffect}
+                                        </li>
+                                        </> 
+                                        : <></>}
+                                    </ul>
+                                    <p className="character-centertext">
+                                        {attack.description}
+                                    </p>
+                                    <p className="character-centertext">
+                                        <button>Edit</button>
+                                        <button onClick={handleDeleteAttack} data-attackID={attack.id}>Delete</button>
+                                    </p>
                                 </div>
                             ))}
                         </div>
                     </div>
-                </form>
-            
-            }
+                    <div id="character-trait-big-cont">
+                        <p>
+                            <b>Racial Traits </b>
+                            <button onClick={showTraitForm}>Add Trait</button>
+                        </p>
+                        {showNewTraitForm ? <NewTraitForm setShowTraitForm = {setShowNewTraitForm} handleNewTraitSubmit={handleNewTraitSubmit} />: <></>}
+                        <div id="character-trait-cont">
+                            {character.traits.map((trait)=>(
+                                <div className="character-trait-box">
+                                    <h3>{trait.name}</h3>
+                                    <p>{Array.isArray(trait.description) ? trait.description.join(' ') : trait.description}</p>
+                                    <p>
+                                        {trait.charID ? 
+                                        <>
+                                            <button>Edit</button>
+                                            <button data-traitid={trait.id} onClick={handleDeleteTrait}>Delete</button>
+                                        </> 
+                                        : 
+                                        <>
+                                            <button data-traitindex={trait.index} onClick={handleDeleteTrait}>Delete</button>
+                                        </>}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div id="character-feat-big-cont">
+                        <p>
+                            <b>Class Features </b>
+                            <button>Add Feature</button>
+                        </p>
+                        <div id="character-feat-cont">
+                            {character.features.map((feature)=>(
+                                <div className="character-feat-box">
+                                    <h3>{feature.name}</h3>
+                                    <p>{Array.isArray(feature.description) ? feature.description.join(' ') : feature.description}</p>
+                                    <p>
+                                        {feature.charID ? <button>Edit</button> : <></>}
+                                        <button>Delete</button>
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                
+            </>
+            } {/* This bracket is to close the loading conditional*/}
         </>
     )
 

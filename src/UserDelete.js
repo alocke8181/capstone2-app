@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useParams, useNavigate } from "react-router";
-import checkAuthOrAdmin from "./Helpers";
 import { Link } from "react-router-dom";
+import { checkAuthOrAdmin } from "./Helpers";
 
 const UserDelete = ({deleteUser}) =>{
 

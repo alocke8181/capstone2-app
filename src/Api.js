@@ -2,6 +2,8 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
+const EXTERNAL_URL = 'https://www.dnd5eapi.co/api';
+
 class Api{
 
 
@@ -94,6 +96,96 @@ class Api{
             throw Array.isArray(msg) ? msg : [msg];
         };
     };
+
+    //Patch a character
+    static async patchCharacter(data, token){
+        console.debug('PATCH', '/characters', data.id);
+        try{
+            let resp = await axios.patch(`${BASE_URL}/characters/${data.id}`, data,{
+                headers : {Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        }
+    }
+
+    //Post an attack
+    static async postAttack(data, token){
+        console.debug('POST','/attacks');
+        try{
+            let resp = await axios.post(`${BASE_URL}/attacks`, data,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    };
+
+    //Delete an attack
+    static async deleteAttack(attackID, token){
+        console.debug('DELETE','/attacks',attackID);
+        try{
+            let resp = await axios.delete(`${BASE_URL}/attacks/${attackID}`,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    }
+
+    //Post a custom trait
+    static async postTrait(data, token){
+        console.debug('POST','/traits');
+        try{
+            let resp = await axios.post(`${BASE_URL}/traits`, data,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    };
+
+    //Get a trait from the external api
+    static async getExternalTrait(index){
+        console.debug('EXTERNAL GET','/traits');
+        try{
+            let resp = await axios.get(`${EXTERNAL_URL}/traits/${index}`);
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    }
+
+    //Delete a custom trait
+    static async deleteTrait(traitID, token){
+        console.debug('DELETE','/traits',traitID);
+        try{
+            let resp = await axios.delete(`${BASE_URL}/traits/${traitID}`,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    }
+
+
 
 };
 

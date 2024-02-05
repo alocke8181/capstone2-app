@@ -88,6 +88,48 @@ const Main = () =>{
         return resp;
     }
 
+    //Patch a character to the backend
+    async function patchCharacter(data){
+        const resp = await Api.patchCharacter(data, token);
+        return resp;
+    }
+
+    //Post an attack to the backend
+    async function postAttack(data){
+        const resp = await Api.postAttack(data, token);
+        return resp;
+    }
+
+    //Delete an attack from the backend
+    async function deleteAttack(attackID){
+        const resp = await Api.deleteAttack(attackID, token);
+        return resp;
+    }
+
+    //Post a trait to the backend OR get external data from the API
+    async function postTrait(data, isCustom){
+        if(isCustom){
+            delete data.choice;
+            const resp = await Api.postTrait(data, token);
+            return resp.data.trait;
+        }else{
+            const resp = await Api.getExternalTrait(data.choice)
+            return({
+                index : resp.data.index,
+                name : resp.data.name,
+                description : resp.data.desc.join(' ')
+            });
+        };
+    };
+
+    //Delete a trait from the backend
+    async function deleteTrait(traitID){
+        const resp = await Api.deleteTrait(traitID, token);
+        return resp;
+    }
+
+
+
     return(
         <UserContext.Provider value={{user, setUser}}>
             <HeaderMenu />
@@ -100,7 +142,10 @@ const Main = () =>{
                 <Route path="/users/:id" element={<UserPage getCharacters={getCharacters}/>}/>
                 <Route path="/users/:id/edit" element={<UserEdit editUser={editUser}/>}/>
                 <Route path="/users/:id/delete" element={<UserDelete deleteUser={deleteUser}/>}/>
-                <Route path="/characters/:id" element={<Character getCharacter={getCharacter} />}/>
+                <Route path="/characters/:id" element={<Character 
+                    getCharacter={getCharacter} patchCharacter={patchCharacter} 
+                    postAttack={postAttack} deleteAttack={deleteAttack}
+                    postTrait={postTrait} deleteTrait={deleteTrait}/>}/>
                 <Route path="/403" element={<Forbidden />}/>
                 <Route path="*" element={<NotFound />}/>
             </Routes>

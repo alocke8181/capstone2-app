@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import { useParams, useNavigate } from "react-router";
-import checkAuthOrAdmin from "./Helpers";
 import {Card, CardBody, CardHeader} from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import { checkAuthOrAdmin } from "./Helpers";
 
 const UserEdit = ({editUser}) =>{
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));

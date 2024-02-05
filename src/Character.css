@@ -105,14 +105,55 @@
 
 #character-attack-cont{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .character-attack-box{
     border: 2px solid black;
     text-align: left;
+    font-size: small;
 }
 
 .character-attack-box h3{
     text-align: center;
+}
+
+#character-trait-big-cont{
+    border: 2px solid black;
+    text-align: center;
+    margin: auto;
+    width: 80%;
+}
+#character-trait-cont{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.character-trait-box{
+    border: 2px solid black;
+    text-align: center;
+    padding: 10px;
+}
+
+.character-trait-box p{
+    font-size: small;
+}
+
+#character-feat-big-cont{
+    border: 2px solid black;
+    text-align: center;
+    margin: auto;
+    width: 80%;
+}
+#character-feat-cont{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.character-feat-box{
+    border: 2px solid black;
+    text-align: center;
+    padding: 10px;
+}
+
+.character-feat-box p{
+    font-size: small;
 }

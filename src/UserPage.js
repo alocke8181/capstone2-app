@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Card, CardBody, CardHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import { Navigate, useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import checkAuthOrAdmin from "./Helpers";
+import {checkAuthOrAdmin} from "./Helpers";
 
 const UserPage = ({getCharacters}) =>{
 
