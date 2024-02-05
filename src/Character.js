@@ -6,10 +6,11 @@ import { CORESTATS, SKILLS } from "./data";
 import { capFirstLetter } from "./Helpers";
 import NewAttackForm from "./NewAttackForm";
 import NewTraitForm from "./NewTraitForm";
+import NewFeatureForm from "./NewFeatureForm";
 
 import "./Character.css"
 
-const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, postTrait, deleteTrait})=>{
+const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, postTrait, deleteTrait, postFeature, deleteFeature})=>{
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
     const {id} = useParams();
@@ -25,12 +26,16 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
 
     const [showNewAttackForm, setShowNewAttackForm] = useState(false);
     const [showNewTraitForm, setShowNewTraitForm] = useState(false);
+    const [showNewFeatureForm, setShowNewFeatureForm] = useState(false);
 
     const showAttackForm = () =>{
         setShowNewAttackForm(true);
     }
     const showTraitForm = ()=>{
         setShowNewTraitForm(true);
+    };
+    const showFeatureForm = ()=>{
+        setShowNewFeatureForm(true);
     };
 
     //Set starter form data based on a character
@@ -167,6 +172,31 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
             await saveCharacter();
         }
     }
+
+    const handleNewFeatureSubmit = async (data, isCustom)=>{
+        if(isCustom){
+            data.charID = character.id;
+        }
+        let resp = await postFeature(data, isCustom);
+        character.features.push(resp);
+        await saveCharacter();
+        return resp;
+    }
+
+    const handleDeleteFeature = async (evt)=>{
+        if(evt.target.dataset.featureid){
+            const featureID = parseInt(evt.target.dataset.featureid);
+            let newCharacterFeatures = character.features.filter((feature) =>(!feature.id || (feature.id && feature.id !== featureID)));
+            character.features = newCharacterFeatures;
+            await saveCharacter();
+            await deleteFeature(featureID);
+        }else if(evt.target.dataset.featureindex){
+            const featureIndex = evt.target.dataset.featureindex;
+            let newCharacterFeatures = character.features.filter((feature)=>(!feature.index || (feature.index && feature.index !== featureIndex)));
+            character.features = newCharacterFeatures;
+            await saveCharacter();
+        };
+    };
     
 
     return(
@@ -527,7 +557,8 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                                         : 
                                         <>
                                             <button data-traitindex={trait.index} onClick={handleDeleteTrait}>Delete</button>
-                                        </>}
+                                        </>
+                                        }
                                     </p>
                                 </div>
                             ))}
@@ -536,16 +567,25 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                     <div id="character-feat-big-cont">
                         <p>
                             <b>Class Features </b>
-                            <button>Add Feature</button>
+                            <button onClick={showFeatureForm}>Add Feature</button>
                         </p>
+                        {showNewFeatureForm ? <NewFeatureForm setShowFeatureForm = {setShowNewFeatureForm} handleNewFeatureSubmit={handleNewFeatureSubmit} />: <></>}
                         <div id="character-feat-cont">
                             {character.features.map((feature)=>(
                                 <div className="character-feat-box">
                                     <h3>{feature.name}</h3>
                                     <p>{Array.isArray(feature.description) ? feature.description.join(' ') : feature.description}</p>
                                     <p>
-                                        {feature.charID ? <button>Edit</button> : <></>}
-                                        <button>Delete</button>
+                                        {feature.charID ? 
+                                        <>
+                                            <button>Edit</button>
+                                            <button data-featureid={feature.id} onClick={handleDeleteFeature}>Delete</button>
+                                        </> 
+                                        : 
+                                        <>
+                                            <button data-featureindex={feature.index} onClick={handleDeleteFeature}>Delete</button>
+                                        </>
+                                        }
                                     </p>
                                 </div>
                             ))}

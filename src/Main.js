@@ -128,6 +128,28 @@ const Main = () =>{
         return resp;
     }
 
+    //Post a feature to the backend OR get external data from the API
+    async function postFeature(data, isCustom){
+        if(isCustom){
+            delete data.choice;
+            const resp = await Api.postFeature(data, token);
+            return resp.data.feature;
+        }else{
+            const resp = await Api.getExternalFeature(data.choice)
+            return({
+                index : resp.data.index,
+                name : resp.data.name,
+                description : resp.data.desc.join(' ')
+            });
+        };
+    };
+
+    //Delete a feature from the backend
+    async function deleteFeature(featureID){
+        const resp = await Api.deleteFeature(featureID, token);
+        return resp;
+    }
+
 
 
     return(
@@ -145,7 +167,8 @@ const Main = () =>{
                 <Route path="/characters/:id" element={<Character 
                     getCharacter={getCharacter} patchCharacter={patchCharacter} 
                     postAttack={postAttack} deleteAttack={deleteAttack}
-                    postTrait={postTrait} deleteTrait={deleteTrait}/>}/>
+                    postTrait={postTrait} deleteTrait={deleteTrait}
+                    postFeature={postFeature} deleteFeature={deleteFeature}/>}/>
                 <Route path="/403" element={<Forbidden />}/>
                 <Route path="*" element={<NotFound />}/>
             </Routes>

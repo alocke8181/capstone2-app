@@ -185,6 +185,49 @@ class Api{
         };
     }
 
+    //Post a custom feature
+    static async postFeature(data, token){
+        console.debug('POST','/features');
+        try{
+            let resp = await axios.post(`${BASE_URL}/features`, data,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    };
+
+    //Get a feature from the external api
+    static async getExternalFeature(index){
+        console.debug('EXTERNAL GET','/features');
+        try{
+            let resp = await axios.get(`${EXTERNAL_URL}/features/${index}`);
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    }
+
+    //Delete a custom feature
+    static async deleteFeature(featureID, token){
+        console.debug('DELETE','/features',featureID);
+        try{
+            let resp = await axios.delete(`${BASE_URL}/features/${featureID}`,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    }
+
 
 
 };
