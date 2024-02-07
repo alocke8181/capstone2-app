@@ -4,13 +4,15 @@ import { useParams, useNavigate } from "react-router";
 import {checkAuthOrAdmin} from "./Helpers";
 import { CORESTATS, SKILLS } from "./data";
 import { capFirstLetter } from "./Helpers";
+
+import CharacterSticky from "./CharacterSticky";
 import NewAttackForm from "./NewAttackForm";
 import NewTraitForm from "./NewTraitForm";
 import NewFeatureForm from "./NewFeatureForm";
-
+import CharacterSpellCont from "./CharacterSpellCont";
 import "./Character.css"
 
-const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, postTrait, deleteTrait, postFeature, deleteFeature})=>{
+const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, postTrait, deleteTrait, postFeature, deleteFeature, getSpell})=>{
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
     const {id} = useParams();
@@ -198,17 +200,33 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
         };
     };
     
+    const handleNewSpellSubmit = async (choice, levelProp)=>{
+        let resp = await getSpell(choice);
+        character[levelProp].push(resp);
+        await saveCharacter();
+        return resp;
+    }
+
+    const handleDeleteSpell = async (index, levelProp)=>{
+        let newSpells = character[levelProp].filter((spell)=>(spell.index !== index));
+        character[levelProp] = newSpells;
+        await saveCharacter();
+    };
 
     return(
         <>
             {loading ? <p><b>Loading Character...</b></p> : 
             <>
-                <p>Character is auto-saved when adding, changing, or deleting attacks, traits, features, and spells.</p>
+                <CharacterSticky/>
+                <p>
+                    Character is auto-saved when adding, changing, or deleting attacks, traits, features, and spells.
+                    Upon leveling up, save the character to update proficieny bonus, spell slots, etc...
+                    </p>
                 {saving ? <p><button disabled>Saving Character</button></p> : <p><button onClick={saveCharacter}>Save Character</button></p>}
                 <form>
                     <div id="character-basic-cont">
                         <div className="character-basic-box">
-                            <p><label htmlFor="charName"><b>Character Name</b></label></p>
+                            <label htmlFor="charName"><h3>Character Name</h3></label>
                             <p><input
                                 type="text"
                                 id="charName"
@@ -218,15 +236,15 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                             /></p>
                         </div>
                         <div className="character-basic-box"> 
-                            <p><b>Race</b></p>
+                            <h3>Race</h3>
                             <p>{capFirstLetter(character.race)}</p>
                         </div>
                         <div className="character-basic-box">
-                            <p><b>Class</b></p>
+                            <h3>Class</h3>
                             <p>{capFirstLetter(character.className)}</p>
                         </div>
                         <div className="character-basic-box">
-                            <p><label htmlFor="level"><b>Level</b></label></p>
+                            <label htmlFor="level"><h3>Level</h3></label>
                             <p><input
                                 className="character-input-num-small"
                                 type="number"
@@ -239,7 +257,7 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                             /></p>
                         </div>
                         <div className="character-basic-box">
-                            <p><label htmlFor="exp"><b>Exp</b></label></p>
+                            <label htmlFor="exp"><h3>Exp</h3></label>
                             <p><input
                                 className="character-input-num-med"
                                 type="number"
@@ -254,9 +272,8 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                     <div id="character-core-stat-cont">
                         {CORESTATS.map((stat)=>(
                             <div className="character-core-stat-box" key={stat}>
-                                <label htmlFor={stat.slice(0,3)}><b>{capFirstLetter(stat)}</b></label>
-                                <br/>
-                                <input
+                                <label htmlFor={stat.slice(0,3)}><h4>{capFirstLetter(stat)}</h4></label>
+                                <p><input
                                     className="character-input-num-big"
                                     type="number"
                                     id={stat.slice(0,3)}
@@ -264,14 +281,14 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                                     min="0"
                                     value={formData[stat.slice(0,3)]}
                                     onChange={handleStatChange}
-                                />
-                                <p>{character[(stat.slice(0,3)+'Mod')]}</p>
+                                /></p>
+                                <h4>{character[(stat.slice(0,3)+'Mod')]}</h4>
                             </div>
                         ))}
                     </div>
                     <div id="character-combat-stats-cont">
                         <div className="character-combat-stat-box">
-                            <p><label htmlFor="armorClass"><b>AC</b></label></p>
+                            <label htmlFor="armorClass"><h3>AC</h3></label>
                             <p>
                                 <input
                                     className="character-input-num-big"
@@ -285,19 +302,19 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                             </p>
                         </div>
                         <div className="character-combat-stat-box">
-                            <p><b>Initiative</b></p>
-                            <p>
+                            <p><h3>Initiative</h3></p>
+                            <h4>
                                 {character.initiative}
-                            </p>
+                            </h4>
                         </div>
                         <div className="character-combat-stat-box">
-                            <p><b>Speed</b></p>
-                            <p>
+                            <p><h3>Speed</h3></p>
+                            <h4>
                                 {character.speed}
-                            </p>
+                            </h4>
                         </div>
                         <div className="character-combat-stat-box" id="character-hp-box">
-                            <p><label htmlFor="hpMax">Max HP</label></p>
+                            <label htmlFor="hpMax"><h4>Max HP</h4></label>
                             <p>
                                 <input
                                     type="number"
@@ -309,7 +326,7 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                                     onChange={handleChange}
                                 />
                             </p>
-                            <p><label htmlFor="hpCurr">Current HP</label></p>
+                            <label htmlFor="hpCurr"><h4>Current HP</h4></label>
                             <p>
                                 <input
                                     type="number"
@@ -323,7 +340,7 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                             </p>
                         </div>
                         <div className="character-combat-stat-box">
-                            <p><label htmlFor="hpTemp">Temporary HP</label></p>
+                            <label htmlFor="hpTemp"><h4>Temporary HP</h4></label>
                             <p>
                                 <input
                                     type="number"
@@ -337,7 +354,7 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                             </p>
                         </div>
                         <div className="character-combat-stat-box">
-                            <p><b>Hit Dice Type : D{character.hitDice}</b></p>
+                            <h4>Hit Dice Type : D{character.hitDice}</h4>
                             <p>
                                 <label htmlFor="hitDiceMax">Max : </label>
                                 <input
@@ -364,7 +381,7 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                             </p>
                         </div>
                         <div className="character-combat-stat-box">
-                            <p><b>Death Saves</b></p>
+                            <h4>Death Saves</h4>
                             <p>
                                 <label htmlFor="deathSaveSuccess">Successes : </label>
                                 <input
@@ -396,27 +413,27 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                     <div id="character-skill-cont">
                         <div className="character-skill-box-small">
                             <div className="character-skill-box-subbox">
-                                <p><b>Proficieny Bonus</b></p>
+                                <h4>Proficieny Bonus</h4>
                                 <p>{character.profBonus}</p>
                             </div>
                             <div className="character-skill-box-subbox">
-                                <p><b>Passive Perception</b></p>
+                                <h4>Passive Perception</h4>
                                 <p>{character.passPerc}</p>
                             </div>
                             <div className="character-skill-box-subbox">
-                                <label htmlFor="inspiration"><b>Inspiration</b></label>
-                                <br/>
-                                <input
+                                <label htmlFor="inspiration"><h4>Inspiration</h4></label>
+                                <p><input
                                     type="number"
                                     id="inspiration"
                                     name="inspiration"
                                     min="0"
                                     value={formData.inspiration}
                                     onChange={handleChange}
-                                />
+                                /></p>
                             </div>
                         </div>
                         <div className="character-skill-box-small">
+                            <h3>Saving Throws</h3>
                             <ul id="character-saving-profs-list">
                                 {CORESTATS.map((stat)=>(
                                     <li key={stat}>
@@ -451,6 +468,7 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                             </ul>
                         </div>
                         <div className="character-skill-box-large">
+                            <h3>Skills</h3>
                             <ul id="character-skill-list">
                                 {SKILLS.map((skill)=>(
                                     <li key={skill.name}>
@@ -489,14 +507,12 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                     </div>
                 </form>
                     <div id="character-attack-big-cont">
-                        <p>
-                            <b>Attacks </b>
-                            <button onClick={showAttackForm}>Add Attack</button>
-                        </p>
+                        <h2>Attacks</h2>
+                        <button onClick={showAttackForm}>Add Attack</button>
                         {showNewAttackForm ? <NewAttackForm setShowAttackForm={setShowNewAttackForm} handleNewAttackSubmit={handleNewAttackSubmit}/> : <></>}
                         <div id="character-attack-cont">
                             {character.attacks.map((attack)=>(
-                                <div className="character-attack-box">
+                                <div className="character-attack-box" key={attack.id}>
                                     <h3>{attack.name}</h3>
                                     <ul>
                                         <li key="roll">
@@ -531,17 +547,15 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                                     </p>
                                     <p className="character-centertext">
                                         <button>Edit</button>
-                                        <button onClick={handleDeleteAttack} data-attackID={attack.id}>Delete</button>
+                                        <button onClick={handleDeleteAttack} data-attackid={attack.id}>Delete</button>
                                     </p>
                                 </div>
                             ))}
                         </div>
                     </div>
                     <div id="character-trait-big-cont">
-                        <p>
-                            <b>Racial Traits </b>
-                            <button onClick={showTraitForm}>Add Trait</button>
-                        </p>
+                        <h2>Racial Traits </h2>
+                        <button onClick={showTraitForm}>Add Trait</button>
                         {showNewTraitForm ? <NewTraitForm setShowTraitForm = {setShowNewTraitForm} handleNewTraitSubmit={handleNewTraitSubmit} />: <></>}
                         <div id="character-trait-cont">
                             {character.traits.map((trait)=>(
@@ -565,10 +579,8 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                         </div>
                     </div>
                     <div id="character-feat-big-cont">
-                        <p>
-                            <b>Class Features </b>
-                            <button onClick={showFeatureForm}>Add Feature</button>
-                        </p>
+                        <h2>Class Features</h2>
+                        <button onClick={showFeatureForm}>Add Feature</button>
                         {showNewFeatureForm ? <NewFeatureForm setShowFeatureForm = {setShowNewFeatureForm} handleNewFeatureSubmit={handleNewFeatureSubmit} />: <></>}
                         <div id="character-feat-cont">
                             {character.features.map((feature)=>(
@@ -590,6 +602,29 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                                 </div>
                             ))}
                         </div>
+                    </div>
+                    <div id="character-spell-big-cont">
+                        <h2>Spells</h2>
+                        <CharacterSpellCont spellLevelString={'cantrips'} formData={formData} character={character}  
+                            handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+                        <CharacterSpellCont spellLevelString={'One'} formData={formData} character={character}  
+                            handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+                        <CharacterSpellCont spellLevelString={'Two'} formData={formData} character={character}  
+                            handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+                        <CharacterSpellCont spellLevelString={'Three'} formData={formData} character={character}  
+                            handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+                        <CharacterSpellCont spellLevelString={'Four'} formData={formData} character={character}  
+                            handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+                        <CharacterSpellCont spellLevelString={'Five'} formData={formData} character={character}  
+                            handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+                        <CharacterSpellCont spellLevelString={'Six'} formData={formData} character={character}  
+                            handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+                        <CharacterSpellCont spellLevelString={'Seven'} formData={formData} character={character}  
+                            handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+                        <CharacterSpellCont spellLevelString={'Eight'} formData={formData} character={character}  
+                            handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+                        <CharacterSpellCont spellLevelString={'Nine'} formData={formData} character={character}  
+                            handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
                     </div>
                 
             </>

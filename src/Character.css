@@ -1,3 +1,9 @@
+h2, h3, h4{
+    margin: 5px;
+}
+
+
+
 .character-input-num-med{
     width: 40%;
     text-align: center;
@@ -27,7 +33,6 @@
 
 .character-basic-box{
     border: 2px solid black;
-    padding: 5px;
 }
 
 .character-basic-box p{
@@ -45,6 +50,10 @@
     border: 2px solid black;
 }
 
+.character-core-stat-box p{
+    margin: 1px;
+}
+
 #character-combat-stats-cont{
     margin: auto;
     width: 80%;
@@ -53,8 +62,11 @@
 }
 
 .character-combat-stat-box{
-
     border: 2px solid black;
+}
+
+.character-combat-stat-box p{
+    margin: 1px;
 }
 
 #character-hp-box p{
@@ -81,6 +93,7 @@
 }
 
 #character-saving-profs-list{
+    margin-left: 17%;
     text-align: left;
 }
 
@@ -135,7 +148,7 @@
 }
 
 .character-trait-box p{
-    font-size: small;
+    font-size: x-small;
 }
 
 #character-feat-big-cont{
@@ -155,5 +168,11 @@
 }
 
 .character-feat-box p{
-    font-size: small;
+    font-size: x-small;
+}
+
+#character-spell-big-cont{
+    border: 2px solid black;
+    width: 80%;
+    margin: auto;
 }

@@ -1,0 +1,36 @@
+h2, h3, h4{
+    margin: 5px;
+}
+
+.character-spell-cont{
+    border: 2px solid black;
+    padding-bottom: 5px;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+}
+
+.character-spell-subcont{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.character-spell-form-cont{
+    display: flex;
+    align-items: center;
+}
+.character-spell-form-cont p{
+    margin: 1px;
+}
+
+
+.character-spell-add{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.character-spell-add input{
+    width: 40px;
+    text-align: center;
+}

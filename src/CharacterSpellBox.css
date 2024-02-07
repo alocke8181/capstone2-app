@@ -1,0 +1,23 @@
+.character-spell-box{
+    border: 2px solid black;
+}
+
+.character-spell-box h4{
+    margin: 1px;
+}
+
+.character-spell-box p{
+    margin: 1px;
+}
+
+.character-spell-box{
+    font-size: small;
+}
+
+.character-spell-box-desc{
+    font-size: smaller;
+}
+
+.character-spell-box ul{
+    list-style-type: none;
+}

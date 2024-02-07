@@ -439,8 +439,45 @@ const FEATURES = [
     {"index":"wild-shape-cr-1-4-or-below-no-flying-or-swim-speed","name":"Wild Shape (CR 1/4 or below, no flying or swim speed)","url":"/api/features/wild-shape-cr-1-4-or-below-no-flying-or-swim-speed"},
     {"index":"wild-shape-cr-1-or-below","name":"Wild Shape (CR 1 or below)","url":"/api/features/wild-shape-cr-1-or-below"}]
 
+const SPELLS = {
+    CANTRIPS : ['acid-splash','chill-touch','dancing-lights','druidcraft','eldritch-blast','fire-bolt','guidance','mage-hand','mending','message','minor-illusion','poison-spray',
+                'prestidigitation','produce-flame','ray-of-frost','resistance','sacred-flame','shillelagh','shocking-grasp','spare-the-dying','thaumaturgy','true-strike','vicious-mockery'],
+    LEVEL_ONE : ['alarm','animal-friendship','bane','bless','burning-hands','charm-person','color-spray','command','comprehend-languages','create-or-destroy-water','cure-wounds',
+                'detect-evil-and-good','detect-magic','detect-poison-and-disease','disguise-self','divine-favor','entangle','expeditious-retreat','faerie-fire','false-life','feather-fall',
+                'find-familiar','floating-disk','fog-cloud','goodberry','grease','guiding-bolt','healing-word','hellish-rebuke','heroism','hideous-laughter','hunters-mark','identify',
+                'illusory-script','inflict-wounds','jump','longstrider','mage-armor','magic-missile','protection-from-evil-and-good','purify-food-and-drink','sanctuary','shield',
+                'shield-of-faith','silent-image','sleep','speak-with-animals','thunderwave','unseen-servant'],
+    LEVEL_TWO : ['acid-arrow','aid','alter-self','animal-messenger','arcane-lock','arcanists-magic-aura','augury','barkskin','blindness-deafness','blur','branding-smite','calm-emotions',
+                'continual-flame','darkness','darkvision','detect-thoughts','enhance-ability','enlarge-reduce','enthrall','find-steed','find-traps','flame-blade','flaming-sphere',
+                'gentle-repose','gust-of-wind','heat-metal','hold-person','invisibility','knock','lesser-restoration','levitate','locate-animals-or-plants','locate-object','magic-mouth',
+                'magic-weapon','mirror-image','misty-step','moonbeam','pass-without-trace','prayer-of-healing','protection-from-poison','ray-of-enfeeblement','rope-trick',
+                'scorching-ray','see-invisibility','shatter','silence','spider-climb','spike-growth','spiritual-weapon','suggestion','warding-bond','web','zone-of-truth'],
+    LEVEL_THREE : ['animate-dead','beacon-of-hope','bestow-curse','blink','call-lightning','clairvoyance','conjure-animals','couterspell','create-food-and-water','daylight',
+                    'dispel-magic','fear','fireball','fly','gaseous-form','glyph-of-warding','haste','hypnotic-pattern','lightning-bolt','magic-circle','major-image','mass-healing-word',
+                    'meld-into-stone','nondetection','phantom-steed','plant-growth','protection-from-energy','remove-curse','revivify','sending','sleet-storm','slow','speak-with-dead',
+                    'speak-with-plants','spirit-guardians','stinking-cloud','tiny-hut','tongues','vampiric-touch','water-breathing','water-walk','wind-wall'],
+    LEVEL_FOUR : ['arcane-eye','banishment','black-tentacles','blight','compulsion','confusion','conjure-minor-elementals','conjure-woodland-beings','control-water','death-ward',
+                    'dimension-door','divination','dominate-beast','fabricate','faithful-hound','fire-shield','freedom-of-movement','giant-insect','greater-invisibility',
+                    'guardian-of-faith','hallucinatory-terrain','ice-storm','locate-creature','phantasmal-killer','polymorph','private-sanctum','resiliant-sphere','secret-crest',
+                    'stone-shape','stoneskin','wall-of-fire'],
+    LEVEL_FIVE : ['animate-objects','antilife-shell','arcane-hand','awaken','cloudkill','commune','commune-with-nature','cone-of-cold','conjure-elemental','contact-other-plane',
+                    'contagion','creation','dispel-evil-and-good','dominate-person','dream','flame-strike','geas','greater-restoration','hallow','hold-monster','insect-plague',
+                    'legend-lore','mass-cure-wounds','mislead','modify-memory','passwall','planar-binding','raise-dead','reincarnate','scrying','seeming','telekinesis',
+                    'telepathic-bond','teleportation-circle','tree-stride','wall-of-force','wall-of-stone'],
+    LEVEL_SIX : ['blade-barrier','chain-lightning','circle-of-death','conjure-fey','contingency','create-undead','disintegrate','eyebite','find-the-path','flesh-to-stone','forbiddence',
+                'freezing-sphere','globe-of-invulnerability','guards-and-wards','harm','heal','heroes-feast','instant-summons','irresistible-dance','magic-jar','mass-suggestion',
+                'move-earth','planar-ally','programmed-illusion','sunbeam','transport-via-plants','true-seeing','wall-of-ice','wall-of-thorns','wind-walk','word-of-recall'],
+    LEVEL_SEVEN : ['arcane-sword','conjure-celestial','delayed-blast-fireball','divine-word','etherealness','finger-of-death','fire-storm','forcecage','magnificent-mansion','mirage-arcane',
+                    'plane-shift','prismatic-spray','project-image','regenerate','resurrection','reverse-gravity','sequester','simulacrum','symbol','teleport'],
+    LEVEL_EIGHT : ['animal-shapes','antimagic-field','antipathy-sympathy','clone','control-weather','demiplane','dominate-monster','earthquake','feeblemind','glibness','holy-aura',
+                    'incendiary-cloud','maze','mind-blank','power-word-stun','sunburst'],
+    LEVEL_NINE : ['astral-projection','foresight','gate','imprisonment','mass-heal','meteor-swarm','power-word-kill','prismatic-wall','shapechange','storm-of-vengeance','time-stop',
+                    'true-polymorph','true-resurrection','weird','wish']
+}
+
 
 export {CORESTATS,
         SKILLS,
         TRAITS,
-        FEATURES};
+        FEATURES,
+        SPELLS};

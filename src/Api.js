@@ -202,7 +202,7 @@ class Api{
 
     //Get a feature from the external api
     static async getExternalFeature(index){
-        console.debug('EXTERNAL GET','/features');
+        console.debug('EXTERNAL GET','/features', index);
         try{
             let resp = await axios.get(`${EXTERNAL_URL}/features/${index}`);
             return resp;
@@ -228,6 +228,35 @@ class Api{
         };
     }
 
+    //Get a spell
+    static async getSpell(index){
+        console.debug('EXTERNAL GET','/spells', index);
+        try{
+            let resp = await axios.get(`${EXTERNAL_URL}/spells/${index}`);
+            let spell = {
+                index : resp.data.index,
+                name : resp.data.name,
+                description : resp.data.desc.join(' '),
+                higherLevels : resp.data.higher_level || null,
+                range : resp.data.range,
+                duration : resp.data.duration,
+                concentration : resp.data.concentration,
+                ritual : resp.data.ritual,
+                school : resp.data.school,
+                castingTime : resp.data.casting_time,
+                attackType : resp.data.attack_type || null,
+                damage : resp.data.damage || null,
+                areaOfAffect : resp.data.area_of_affect || null,
+                healLevels : resp.data.heal_at_slot_level || null,
+                dc : resp.data.dc || null
+            }
+            return spell;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    };
 
 
 };
