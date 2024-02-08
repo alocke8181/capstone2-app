@@ -10,6 +10,8 @@ import NewAttackForm from "./NewAttackForm";
 import NewTraitForm from "./NewTraitForm";
 import NewFeatureForm from "./NewFeatureForm";
 import CharacterSpellCont from "./CharacterSpellCont";
+import CharacterEquipment from "./CharacterEquipment";
+
 import "./Character.css"
 
 const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, postTrait, deleteTrait, postFeature, deleteFeature, getSpell})=>{
@@ -185,6 +187,26 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
         return resp;
     }
 
+    const handleAddEquipment = async (formData)=>{
+        const itemName = formData.name;
+        if(character.equipment.some((item)=>(item.name === itemName))){
+            alert(`Cannot have duplicate of item: ${itemName}`);
+            return;
+        }else{
+            character.equipment.push({
+                name : formData.name,
+                amount : formData.amount
+            });
+            await saveCharacter();
+        }
+    };
+
+    const handleDeleteEquipment = async (itemName)=>{
+        let newEquip = character.equipment.filter((item)=>(item.name !== itemName))
+        character.equipment = newEquip;
+        await saveCharacter();
+    }
+
     const handleDeleteFeature = async (evt)=>{
         if(evt.target.dataset.featureid){
             const featureID = parseInt(evt.target.dataset.featureid);
@@ -212,6 +234,7 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
         character[levelProp] = newSpells;
         await saveCharacter();
     };
+
 
     return(
         <>
@@ -506,6 +529,7 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                         </div>
                     </div>
                 </form>
+                    <CharacterEquipment character={character} handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
                     <div id="character-attack-big-cont">
                         <h2>Attacks</h2>
                         <button onClick={showAttackForm}>Add Attack</button>
@@ -605,6 +629,26 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                     </div>
                     <div id="character-spell-big-cont">
                         <h2>Spells</h2>
+                        <div>
+                            <form>
+                                <label htmlFor="spellAbility">Spellcasting Ability : </label>
+                                <select
+                                    id="spellAbility"
+                                    name="spellAbility"
+                                    value={formData.spellAbility}
+                                    onChange={handleChange}
+                                >
+                                    <option value=''>None</option>
+                                    {CORESTATS.map((stat)=>(
+                                        <option value={stat.slice(0,3)}>{capFirstLetter(stat)}</option>
+                                    ))}
+                                </select>
+                            </form>
+                            <p>
+                                Spellcasting Modifier : {character[character.spellAbility + "Mod"] + character.profBonus || 0} - 
+                                Spell Save DC : {character[character.spellAbility + "Mod"] + character.profBonus + 8|| 0}
+                            </p>
+                        </div>
                         <CharacterSpellCont spellLevelString={'cantrips'} formData={formData} character={character}  
                             handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
                         <CharacterSpellCont spellLevelString={'One'} formData={formData} character={character}  
