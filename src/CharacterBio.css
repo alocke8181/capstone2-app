@@ -1,0 +1,68 @@
+h2, h3, h4{
+    margin: 5px;
+}
+
+
+#character-bio-cont{
+    border: 2px solid black;
+    width: 80%;
+    margin: auto;
+}
+
+#character-bio-pibf{
+    border: 2px solid black;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.character-bio-subcont{
+    width: 100%;
+    margin: auto;
+    border: 2px solid black;
+}
+
+.character-bio-subcont textarea{
+    width: 90%;
+    height: 5lh;
+    resize: none;
+}
+
+#character-bio-ahwa{
+    border: 2px solid black;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+#character-bio-ahw{
+    border: 2px solid black;
+}
+
+#character-bio-appearance{
+    border: 2px solid black;
+}
+
+#character-bio-appearance textarea{
+    width: 90%;
+    height: 10lh;
+    resize: none;
+}
+
+#character-bio-backstory{
+    border: 2px solid black;
+}
+
+#character-bio-backstory textarea{
+    width: 90%;
+    height: 10lh;
+    resize: none;
+}
+
+#character-bio-allies{
+    border: 2px solid black;
+}
+
+#character-bio-allies textarea{
+    width: 90%;
+    height: 5lh;
+    resize: none;
+}

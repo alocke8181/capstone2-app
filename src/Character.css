@@ -109,6 +109,26 @@ h2, h3, h4{
     text-align: left;
 }
 
+#character-profs-altres-cont{
+    border: 2px solid black;
+    width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr 3fr;
+}
+
+#character-languages{
+    border: 2px solid black;
+}
+
+#character-equip-profs{
+    border: 2px solid black;
+}
+
+#character-equip-profs ul{
+    columns: 2;
+}
+
 #character-attack-big-cont{
     border: 2px solid black;
     text-align: center;

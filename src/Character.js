@@ -11,6 +11,8 @@ import NewTraitForm from "./NewTraitForm";
 import NewFeatureForm from "./NewFeatureForm";
 import CharacterSpellCont from "./CharacterSpellCont";
 import CharacterEquipment from "./CharacterEquipment";
+import CharacterAltRes from "./CharacterAltRes";
+import CharacterBio from "./CharacterBio";
 
 import "./Character.css"
 
@@ -207,6 +209,21 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
         await saveCharacter();
     }
 
+    const handleAddAltRes = async (formData)=>{
+        const resName = formData.name;
+        if(character.altResources.some((resource)=>(resource.name === resName))){
+            alert(`Cannot have duplicate Alt Resource: ${resName}`);
+            return;
+        }else{
+            character.altResources.push({
+                name : formData.name,
+                max : formData.max,
+                curr : formData.curr
+            });
+            await saveCharacter();
+        }
+    }
+
     const handleDeleteFeature = async (evt)=>{
         if(evt.target.dataset.featureid){
             const featureID = parseInt(evt.target.dataset.featureid);
@@ -242,7 +259,7 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
             <>
                 <CharacterSticky/>
                 <p>
-                    Character is auto-saved when adding, changing, or deleting attacks, traits, features, and spells.
+                    Character is auto-saved when adding, changing, or deleting alt resources, equipment, attacks, traits, features, and spells.
                     Upon leveling up, save the character to update proficieny bonus, spell slots, etc...
                     </p>
                 {saving ? <p><button disabled>Saving Character</button></p> : <p><button onClick={saveCharacter}>Save Character</button></p>}
@@ -529,7 +546,31 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                         </div>
                     </div>
                 </form>
-                    <CharacterEquipment character={character} handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
+                <div id="character-profs-altres-cont">
+                    <div id="character-languages">
+                        <h3>Languages</h3>
+                        <ul>
+                            {character.languages.map((language)=>(
+                                <li key={language}>
+                                    {language}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div id="character-equip-profs">
+                    <h3>Equipment Proficiencies</h3>
+                        <ul>
+                            {character.equipProfs.map((prof)=>(
+                                <li key={prof}>
+                                    {prof}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <CharacterAltRes character={character}/>
+                </div>
+                    
+                <CharacterEquipment character={character} handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
                     <div id="character-attack-big-cont">
                         <h2>Attacks</h2>
                         <button onClick={showAttackForm}>Add Attack</button>
@@ -670,6 +711,8 @@ const Character = ({getCharacter, patchCharacter, postAttack, deleteAttack, post
                         <CharacterSpellCont spellLevelString={'Nine'} formData={formData} character={character}  
                             handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
                     </div>
+                <CharacterBio character={character} setCharacter={setCharacter}/>
+                
                 
             </>
             } {/* This bracket is to close the loading conditional*/}
