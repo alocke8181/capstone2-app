@@ -14,7 +14,7 @@ import Register from './Register';
 import UserPage from "./UserPage";
 import UserEdit from './UserEdit';
 import UserDelete from './UserDelete';
-import Character from "./Character";
+import Character from "./Character/Character";
 import NotFound from './NotFound';
 import Forbidden from './Forbidden';
 
@@ -150,12 +150,6 @@ const Main = () =>{
         return resp;
     }
 
-    //Get a spell from the external api
-    async function getSpell(index){
-        const resp = await Api.getSpell(index);
-        return resp;
-    }
-
 
     return(
         <UserContext.Provider value={{user, setUser}}>
@@ -173,8 +167,8 @@ const Main = () =>{
                     getCharacter={getCharacter} patchCharacter={patchCharacter} 
                     postAttack={postAttack} deleteAttack={deleteAttack}
                     postTrait={postTrait} deleteTrait={deleteTrait}
-                    postFeature={postFeature} deleteFeature={deleteFeature} 
-                    getSpell={getSpell}/>}/>
+                    postFeature={postFeature} deleteFeature={deleteFeature} />}
+                />
                 <Route path="/403" element={<Forbidden />}/>
                 <Route path="*" element={<NotFound />}/>
             </Routes>

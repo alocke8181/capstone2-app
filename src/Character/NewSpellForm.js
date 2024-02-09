@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import { SPELLS } from "./data";
-import { capFirstLetter } from "./Helpers";
+import { SPELLS } from "../data";
+import { capFirstLetter } from "../Helpers";
 
 const NewSpellForm = ({spellLevelString, setShowForm, handleNewSpellSubmit})=>{
     

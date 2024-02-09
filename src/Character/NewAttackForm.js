@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import { CORESTATS } from "./data";
-import { capFirstLetter } from "./Helpers";
+import { CORESTATS } from "../data";
+import { capFirstLetter } from "../Helpers";
 import './NewAttackForm.css';
 
 const NewAttackForm = ({setShowAttackForm, handleNewAttackSubmit})=>{

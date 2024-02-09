@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { FEATURES } from "./data";
+import { FEATURES } from "../data";
 
 const NewFeatureForm = ({setShowFeatureForm, handleNewFeatureSubmit})=>{
 

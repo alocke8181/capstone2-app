@@ -27,7 +27,9 @@ const CharacterSpellBox = ({spell, deleteSpell})=>{
                     <ul>
                         {spell.damage ? 
                         <li key='damage'>
-                            Damage : {spell.damage.damage_at_slot_level[Object.keys(spell.damage.damage_at_slot_level)[0]]} {spell.damage.damage_type.name}
+                            Damage : {spell.damage_at_slot_level? 
+                                <>{spell.damage.damage_at_slot_level[Object.keys(spell.damage.damage_at_slot_level)[0]]} {spell.damage.damage_type.name}</> : 
+                                <>{spell.damage.damage_at_character_level[Object.keys(spell.damage.damage_at_character_level)[0]]} {spell.damage.damage_type.name}</>}
                         </li> 
                         : <></>}
 
@@ -77,15 +79,18 @@ const CharacterSpellBox = ({spell, deleteSpell})=>{
                         <button onClick={toggleDesc}>Toggle Description</button>
                     </p>
                     {showDesc ? 
-                        <p className="character-spell-box-desc">
-                        {spell.description}
-                        </p>
+                        <>
+                            <p className="character-spell-box-desc">
+                                {spell.description}
+                            </p>
+                            {spell.higherLevels ? 
+                                <p className="character-spell-box-desc">{spell.higherLevels}</p> 
+                            : <></>}
+                            
+                        </>
                         :
                         <></>
                     }
-                    {spell.higherLevels ? 
-                        <p>{spell.higherLevels}</p> 
-                        : <></>}
                     <p>
                         <button data-spellindex={spell.index} onClick={deleteSelf}>Delete</button>
                     </p>

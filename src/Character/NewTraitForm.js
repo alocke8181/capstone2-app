@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { TRAITS } from "./data";
+import { TRAITS } from "../data";
 
 const NewTraitForm = ({setShowTraitForm, handleNewTraitSubmit})=>{
 
@@ -45,7 +45,6 @@ const NewTraitForm = ({setShowTraitForm, handleNewTraitSubmit})=>{
             alert('Please enter a name and description, or pick a standard trait!');
             return;
         }else{
-            console.log(formData.choice);
             setLoading(true);
             let resp = await handleNewTraitSubmit(formData, isCustom);
             setLoading(false);

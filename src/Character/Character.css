@@ -2,7 +2,31 @@ h2, h3, h4{
     margin: 5px;
 }
 
+#character-page{
+    width: 100%;
+    margin: auto;
+    margin-left: 1%;
+    display: grid;
+    grid-template-columns: 35fr 5fr;
+}
 
+#sidebar{
+    margin-right: 10%;
+    padding-top: 5%;
+    text-align: left;
+}
+
+#sidebar ul{
+    list-style-type: none;
+}
+
+#sidebar button{
+    margin-left: 15%;
+}
+
+#sidebar-content{
+    border: 2px solid black;
+}
 
 .character-input-num-med{
     width: 40%;
@@ -26,9 +50,9 @@ h2, h3, h4{
 
 #character-basic-cont{
     margin: auto;
-    width: 80%;
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .character-basic-box{
@@ -41,7 +65,7 @@ h2, h3, h4{
 
 #character-core-stat-cont{
     margin: auto;
-    width: 80%;
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
@@ -56,7 +80,7 @@ h2, h3, h4{
 
 #character-combat-stats-cont{
     margin: auto;
-    width: 80%;
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
@@ -75,7 +99,7 @@ h2, h3, h4{
 
 #character-skill-cont{
     margin: auto;
-    width: 80%;
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 3fr;
 }
@@ -111,7 +135,7 @@ h2, h3, h4{
 
 #character-profs-altres-cont{
     border: 2px solid black;
-    width: 80%;
+    width: 100%;
     margin: auto;
     display: grid;
     grid-template-columns: 1fr 2fr 3fr;
@@ -127,13 +151,14 @@ h2, h3, h4{
 
 #character-equip-profs ul{
     columns: 2;
+    text-align: left;
 }
 
 #character-attack-big-cont{
     border: 2px solid black;
     text-align: center;
     margin: auto;
-    width: 80%;
+    width: 100%;
 }
 
 #character-attack-cont{
@@ -155,7 +180,7 @@ h2, h3, h4{
     border: 2px solid black;
     text-align: center;
     margin: auto;
-    width: 80%;
+    width: 100%;
 }
 #character-trait-cont{
     display: grid;
@@ -175,7 +200,7 @@ h2, h3, h4{
     border: 2px solid black;
     text-align: center;
     margin: auto;
-    width: 80%;
+    width: 100%;
 }
 #character-feat-cont{
     display: grid;
@@ -193,6 +218,6 @@ h2, h3, h4{
 
 #character-spell-big-cont{
     border: 2px solid black;
-    width: 80%;
+    width: 100%;
     margin: auto;
 }

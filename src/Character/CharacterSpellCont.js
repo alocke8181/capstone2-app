@@ -7,7 +7,7 @@ const CharacterSpellCont = ({formData, character, spellLevelString, handleChange
 
     let levelProp = 'level'+spellLevelString;
     let levelSlotsProp = 'level'+spellLevelString+'Slots';
-    let levelLeftProp = 'level'+spellLevelString+'SlotsLeft';
+    let levelLeftProp = 'level'+spellLevelString+'Left';
 
     let isCantrips = false;
 

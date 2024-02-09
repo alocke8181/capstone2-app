@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import './CharacterAltResBox.css'
 
-const CharacterAltResBox = ({resource})=>{
+const CharacterAltResBox = ({resource, handleDeleteAltRes})=>{
 
     const [formData, setFormData] = useState({
         max : resource.max,
@@ -39,6 +39,7 @@ const CharacterAltResBox = ({resource})=>{
                     onChange={handleChange}
                 />
             </form>
+            <button onClick={()=>{handleDeleteAltRes(resource.name)}}>X</button>
         </div>
     )
 
