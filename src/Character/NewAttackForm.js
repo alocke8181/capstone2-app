@@ -16,8 +16,8 @@ const NewAttackForm = ({setShowAttackForm, handleNewAttackSubmit})=>{
         dmgMod : 0,
         dmgType : '',
         altNumDice : 0,
-        altDmgDice : 4,
-        altDmgSkill : 'str',
+        altDmgDice : 0,
+        altDmgSkill : '',
         altDmgMod : 0,
         altDmgType : '',
         description : '',
@@ -164,7 +164,7 @@ const NewAttackForm = ({setShowAttackForm, handleNewAttackSubmit})=>{
                             name="altDmgDice"
                             value={formData.altDmgDice}
                             onChange={handleChange}>
-                                <option value={null}>None</option>
+                                <option value={0}>None</option>
                                 <option value={4}>D4</option>
                                 <option value={6}>D6</option>
                                 <option value={8}>D8</option>
@@ -190,7 +190,7 @@ const NewAttackForm = ({setShowAttackForm, handleNewAttackSubmit})=>{
                             name="altDmgSkill"
                             value={formData.altDmgSkill}
                             onChange={handleChange}>
-                                <option value={null}>None</option>
+                                <option value={''}>None</option>
                                 {CORESTATS.map((stat)=>(
                                     <option value={stat.slice(0,3)}>{capFirstLetter(stat)}</option>
                                 ))}
@@ -232,7 +232,7 @@ const NewAttackForm = ({setShowAttackForm, handleNewAttackSubmit})=>{
                             name="savingSkill"
                             value={formData.savingSkill}
                             onChange={handleChange}>
-                                <option value={null}>None</option>
+                                <option value={''}>None</option>
                                 {CORESTATS.map((stat)=>(
                                     <option value={stat.slice(0,3)}>{capFirstLetter(stat)}</option>
                                 ))}

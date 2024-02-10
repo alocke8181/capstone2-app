@@ -3,6 +3,12 @@ import React from "react";
 //This file contains raw data to mostly be used for mapping purposes (eg mapping to selection options)
 //Traits and Features are copied from the external API
 
+const RACES = ['dragonborn','dwarf','elf','gnome','half-elf','half-orc','halfling','human','tiefling'];
+
+const CLASSES = ['barbarian','bard','cleric','druid','fighter','monk','paladin','ranger','rogue','sorcerer','warlock','wizard'];
+
+const BACKGROUNDS = ['Acolyte','Charlatan','Criminal','Entertainer','Folk Hero','Gladiator','Guild Member','Hermit','Knight','Noble','Outlander','Pirate','Sage','Sailor','Soldier','Urchin'];
+
 const CORESTATS = ['strength','dexterity','constitution','intelligence','wisdom','charisma'];
 
 const SKILLS = [
@@ -476,7 +482,10 @@ const SPELLS = {
 }
 
 
-export {CORESTATS,
+export {CLASSES,
+        RACES,
+        BACKGROUNDS,
+        CORESTATS,
         SKILLS,
         TRAITS,
         FEATURES,

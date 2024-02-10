@@ -90,7 +90,7 @@ const CharacterAltRes = ({character, saveCharacter})=>{
             </p>}
             <div id="character-altres-subcont">
                 {character.altResources.map((resource)=>(
-                    <CharacterAltResBox resource={resource} handleDeleteAltRes={handleDeleteAltRes}/>
+                    <CharacterAltResBox resource={resource} handleDeleteAltRes={handleDeleteAltRes} key={resource.name}/>
                 ))}
             </div>
         </div>

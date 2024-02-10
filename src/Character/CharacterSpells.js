@@ -42,7 +42,7 @@ const CharacterSpells = ({formData, character, handleChange, saveCharacter})=>{
                     >
                         <option value=''>None</option>
                         {CORESTATS.map((stat)=>(
-                            <option value={stat.slice(0,3)}>{capFirstLetter(stat)}</option>
+                            <option value={stat.slice(0,3)} key={stat}>{capFirstLetter(stat)}</option>
                         ))}
                     </select>
                 </form>

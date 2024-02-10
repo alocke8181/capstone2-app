@@ -1,5 +1,5 @@
 function checkAuthOrAdmin(user, id){
-    return(user && (user.id == id || user.isAdmin));
+    return(user && (user.id == id || user.isadmin));
 };
 
 //Helper to capitalize the first letter of strings

@@ -61,7 +61,7 @@ const CharacterTraits = ({character, saveCharacter, postTrait, deleteTrait})=>{
             {showNewTraitForm ? <NewTraitForm setShowTraitForm = {setShowNewTraitForm} handleNewTraitSubmit={handleNewTraitSubmit} />: <></>}
             <div id="character-trait-cont">
                 {character.traits.map((trait)=>(
-                    <CharacterTraitBox trait={trait} handleDeleteTrait={handleDeleteTrait} />
+                    <CharacterTraitBox trait={trait} handleDeleteTrait={handleDeleteTrait} key={trait.name}/>
                 ))}
             </div>
         </div>

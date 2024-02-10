@@ -59,7 +59,7 @@ const CharacterSpellCont = ({formData, character, spellLevelString, handleChange
             {character[levelProp] ? 
             <div className="character-spell-subcont">
             {character[levelProp].map((spell)=>(
-                <CharacterSpellBox spell={spell} deleteSpell={deleteSpell}/>
+                <CharacterSpellBox spell={spell} deleteSpell={deleteSpell} key={spell.index}/>
             ))}</div>
             : <></> }
         </div>

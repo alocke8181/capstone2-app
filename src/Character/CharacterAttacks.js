@@ -34,7 +34,7 @@ const CharacterAttacks = ({character, saveCharacter})=>{
                         {showNewAttackForm ? <NewAttackForm setShowAttackForm={setShowNewAttackForm} handleNewAttackSubmit={handleNewAttackSubmit}/> : <></>}
                         <div id="character-attack-cont">
                             {character.attacks.map((attack)=>(
-                                <CharacterAttackBox character={character} attack={attack} handleDeleteAttack={handleDeleteAttack}/>
+                                <CharacterAttackBox character={character} attack={attack} handleDeleteAttack={handleDeleteAttack} key={attack.name}/>
                             ))}
                         </div>
                     </div>

@@ -17,7 +17,7 @@ const CharacterAltResBox = ({resource, handleDeleteAltRes})=>{
     }
 
     return(
-        <div className="character-altres-box">
+        <div className="character-altres-box" key={resource.name}>
             <h3>{resource.name}</h3>
             <form>
                 <label htmlFor="max">Max : </label>

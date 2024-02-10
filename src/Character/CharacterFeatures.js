@@ -42,7 +42,7 @@ const CharacterFeatures = ({character, saveCharacter, postFeature, deleteFeature
             {showNewFeatureForm ? <NewFeatureForm setShowFeatureForm = {setShowNewFeatureForm} handleNewFeatureSubmit={handleNewFeatureSubmit} />: <></>}
             <div id="character-feat-cont">
                 {character.features.map((feature)=>(
-                    <CharacterFeatureBox feature={feature} handleDeleteFeature={handleDeleteFeature} />
+                    <CharacterFeatureBox feature={feature} handleDeleteFeature={handleDeleteFeature} key={feature.name}/>
                 ))}
             </div>
         </div>

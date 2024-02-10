@@ -89,13 +89,13 @@ const CharacterCoreStats = ({character, formData, handleChange, handleStatChange
                             </p>
                         </div>
                         <div className="character-combat-stat-box">
-                            <p><h3>Initiative</h3></p>
+                            <h3>Initiative</h3>
                             <h4>
                                 {character.initiative}
                             </h4>
                         </div>
                         <div className="character-combat-stat-box">
-                            <p><h3>Speed</h3></p>
+                            <h3>Speed</h3>
                             <h4>
                                 {character.speed}
                             </h4>

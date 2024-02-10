@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from "react";
-import { Card, CardBody, CardHeader, ListGroup, ListGroupItem } from "react-bootstrap";
-import { Navigate, useParams, useNavigate } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import {checkAuthOrAdmin} from "./Helpers";
+import {checkAuthOrAdmin, capFirstLetter} from "./Helpers";
+import './UserPage.css';
 
-const UserPage = ({getCharacters}) =>{
+const UserPage = ({getUser, getCharacters}) =>{
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+    const [localUser, setLocalUser] = useState(JSON.parse(localStorage.getItem('user')))
     const {id} = useParams();
     const nav = useNavigate()
+
+    const [user, setUser] = useState({});
 
     const [loading, setLoading] = useState(true); 
 
@@ -17,12 +19,14 @@ const UserPage = ({getCharacters}) =>{
 
     useEffect(()=>{
 
-        if(!checkAuthOrAdmin(user, id)){
+        if(!checkAuthOrAdmin(localUser, id)){
             nav('/403');
         }
-        const fetchCharacters = async (userID) =>{
+        const fetchCharacters = async (id) =>{
             setLoading(true);
-            const resp = await getCharacters(userID);
+            const userData = await getUser(id);
+            setUser(userData);
+            const resp = await getCharacters(id);
             setCharacters(resp.data.characters);
             setLoading(false);
         }
@@ -31,40 +35,28 @@ const UserPage = ({getCharacters}) =>{
 
 
     return(
-        <>
-            <Card>
-                <CardHeader>
-                    <h1>{user.username}</h1>
-                </CardHeader>
-                <CardBody>
-                    <ListGroup>
-                        <ListGroupItem key='email'>
-                            Email: {user.email}
-                        </ListGroupItem>
-                        <ListGroupItem key='editLink'>
-                            <Link to={`/users/${user.id}/edit`}>Edit Profile</Link>
-                        </ListGroupItem>
-                        {loading ? <p><b>Loading Characters...</b></p> : 
-                        <ListGroup>
-                            {characters.map((character)=>(
-                                <ListGroupItem key={character.id}>
-                                    <Card>
-                                        <CardHeader>
-                                            <Link to={`/characters/${character.id}`}><h3>{character.charname}</h3></Link>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <p>Level {character.level} {character.race} {character.classname}</p>
-                                        </CardBody>
-                                    </Card>
-                                </ListGroupItem>
-                            ))}
-                        </ListGroup>
-                        }
-                    </ListGroup>
-                </CardBody>
-            </Card>
-        </>
-
+        <div id="user-page">
+            <h1>{user.username}</h1>
+            <p>Email : {user.email}</p>
+            <div id="user-chars">
+                {loading? <p><b>Loading Characters...</b></p> :
+                <>
+                    {characters.map((character)=>(
+                        <div className="char-box" key={character.id}>
+                            <Link to={`/characters/${character.id}`}><h2>{character.charname}</h2></Link>
+                            <p>Level {character.level} {capFirstLetter(character.race)} {capFirstLetter(character.classname)}</p>
+                        </div>
+                    ))}
+                </>
+                }
+            </div>
+            <p>
+                <Link to={'/characters/new'}>Create New Character</Link>
+            </p>
+            <p>
+                <Link to={`/users/${user.id}/delete`}>Delete Account</Link>
+            </p>
+        </div>
     )
 }
 

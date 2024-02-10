@@ -37,6 +37,21 @@ class Api{
         };
     };
 
+    //Get a user
+    static async getUser(id, token){
+        console.debug('GET','/users',id);
+        try{
+            const resp = await axios.get(`${BASE_URL}/users/${id}`,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    };
+
     //Patch a user
     static async patchUser(data, id, token){
         console.debug('PATCH','/users',id);
@@ -66,6 +81,21 @@ class Api{
             throw Array.isArray(msg) ? msg : [msg];
         };
     };
+
+    //Post a new character
+    static async postCharacter(data, token){
+        console.debug('POST','/characters');
+        try{
+            let resp = await axios.post(`${BASE_URL}/characters`,data,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    }
 
     //Get all the characters belonging to a user
     static async getCharacters(id, token){
@@ -103,6 +133,21 @@ class Api{
         try{
             let resp = await axios.patch(`${BASE_URL}/characters/${data.id}`, data,{
                 headers : {Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        }
+    }
+
+    //Delete a character
+    static async deleteCharacter(id, token){
+        console.debug('DELETE','/characters',id);
+        try{
+            let resp = await axios.delete(`${BASE_URL}/characters/${id}`,{
+                headers:{Authorization: `Bearer ${token}`}
             });
             return resp;
         }catch(e){

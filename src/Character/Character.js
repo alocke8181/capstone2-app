@@ -20,7 +20,7 @@ import CharacterBio from "./CharacterBio";
 
 import "./Character.css"
 
-const Character = ({getCharacter, patchCharacter, postTrait, deleteTrait, postFeature, deleteFeature})=>{
+const Character = ({getCharacter, patchCharacter, deleteCharacter, postTrait, deleteTrait, postFeature, deleteFeature})=>{
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
     const {id} = useParams();
@@ -156,7 +156,14 @@ const Character = ({getCharacter, patchCharacter, postTrait, deleteTrait, postFe
         await saveCharacter();
     }
 
-    
+    const handleDeleteCharacter = async()=>{
+        if(window.confirm(`Are you sure you want to delete ${character.charName}? This action cannot be undone.`)==true){
+            let resp = await deleteCharacter(character.id);
+            nav(`/users/${user.id}`);
+        }else{
+            return;
+        };
+    };
     
     
 
@@ -170,21 +177,20 @@ const Character = ({getCharacter, patchCharacter, postTrait, deleteTrait, postFe
             <div id="character-page">
                 
                 <div>
-                <CharacterCoreStats character={character} formData={formData} handleChange={handleChange} 
-                    handleStatChange={handleStatChange} handleSkillChange={handleSkillChange} handleSavingThrowChange={handleSavingThrowChange} />
-                <div id="character-profs-altres-cont">
-                    <CharacterLanguages character={character} saveCharacter={saveCharacter}/>
-                    <CharacterEquipProfs character={character} saveCharacter={saveCharacter}/>
-                    <CharacterAltRes character={character} saveCharacter={saveCharacter}/>
-                </div>
-                
-                <CharacterEquipment character={character} handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
-                <CharacterAttacks character={character} saveCharacter={saveCharacter} />
-                <CharacterTraits character={character} saveCharacter={saveCharacter} postTrait={postTrait} deleteTrait={deleteTrait}/>
-                <CharacterFeatures character={character} saveCharacter={saveCharacter} postFeature={postFeature} deleteFeature={deleteFeature} />
-                <CharacterSpells formData={formData} character={character} handleChange={handleChange} saveCharacter={saveCharacter} />    
-                <CharacterBio character={character} setCharacter={setCharacter}/>
-                
+                    <CharacterCoreStats character={character} formData={formData} handleChange={handleChange} 
+                        handleStatChange={handleStatChange} handleSkillChange={handleSkillChange} handleSavingThrowChange={handleSavingThrowChange} />
+                    <div id="character-profs-altres-cont">
+                        <CharacterLanguages character={character} saveCharacter={saveCharacter}/>
+                        <CharacterEquipProfs character={character} saveCharacter={saveCharacter}/>
+                        <CharacterAltRes character={character} saveCharacter={saveCharacter}/>
+                    </div>
+                    <CharacterEquipment character={character} handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
+                    <CharacterAttacks character={character} saveCharacter={saveCharacter} />
+                    <CharacterTraits character={character} saveCharacter={saveCharacter} postTrait={postTrait} deleteTrait={deleteTrait}/>
+                    <CharacterFeatures character={character} saveCharacter={saveCharacter} postFeature={postFeature} deleteFeature={deleteFeature} />
+                    <CharacterSpells formData={formData} character={character} handleChange={handleChange} saveCharacter={saveCharacter} />    
+                    <CharacterBio character={character} setCharacter={setCharacter}/>
+                    <button onClick={handleDeleteCharacter}>Delete Character</button>
                 </div>
                 <div id="sidebar">
                     <StickyBox>
