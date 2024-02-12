@@ -3,8 +3,9 @@ h2, h3, h4{
 }
 
 #character-equip-cont{
-    border: 2px solid black;
+    border: 2px solid gray;
     width: 100%;
+    height: 100%;
     margin: auto;
 }
 
@@ -17,7 +18,7 @@ h2, h3, h4{
 }
 
 #character-equip-list li{
-    border: 1px solid black;
+    border: 1px solid gray;
     padding: 0px;
     display: inline-block;
     width: 100%;

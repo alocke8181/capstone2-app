@@ -1,6 +1,6 @@
 import React from "react";
 
-const CharacterFeatureBox = ({feature, handleDeleteFeature})=>{
+const CharacterFeatureBox = ({feature, handleDeleteFeature, showEditFeatureFormFunc})=>{
     return(
         <div className="character-feat-box">
             <h3>{feature.name}</h3>
@@ -8,7 +8,7 @@ const CharacterFeatureBox = ({feature, handleDeleteFeature})=>{
             <p>
                 {feature.charID ? 
                 <>
-                    <button>Edit</button>
+                    <button data-featureid={feature.id} onClick={showEditFeatureFormFunc}>Edit</button>
                     <button data-featureid={feature.id} onClick={handleDeleteFeature}>Delete</button>
                 </> 
                 : 

@@ -172,6 +172,21 @@ class Api{
         };
     };
 
+    //Patch an attack
+    static async patchAttack(data, token){
+        console.debug('PATCH','/attacks',data.id);
+        try{
+            let resp = await axios.patch(`${BASE_URL}/attacks/${data.id}`,data,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    }
+
     //Delete an attack
     static async deleteAttack(attackID, token){
         console.debug('DELETE','/attacks',attackID);
@@ -192,6 +207,21 @@ class Api{
         console.debug('POST','/traits');
         try{
             let resp = await axios.post(`${BASE_URL}/traits`, data,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    };
+
+    //Patch a custom trait
+    static async patchTrait(data, token){
+        console.debug('PATCH','/traits',data.id);
+        try{
+            let resp = await axios.patch(`${BASE_URL}/traits/${data.id}`,data,{
                 headers:{Authorization: `Bearer ${token}`}
             });
             return resp;
@@ -244,6 +274,21 @@ class Api{
             throw Array.isArray(msg) ? msg : [msg];
         };
     };
+
+    //Patch a custom feature
+    static async patchFeature(data, token){
+        console.debug('PATCH','/features',data.id);
+        try{
+            let resp = await axios.patch(`${BASE_URL}/features/${data.id}`,data,{
+                headers:{Authorization: `Bearer ${token}`}
+            });
+            return resp;
+        }catch(e){
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        };
+    }
 
     //Get a feature from the external api
     static async getExternalFeature(index){

@@ -1,6 +1,6 @@
 import React from "react";
 
-const CharacterTraitBox = ({trait, handleDeleteTrait})=>{
+const CharacterTraitBox = ({trait, handleDeleteTrait, showEditTraitFormFunc})=>{
 
     return(
         <div className="character-trait-box">
@@ -9,7 +9,7 @@ const CharacterTraitBox = ({trait, handleDeleteTrait})=>{
             <p>
                 {trait.charID ? 
                 <>
-                    <button>Edit</button>
+                    <button data-traitid={trait.id} onClick={showEditTraitFormFunc}>Edit</button>
                     <button data-traitid={trait.id} onClick={handleDeleteTrait}>Delete</button>
                 </> 
                 : 

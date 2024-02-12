@@ -3,11 +3,18 @@ import { useParams, useNavigate } from "react-router";
 import {checkAuthOrAdmin} from "../Helpers";
 import { CORESTATS, SKILLS } from "../data";
 import { capFirstLetter } from "../Helpers";
+import Api from "../Api";
+
 
 import StickyBox from "react-sticky-box";
 
 import CharacterSticky from "./CharacterSticky";
+import CharacterBasic from "./CharacterBasic";
 import CharacterCoreStats from "./CharacterCoreStats";
+import CharacterCombatStats from "./CharacterCombatStats";
+import CharacterProfBonusBox from "./CharacterProfBonusBox";
+import CharacterSaveThrows from "./CharacterSaveThrows";
+import CharacterSkills from "./CharacterSkills";
 import CharacterLanguages from "./CharacterLanguages";
 import CharacterEquipProfs from "./CharacterEquipProfs";
 import CharacterAttacks from "./CharacterAttacks";
@@ -20,9 +27,11 @@ import CharacterBio from "./CharacterBio";
 
 import "./Character.css"
 
-const Character = ({getCharacter, patchCharacter, deleteCharacter, postTrait, deleteTrait, postFeature, deleteFeature})=>{
+const Character = ({getCharacter})=>{
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const [token, setToken] = useState(localStorage.getItem('token'));
+
     const {id} = useParams();
     const nav = useNavigate();
 
@@ -33,10 +42,6 @@ const Character = ({getCharacter, patchCharacter, deleteCharacter, postTrait, de
     const [character, setCharacter] = useState({});
 
     const [formData, setFormData] = useState({});
-
-    
-    
-    
 
     //Set starter form data based on a character
     const resetFormData = (character)=>{
@@ -52,7 +57,7 @@ const Character = ({getCharacter, patchCharacter, deleteCharacter, postTrait, de
     useEffect(()=>{
         const fetchCharacter = async (charID)=>{
             setLoading(true);
-            const resp = await getCharacter(charID);
+            const resp = await Api.getCharacter(charID, token);
             if(!checkAuthOrAdmin(user, resp.data.character.creatorID)){
                 nav('/403');
             };
@@ -66,7 +71,7 @@ const Character = ({getCharacter, patchCharacter, deleteCharacter, postTrait, de
     //Function to save the character to the db
     const saveCharacter = async ()=>{
         setSaving(true);
-        let resp = await patchCharacter(character);
+        let resp = await Api.patchCharacter(character, token);
         setCharacter(resp.data.character);
         resetFormData(resp.data.character);
         setSaving(false);
@@ -134,7 +139,23 @@ const Character = ({getCharacter, patchCharacter, deleteCharacter, postTrait, de
         }));
     };
 
-    
+     //Post an attack to the backend
+     async function postAttack(data){
+        const resp = await Api.postAttack(data, token);
+        return resp;
+    }
+
+    //Patch an attack
+    async function patchAttack(data){
+        const resp = await Api.patchAttack(data, token);
+        return resp;
+    }
+
+    //Delete an attack from the backend
+    async function deleteAttack(attackID){
+        const resp = await Api.deleteAttack(attackID, token);
+        return resp;
+    }
 
     const handleAddEquipment = async (formData)=>{
         const itemName = formData.name;
@@ -156,9 +177,64 @@ const Character = ({getCharacter, patchCharacter, deleteCharacter, postTrait, de
         await saveCharacter();
     }
 
+    //Post a trait to the backend OR get external data from the API
+    async function postTrait(data, isCustom){
+        if(isCustom){
+            delete data.choice;
+            const resp = await Api.postTrait(data, token);
+            return resp.data.trait;
+        }else{
+            const resp = await Api.getExternalTrait(data.choice)
+            return({
+                index : resp.data.index,
+                name : resp.data.name,
+                description : resp.data.desc.join(' ')
+            });
+        };
+    };
+
+    //Patch a trait to the backend
+    async function patchTrait(data){
+        const resp = await Api.patchTrait(data, token);
+        return resp;
+    }
+
+    //Delete a trait from the backend
+    async function deleteTrait(traitID){
+        const resp = await Api.deleteTrait(traitID, token);
+        return resp;
+    }
+
+     //Post a feature to the backend OR get external data from the API
+     async function postFeature(data, isCustom){
+        if(isCustom){
+            delete data.choice;
+            const resp = await Api.postFeature(data, token);
+            return resp.data.feature;
+        }else{
+            const resp = await Api.getExternalFeature(data.choice)
+            return({
+                index : resp.data.index,
+                name : resp.data.name,
+                description : resp.data.desc.join(' ')
+            });
+        };
+    };
+
+    async function patchFeature(data){
+        const resp = await Api.patchFeature(data,token);
+        return resp;
+    };
+
+    //Delete a feature from the backend
+    async function deleteFeature(featureID){
+        const resp = await Api.deleteFeature(featureID, token);
+        return resp;
+    }
+
     const handleDeleteCharacter = async()=>{
         if(window.confirm(`Are you sure you want to delete ${character.charName}? This action cannot be undone.`)==true){
-            let resp = await deleteCharacter(character.id);
+            let resp = await Api.deleteCharacter(character.id, token);
             nav(`/users/${user.id}`);
         }else{
             return;
@@ -177,17 +253,27 @@ const Character = ({getCharacter, patchCharacter, deleteCharacter, postTrait, de
             <div id="character-page">
                 
                 <div>
-                    <CharacterCoreStats character={character} formData={formData} handleChange={handleChange} 
-                        handleStatChange={handleStatChange} handleSkillChange={handleSkillChange} handleSavingThrowChange={handleSavingThrowChange} />
-                    <div id="character-profs-altres-cont">
+                    <CharacterBasic character={character} formData={formData} handleChange={handleChange} />
+                    <CharacterCoreStats character={character} formData={formData} handleStatChange={handleStatChange} />
+                    <CharacterCombatStats character={character} formData={formData} handleChange={handleChange} />
+                    <div id="character-skill-cont">
+                        <CharacterProfBonusBox character={character} formData={formData} handleChange={handleChange} />
+                        <CharacterSaveThrows character={character} formData={formData} handleSavingThrowChange={handleSavingThrowChange}/>
+                        <CharacterSkills character={character} handleSkillChange={handleSkillChange} />
                         <CharacterLanguages character={character} saveCharacter={saveCharacter}/>
                         <CharacterEquipProfs character={character} saveCharacter={saveCharacter}/>
-                        <CharacterAltRes character={character} saveCharacter={saveCharacter}/>
                     </div>
-                    <CharacterEquipment character={character} handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
-                    <CharacterAttacks character={character} saveCharacter={saveCharacter} />
-                    <CharacterTraits character={character} saveCharacter={saveCharacter} postTrait={postTrait} deleteTrait={deleteTrait}/>
-                    <CharacterFeatures character={character} saveCharacter={saveCharacter} postFeature={postFeature} deleteFeature={deleteFeature} />
+                    <div id="character-profs-altres-cont">
+                        <CharacterAltRes character={character} saveCharacter={saveCharacter}/>
+                        <CharacterEquipment character={character} handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
+                    </div>
+                    
+                    <CharacterAttacks character={character} saveCharacter={saveCharacter} 
+                        postAttack={postAttack} deleteAttack={deleteAttack} patchAttack={patchAttack}/>
+                    <CharacterTraits character={character} saveCharacter={saveCharacter} 
+                        postTrait={postTrait} patchTrait={patchTrait} deleteTrait={deleteTrait}/>
+                    <CharacterFeatures character={character} saveCharacter={saveCharacter} 
+                        postFeature={postFeature} patchFeature={patchFeature} deleteFeature={deleteFeature} />
                     <CharacterSpells formData={formData} character={character} handleChange={handleChange} saveCharacter={saveCharacter} />    
                     <CharacterBio character={character} setCharacter={setCharacter}/>
                     <button onClick={handleDeleteCharacter}>Delete Character</button>

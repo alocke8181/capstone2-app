@@ -22,6 +22,7 @@ const CharacterAltResBox = ({resource, handleDeleteAltRes})=>{
             <form>
                 <label htmlFor="max">Max : </label>
                 <input
+                    className="character-input-num-small"
                     type="number"
                     id="max"
                     name="max"
@@ -29,8 +30,10 @@ const CharacterAltResBox = ({resource, handleDeleteAltRes})=>{
                     value={formData.max}
                     onChange={handleChange}
                 />
+                <br/>
                 <label htmlFor="curr">Current : </label>
                 <input
+                    className="character-input-num-small"
                     type="number"
                     id="curr"
                     name="curr"
@@ -38,8 +41,10 @@ const CharacterAltResBox = ({resource, handleDeleteAltRes})=>{
                     value={formData.curr}
                     onChange={handleChange}
                 />
+                <br/>
+                <button onClick={()=>{handleDeleteAltRes(resource.name)}}>Delete</button>
             </form>
-            <button onClick={()=>{handleDeleteAltRes(resource.name)}}>X</button>
+            
         </div>
     )
 

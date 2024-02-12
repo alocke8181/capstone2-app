@@ -96,79 +96,12 @@ const Main = () =>{
         return resp;
     }
 
-    //Get a character from the backend
-    async function getCharacter(charID){
-        const resp = await Api.getCharacter(charID, token);
-        return resp;
-    }
 
-    //Patch a character to the backend
-    async function patchCharacter(data){
-        const resp = await Api.patchCharacter(data, token);
-        return resp;
-    }
+   
 
-    //Delete a character
-    async function deleteCharacter(id){
-        let resp = await Api.deleteCharacter(id, token);
-        return resp;
-    };
+    
 
-    //Post an attack to the backend
-    async function postAttack(data){
-        const resp = await Api.postAttack(data, token);
-        return resp;
-    }
-
-    //Delete an attack from the backend
-    async function deleteAttack(attackID){
-        const resp = await Api.deleteAttack(attackID, token);
-        return resp;
-    }
-
-    //Post a trait to the backend OR get external data from the API
-    async function postTrait(data, isCustom){
-        if(isCustom){
-            delete data.choice;
-            const resp = await Api.postTrait(data, token);
-            return resp.data.trait;
-        }else{
-            const resp = await Api.getExternalTrait(data.choice)
-            return({
-                index : resp.data.index,
-                name : resp.data.name,
-                description : resp.data.desc.join(' ')
-            });
-        };
-    };
-
-    //Delete a trait from the backend
-    async function deleteTrait(traitID){
-        const resp = await Api.deleteTrait(traitID, token);
-        return resp;
-    }
-
-    //Post a feature to the backend OR get external data from the API
-    async function postFeature(data, isCustom){
-        if(isCustom){
-            delete data.choice;
-            const resp = await Api.postFeature(data, token);
-            return resp.data.feature;
-        }else{
-            const resp = await Api.getExternalFeature(data.choice)
-            return({
-                index : resp.data.index,
-                name : resp.data.name,
-                description : resp.data.desc.join(' ')
-            });
-        };
-    };
-
-    //Delete a feature from the backend
-    async function deleteFeature(featureID){
-        const resp = await Api.deleteFeature(featureID, token);
-        return resp;
-    }
+   
 
 
     return(
@@ -184,12 +117,7 @@ const Main = () =>{
                 <Route path="/users/:id/edit" element={<UserEdit editUser={editUser}/>}/>
                 <Route path="/users/:id/delete" element={<UserDelete deleteUser={deleteUser}/>}/>
                 <Route path="/characters/new" element={<CharacterCreate postCharacter={postCharacter}/>}/>
-                <Route path="/characters/:id" element={<Character 
-                    getCharacter={getCharacter} patchCharacter={patchCharacter} deleteCharacter={deleteCharacter}
-                    postAttack={postAttack} deleteAttack={deleteAttack}
-                    postTrait={postTrait} deleteTrait={deleteTrait}
-                    postFeature={postFeature} deleteFeature={deleteFeature} />}
-                />
+                <Route path="/characters/:id" element={<Character/>}/>
                 <Route path="/403" element={<Forbidden />}/>
                 <Route path="*" element={<NotFound />}/>
             </Routes>

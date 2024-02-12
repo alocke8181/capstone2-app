@@ -1,7 +1,7 @@
 import React from "react";
 import { capFirstLetter } from "../Helpers";
 
-const CharacterAttackBox = ({character, attack, handleDeleteAttack})=>{
+const CharacterAttackBox = ({character, attack, handleDeleteAttack, showEditAttackFormFunc})=>{
 
 
     return(
@@ -39,7 +39,7 @@ const CharacterAttackBox = ({character, attack, handleDeleteAttack})=>{
                 {attack.description}
             </p>
             <p className="character-centertext">
-                <button>Edit</button>
+                <button data-attackid={attack.id} onClick={showEditAttackFormFunc}>Edit</button>
                 <button onClick={handleDeleteAttack} data-attackid={attack.id}>Delete</button>
             </p>
         </div>

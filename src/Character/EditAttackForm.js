@@ -3,29 +3,10 @@ import { CORESTATS } from "../data";
 import { capFirstLetter } from "../Helpers";
 import './NewAttackForm.css';
 
-const NewAttackForm = ({setShowNewAttackForm, handleNewAttackSubmit})=>{
+const EditAttackForm = ({editingAttack, handleEditAttackSubmit, hideEditAttackForm})=>{
 
-    const defaultFormData = {
-        name : '',
-        attackSkill : 'str',
-        attackMod : 0,
-        isProf : true,
-        dmgDice : 4,
-        numDice : 1,
-        dmgSkill : 'str',
-        dmgMod : 0,
-        dmgType : '',
-        altNumDice : 0,
-        altDmgDice : 0,
-        altDmgSkill : '',
-        altDmgMod : 0,
-        altDmgType : '',
-        description : '',
-        savingSkill : '',
-        savingEffect : ''
-    }
 
-    const [formData, setFormData] = useState(defaultFormData);
+    const [formData, setFormData] = useState({...editingAttack});
 
     const [loading, setLoading] = useState(false);
 
@@ -37,19 +18,11 @@ const NewAttackForm = ({setShowNewAttackForm, handleNewAttackSubmit})=>{
         }));
     };
 
-    const hideSelf = ()=>{
-        setFormData(defaultFormData);
-        setShowNewAttackForm(false);
-    }
-
     const handleSubmit = async (evt)=>{
         evt.preventDefault();
         setLoading(true);
-        console.log(formData);
-        let resp = await handleNewAttackSubmit(formData);
+        await handleEditAttackSubmit(formData);
         setLoading(false);
-        setShowNewAttackForm(false);
-        setFormData(defaultFormData);
     }
 
     return (
@@ -251,10 +224,10 @@ const NewAttackForm = ({setShowNewAttackForm, handleNewAttackSubmit})=>{
                     </li>
                 </ul>
                 <button onClick={handleSubmit}>Submit</button>
-                <button onClick={hideSelf}>Cancel</button>
+                <button onClick={hideEditAttackForm}>Cancel</button>
             </form>
         </div>
     )
 }
 
-export default NewAttackForm;
+export default EditAttackForm;

@@ -39,7 +39,6 @@ const CharacterEquipProfs = ({character, saveCharacter})=>{
         <div id="character-equip-profs">
             <h3>Equipment Proficiencies</h3>
             <form>
-                <label htmlFor="newProf">Add : </label>
                 <input
                     type="text"
                     id="newProf"

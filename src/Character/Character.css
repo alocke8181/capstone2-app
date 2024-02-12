@@ -25,7 +25,7 @@ h2, h3, h4{
 }
 
 #sidebar-content{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 .character-input-num-med{
@@ -56,7 +56,7 @@ h2, h3, h4{
 }
 
 .character-basic-box{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 .character-basic-box p{
@@ -71,7 +71,7 @@ h2, h3, h4{
 }
 
 .character-core-stat-box{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 .character-core-stat-box p{
@@ -86,7 +86,7 @@ h2, h3, h4{
 }
 
 .character-combat-stat-box{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 .character-combat-stat-box p{
@@ -101,15 +101,15 @@ h2, h3, h4{
     margin: auto;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 3fr;
+    grid-template-columns: 1fr 1fr 4fr 1fr 2fr;
 }
 
 .character-skill-box-small{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 .character-skill-box-subbox{
     width: 100%;
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 .character-skill-box-subbox p{
@@ -117,12 +117,11 @@ h2, h3, h4{
 }
 
 #character-saving-profs-list{
-    margin-left: 17%;
     text-align: left;
 }
 
 .character-skill-box-large{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 #character-skill-list{
@@ -134,19 +133,29 @@ h2, h3, h4{
 }
 
 #character-profs-altres-cont{
-    border: 2px solid black;
+    border: 2px solid gray;
     width: 100%;
     margin: auto;
     display: grid;
-    grid-template-columns: 1fr 2fr 3fr;
+    grid-template-columns: 2fr 3fr;
 }
 
 #character-languages{
-    border: 2px solid black;
+    border: 2px solid gray;
+}
+
+#character-languages input{
+    width: 50%;
+}
+
+#character-languages ul{
+    list-style: none;
+    text-align: left;
+    margin-left: 1%;
 }
 
 #character-equip-profs{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 #character-equip-profs ul{
@@ -155,7 +164,7 @@ h2, h3, h4{
 }
 
 #character-attack-big-cont{
-    border: 2px solid black;
+    border: 2px solid gray;
     text-align: center;
     margin: auto;
     width: 100%;
@@ -167,7 +176,7 @@ h2, h3, h4{
 }
 
 .character-attack-box{
-    border: 2px solid black;
+    border: 2px solid gray;
     text-align: left;
     font-size: small;
 }
@@ -177,7 +186,7 @@ h2, h3, h4{
 }
 
 #character-trait-big-cont{
-    border: 2px solid black;
+    border: 2px solid gray;
     text-align: center;
     margin: auto;
     width: 100%;
@@ -187,7 +196,7 @@ h2, h3, h4{
     grid-template-columns: 1fr 1fr;
 }
 .character-trait-box{
-    border: 2px solid black;
+    border: 2px solid gray;
     text-align: center;
     padding: 10px;
 }
@@ -197,7 +206,7 @@ h2, h3, h4{
 }
 
 #character-feat-big-cont{
-    border: 2px solid black;
+    border: 2px solid gray;
     text-align: center;
     margin: auto;
     width: 100%;
@@ -207,7 +216,7 @@ h2, h3, h4{
     grid-template-columns: 1fr 1fr;
 }
 .character-feat-box{
-    border: 2px solid black;
+    border: 2px solid gray;
     text-align: center;
     padding: 10px;
 }
@@ -217,7 +226,7 @@ h2, h3, h4{
 }
 
 #character-spell-big-cont{
-    border: 2px solid black;
+    border: 2px solid gray;
     width: 100%;
     margin: auto;
 }

@@ -4,13 +4,13 @@ h2, h3, h4{
 
 
 #character-bio-cont{
-    border: 2px solid black;
+    border: 2px solid gray;
     width: 100%;
     margin: auto;
 }
 
 #character-bio-pibf{
-    border: 2px solid black;
+    border: 2px solid gray;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
@@ -18,7 +18,7 @@ h2, h3, h4{
 .character-bio-subcont{
     width: 100%;
     margin: auto;
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 .character-bio-subcont textarea{
@@ -28,17 +28,17 @@ h2, h3, h4{
 }
 
 #character-bio-ahwa{
-    border: 2px solid black;
+    border: 2px solid gray;
     display: grid;
     grid-template-columns: 1fr 4fr;
 }
 
 #character-bio-ahw{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 #character-bio-appearance{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 #character-bio-appearance textarea{
@@ -48,7 +48,7 @@ h2, h3, h4{
 }
 
 #character-bio-backstory{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 #character-bio-backstory textarea{
@@ -58,7 +58,7 @@ h2, h3, h4{
 }
 
 #character-bio-allies{
-    border: 2px solid black;
+    border: 2px solid gray;
 }
 
 #character-bio-allies textarea{

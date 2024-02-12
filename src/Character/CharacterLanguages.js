@@ -40,7 +40,6 @@ const CharacterLanguages = ({character, saveCharacter})=>{
         <div id="character-languages">
             <h3>Languages</h3>
             <form>
-                <label htmlFor="newLang">Add : </label>
                 <input
                     type="text"
                     id="newLang"

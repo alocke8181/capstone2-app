@@ -37,7 +37,13 @@ const CharacterSpellCont = ({formData, character, spellLevelString, handleChange
             }
             <div className="character-spell-form-cont">
                 <form className="character-spell-add">
-                    {isCantrips ? <button onClick={toggleSpellForm}>Add Cantrip</button> : 
+                    {isCantrips ? 
+                    <>
+                        Cantrips Known: {character.cantripsKnown}
+                        <br/>
+                        <button onClick={toggleSpellForm}>Add Cantrip</button>
+                    </>
+                    : 
                     <>
                     <label htmlFor="slotsleft"><b>Total Slots : </b>{character[levelSlotsProp]} | <b>Slots Left : </b></label>
                     <input
