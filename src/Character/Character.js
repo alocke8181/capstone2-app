@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useContext} from "react";
 import { useParams, useNavigate } from "react-router";
 import {checkAuthOrAdmin} from "../Helpers";
-import { CORESTATS, SKILLS } from "../data";
-import { capFirstLetter } from "../Helpers";
 import Api from "../Api";
 
 
 import StickyBox from "react-sticky-box";
+
+import { Oval } from "react-loader-spinner";
 
 import CharacterSticky from "./CharacterSticky";
 import CharacterBasic from "./CharacterBasic";
@@ -281,7 +281,16 @@ const Character = ({getCharacter})=>{
                 <div id="sidebar">
                     <StickyBox>
                         <div id="sidebar-content">
-                            {saving ? <p><button disabled>Saving Character</button></p> : <p><button onClick={saveCharacter}>Save Character</button></p>}
+                            {saving ? <>
+                                <Oval
+                                    width='25'
+                                    height="25"
+                                    color="green"
+                                    ariaLabel="oval-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass=""/> 
+                                <p><button disabled>Saving Character</button></p></>
+                            : <p><button onClick={saveCharacter}>Save Character</button></p>}
                             <CharacterSticky/>
                         </div>
                         

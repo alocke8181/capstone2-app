@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import {checkAuthOrAdmin, capFirstLetter} from "./Helpers";
 import './UserPage.css';
 
+import { Oval } from "react-loader-spinner";
+
 const UserPage = ({getUser, getCharacters}) =>{
 
     const [localUser, setLocalUser] = useState(JSON.parse(localStorage.getItem('user')))
@@ -36,6 +38,15 @@ const UserPage = ({getUser, getCharacters}) =>{
 
     return(
         <div id="user-page">
+            {loading ? 
+                <Oval
+                    width='50'
+                    height="50"
+                    color="green"
+                    ariaLabel="oval-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""/> 
+            :<></>}
             <h1>{user.username}</h1>
             <p>Email : {user.email}</p>
             <div id="user-chars">
