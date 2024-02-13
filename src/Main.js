@@ -21,8 +21,8 @@ import Forbidden from './Forbidden';
 
 const Main = () =>{
 
-    const [user, setUser] = useState(null);
-    const [token, setToken] = useState(null);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+    const [token, setToken] = useState(localStorage.getItem('token') || null);
 
     //Check for info in local storage
     useEffect(()=>{

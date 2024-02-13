@@ -25,7 +25,7 @@ const NewAttackForm = ({setShowNewAttackForm, handleNewAttackSubmit})=>{
         savingEffect : ''
     }
 
-    const [formData, setFormData] = useState(defaultFormData);
+    const [formData, setFormData] = useState({...defaultFormData});
 
     const [loading, setLoading] = useState(false);
 

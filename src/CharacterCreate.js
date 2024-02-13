@@ -22,6 +22,7 @@ const CharacterCreate = ({postCharacter})=>{
     const handleSubmit = async (evt)=>{
         evt.preventDefault();
         formData.creatorID = user.id;
+        formData.userID = user.id;
         const resp = await postCharacter(formData);
         const id = resp.data.id.id;
         console.log(id);

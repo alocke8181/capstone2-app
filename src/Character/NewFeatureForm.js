@@ -9,7 +9,7 @@ const NewFeatureForm = ({setShowFeatureForm, handleNewFeatureSubmit})=>{
         choice : ''
     }
 
-    const [formData, setFormData] = useState({defaultFormData})
+    const [formData, setFormData] = useState({...defaultFormData})
 
     const [loading, setLoading] = useState(false);
 

@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {NavLink} from 'react-router-dom';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
 const NavBar = () =>{
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+
+    useEffect(()=>{
+        setUser(JSON.parse(localStorage.getItem('user')))
+    },[])
     return(
         <div style={{borderBottom: '2px solid black'}}>
             <Navbar expand='md'>

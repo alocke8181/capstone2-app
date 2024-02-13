@@ -65,6 +65,9 @@ const UserPage = ({getUser, getCharacters}) =>{
                 <Link to={'/characters/new'}>Create New Character</Link>
             </p>
             <p>
+                <Link to={`/users/${user.id}/edit`}>Edit Account</Link>
+            </p>
+            <p>
                 <Link to={`/users/${user.id}/delete`}>Delete Account</Link>
             </p>
         </div>

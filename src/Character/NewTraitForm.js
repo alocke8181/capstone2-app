@@ -9,7 +9,7 @@ const NewTraitForm = ({setShowTraitForm, handleNewTraitSubmit})=>{
         choice : ''
     }
 
-    const [formData, setFormData] = useState({defaultFormData})
+    const [formData, setFormData] = useState({...defaultFormData})
 
     const [loading, setLoading] = useState(false);
 

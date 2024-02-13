@@ -143,11 +143,11 @@ class Api{
     }
 
     //Delete a character
-    static async deleteCharacter(id, token){
+    static async deleteCharacter(id, data, token){
         console.debug('DELETE','/characters',id);
         try{
             let resp = await axios.delete(`${BASE_URL}/characters/${id}`,{
-                headers:{Authorization: `Bearer ${token}`}
+                headers:{Authorization: `Bearer ${token}`}, data: data
             });
             return resp;
         }catch(e){
@@ -188,11 +188,11 @@ class Api{
     }
 
     //Delete an attack
-    static async deleteAttack(attackID, token){
+    static async deleteAttack(attackID, data, token){
         console.debug('DELETE','/attacks',attackID);
         try{
             let resp = await axios.delete(`${BASE_URL}/attacks/${attackID}`,{
-                headers:{Authorization: `Bearer ${token}`}
+                headers:{Authorization: `Bearer ${token}`}, data : data
             });
             return resp;
         }catch(e){
@@ -246,11 +246,11 @@ class Api{
     }
 
     //Delete a custom trait
-    static async deleteTrait(traitID, token){
+    static async deleteTrait(traitID, data, token){
         console.debug('DELETE','/traits',traitID);
         try{
             let resp = await axios.delete(`${BASE_URL}/traits/${traitID}`,{
-                headers:{Authorization: `Bearer ${token}`}
+                headers:{Authorization: `Bearer ${token}`}, data : data
             });
             return resp;
         }catch(e){
@@ -304,11 +304,11 @@ class Api{
     }
 
     //Delete a custom feature
-    static async deleteFeature(featureID, token){
+    static async deleteFeature(featureID, data,token){
         console.debug('DELETE','/features',featureID);
         try{
             let resp = await axios.delete(`${BASE_URL}/features/${featureID}`,{
-                headers:{Authorization: `Bearer ${token}`}
+                headers:{Authorization: `Bearer ${token}`}, data : data
             });
             return resp;
         }catch(e){

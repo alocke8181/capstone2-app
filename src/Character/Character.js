@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect} from "react";
 import { useParams, useNavigate } from "react-router";
 import {checkAuthOrAdmin} from "../Helpers";
 import Api from "../Api";
@@ -28,6 +28,8 @@ import CharacterBio from "./CharacterBio";
 import "./Character.css"
 
 const Character = ({getCharacter})=>{
+
+
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const [token, setToken] = useState(localStorage.getItem('token'));
@@ -71,6 +73,7 @@ const Character = ({getCharacter})=>{
     //Function to save the character to the db
     const saveCharacter = async ()=>{
         setSaving(true);
+        character.userID = user.id;
         let resp = await Api.patchCharacter(character, token);
         setCharacter(resp.data.character);
         resetFormData(resp.data.character);
@@ -141,19 +144,22 @@ const Character = ({getCharacter})=>{
 
      //Post an attack to the backend
      async function postAttack(data){
+        data.userID = user.id;
         const resp = await Api.postAttack(data, token);
         return resp;
     }
 
     //Patch an attack
     async function patchAttack(data){
+        data.userID = user.id;
         const resp = await Api.patchAttack(data, token);
         return resp;
     }
 
     //Delete an attack from the backend
     async function deleteAttack(attackID){
-        const resp = await Api.deleteAttack(attackID, token);
+        const data ={userID : user.id}
+        const resp = await Api.deleteAttack(attackID, data, token);
         return resp;
     }
 
@@ -181,6 +187,7 @@ const Character = ({getCharacter})=>{
     async function postTrait(data, isCustom){
         if(isCustom){
             delete data.choice;
+            data.userID = user.id;
             const resp = await Api.postTrait(data, token);
             return resp.data.trait;
         }else{
@@ -195,13 +202,15 @@ const Character = ({getCharacter})=>{
 
     //Patch a trait to the backend
     async function patchTrait(data){
+        data.userID = user.id;
         const resp = await Api.patchTrait(data, token);
         return resp;
     }
 
     //Delete a trait from the backend
     async function deleteTrait(traitID){
-        const resp = await Api.deleteTrait(traitID, token);
+        const data = {userID : user.id}
+        const resp = await Api.deleteTrait(traitID, data, token);
         return resp;
     }
 
@@ -209,6 +218,7 @@ const Character = ({getCharacter})=>{
      async function postFeature(data, isCustom){
         if(isCustom){
             delete data.choice;
+            data.userID = user.id;
             const resp = await Api.postFeature(data, token);
             return resp.data.feature;
         }else{
@@ -222,19 +232,22 @@ const Character = ({getCharacter})=>{
     };
 
     async function patchFeature(data){
+        data.userID = user.id
         const resp = await Api.patchFeature(data,token);
         return resp;
     };
 
     //Delete a feature from the backend
     async function deleteFeature(featureID){
-        const resp = await Api.deleteFeature(featureID, token);
+        const data = {userID : user.id}
+        const resp = await Api.deleteFeature(featureID, data, token);
         return resp;
     }
 
     const handleDeleteCharacter = async()=>{
-        if(window.confirm(`Are you sure you want to delete ${character.charName}? This action cannot be undone.`)==true){
-            let resp = await Api.deleteCharacter(character.id, token);
+        if(window.confirm(`Are you sure you want to delete ${character.charName}? This action cannot be undone.`)===true){
+            const data = {userID : user.id}
+            let resp = await Api.deleteCharacter(character.id, data, token);
             nav(`/users/${user.id}`);
         }else{
             return;
