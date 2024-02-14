@@ -15,11 +15,13 @@ const NewTraitForm = ({setShowTraitForm, handleNewTraitSubmit})=>{
 
     const [isCustom, setIsCustom] = useState(false)
 
-    const setIsCustomFalse = ()=>{
+    const setIsCustomFalse = (evt)=>{
+        evt.preventDefault();
         setIsCustom(false);
     }
 
-    const setIsCustomTrue = ()=>{
+    const setIsCustomTrue = (evt)=>{
+        evt.preventDefault();
         setIsCustom(true);
     };
 
@@ -56,14 +58,10 @@ const NewTraitForm = ({setShowTraitForm, handleNewTraitSubmit})=>{
     return (
         <div className="new-trait-form-cont">
             {loading ? <p><b>Loading...</b></p> : <></>}
-            <p>
-                <button onClick={setIsCustomFalse}>Add Standard Trait</button>
-                <button onClick={setIsCustomTrue}>Add Custom Trait</button>
-            </p>
             <form>
                 {isCustom ? 
-                <ul>
-                    <li key="name">
+                <>
+                    <p><button onClick={setIsCustomFalse}>Add Standard Trait</button></p>
                     <label htmlFor="name">Name : </label>
                     <input
                         type="text"
@@ -71,18 +69,22 @@ const NewTraitForm = ({setShowTraitForm, handleNewTraitSubmit})=>{
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                    /></li>
-                    <li key='description'>
+                    />
+                    <br/>
                     <label htmlFor="description">Description : </label>
+                    <br/>
                     <textarea
                         id="description"
                         name="description"
+                        rows='4'
+                        cols='50'
                         value={formData.description}
                         onChange={handleChange}
-                    /></li>
-                </ul> 
+                    />
+                </> 
                 : 
                 <>
+                    <p><button onClick={setIsCustomTrue}>Add Custom Trait</button></p>
                     <label htmlFor="choice">Select Trait : </label>
                     <select
                         id="choice"

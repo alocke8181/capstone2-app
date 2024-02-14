@@ -36,7 +36,7 @@ const CharacterEquipForm = ({setShowForm, handleAddEquipment})=>{
 
     return (
         <form>
-            <label htmlFor="amount">Amount</label>
+            <label htmlFor="amount">Amount </label>
             <input
                 type="number"
                 id="amount"
@@ -45,7 +45,8 @@ const CharacterEquipForm = ({setShowForm, handleAddEquipment})=>{
                 onChange={handleChange}
                 min='0'
             />
-            <label htmlFor="name">Name</label>
+            <br/>
+            <label htmlFor="name">Name </label>
             <input
                 type="text"
                 id="name"
@@ -53,6 +54,7 @@ const CharacterEquipForm = ({setShowForm, handleAddEquipment})=>{
                 value={formData.name}
                 onChange={handleChange}
             />
+            <br/>
             <button onClick={addItem}>Add Item</button>
             <button onClick={hideSelf}>Cancel</button>
         </form>

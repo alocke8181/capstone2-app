@@ -3,23 +3,23 @@ h2, h3, h4{
 }
 
 #character-equip-cont{
-    border: 2px solid gray;
+    border: 2px ridge gold;
     width: 100%;
     height: 100%;
     margin: auto;
+    overflow: hidden;
 }
 
 #character-equip-list{
     column-count: 6;
     column-gap: 0px;
-    list-style: none;
     padding-left: 0%;
     padding-right: 0%;
 }
 
 #character-equip-list li{
-    border: 1px solid gray;
     padding: 0px;
+    border: 2px ridge gold;
     display: inline-block;
     width: 100%;
 }

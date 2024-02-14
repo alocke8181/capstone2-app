@@ -15,11 +15,13 @@ const NewFeatureForm = ({setShowFeatureForm, handleNewFeatureSubmit})=>{
 
     const [isCustom, setIsCustom] = useState(false)
 
-    const setIsCustomFalse = ()=>{
+    const setIsCustomFalse = (evt)=>{
+        evt.preventDefault();
         setIsCustom(false);
     }
 
-    const setIsCustomTrue = ()=>{
+    const setIsCustomTrue = (evt)=>{
+        evt.preventDefault();
         setIsCustom(true);
     };
 
@@ -57,14 +59,10 @@ const NewFeatureForm = ({setShowFeatureForm, handleNewFeatureSubmit})=>{
     return (
         <div className="new-feature-form-cont">
             {loading ? <p><b>Loading...</b></p> : <></>}
-            <p>
-                <button onClick={setIsCustomFalse}>Add Standard Feature</button>
-                <button onClick={setIsCustomTrue}>Add Custom Feature</button>
-            </p>
             <form>
                 {isCustom ? 
-                <ul>
-                    <li key="name">
+                <>
+                    <p><button onClick={setIsCustomFalse}>Add Standard Feature</button></p>
                     <label htmlFor="name">Name : </label>
                     <input
                         type="text"
@@ -72,18 +70,22 @@ const NewFeatureForm = ({setShowFeatureForm, handleNewFeatureSubmit})=>{
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                    /></li>
-                    <li key='description'>
+                    />
+                    <br/>
                     <label htmlFor="description">Description : </label>
+                    <br/>
                     <textarea
                         id="description"
                         name="description"
+                        rows='4'
+                        cols='50'
                         value={formData.description}
                         onChange={handleChange}
-                    /></li>
-                </ul> 
+                    />
+                </> 
                 : 
                 <>
+                    <p><button onClick={setIsCustomTrue}>Add Custom Feature</button></p>
                     <label htmlFor="choice">Select Feature : </label>
                     <select
                         id="choice"

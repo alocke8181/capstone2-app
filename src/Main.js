@@ -20,6 +20,8 @@ import Character from "./Character/Character";
 import NotFound from './NotFound';
 import Forbidden from './Forbidden';
 
+import './Main.css';
+
 const Main = () =>{
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);

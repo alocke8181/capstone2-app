@@ -55,7 +55,7 @@ const NewSpellForm = ({spellLevelString, setShowForm, handleNewSpellSubmit})=>{
     return (
         <div>
             {loading ? <p><b>Loading...</b></p> : <></>}
-            <form>
+            <p><form>
                 <label htmlFor="choice">Select Spell : </label>
                 <select
                     id="choice"
@@ -68,10 +68,10 @@ const NewSpellForm = ({spellLevelString, setShowForm, handleNewSpellSubmit})=>{
                         <option key={spell} value={spell}>{changeSpellName(spell)}</option>
                     ))}
                 </select>
-                <br/>
+                <p>
                 <button onClick={handleSubmit}>Submit</button>
-                <button onClick={hideSelf}>Cancel</button>
-            </form>
+                <button onClick={hideSelf}>Cancel</button></p>
+            </form></p>
         </div>
     )
 }

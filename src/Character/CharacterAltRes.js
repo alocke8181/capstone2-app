@@ -57,7 +57,7 @@ const CharacterAltRes = ()=>{
             {showForm ? 
             
             <p>
-                <button onClick={()=>{setShowForm(false)}}>Cancel</button>
+                
                 <form>
                     <label htmlFor="name">Name : </label>
                     <input
@@ -67,6 +67,7 @@ const CharacterAltRes = ()=>{
                         value={resFormData.name}
                         onChange={handleChange}
                     />
+                    <br/>
                     <label htmlFor="max">Max : </label>
                     <input
                         type="number"
@@ -76,6 +77,7 @@ const CharacterAltRes = ()=>{
                         value={resFormData.max}
                         onChange={handleChange}
                     />
+                    <br/>
                     <label htmlFor="curr">Current : </label>
                     <input
                         type="number"
@@ -85,12 +87,15 @@ const CharacterAltRes = ()=>{
                         value={resFormData.curr}
                         onChange={handleChange}
                     />
+                    <br/>
                 <button onClick={handleAddAltRes}>Add</button>
+                <button onClick={()=>{setShowForm(false)}}>Cancel</button>
                 </form>
             </p>
             :
             <p>
                 <button onClick={()=>{setShowForm(true)}}>New Resource</button>
+                
             </p>}
             <div id="character-altres-subcont">
                 {character.altResources.map((resource)=>(

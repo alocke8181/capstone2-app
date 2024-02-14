@@ -1,37 +1,35 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useContext } from "react";
 import {NavLink} from 'react-router-dom';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import UserContext from "./UserContext";
+import './HeaderMenu.css';
 
 const NavBar = () =>{
 
     const {user, setUser} = useContext(UserContext);
     
     return(
-        <div style={{borderBottom: '2px solid black'}}>
-            <Navbar expand='md'>
+        <div id="header">
+            <div>
                 <NavLink to='/'>
-                    Home
+                    <h1>The Starting Tavern</h1>
                 </NavLink>
-
-                <Nav className="ml-auto" navbar>
-                    {user ? 
-                        <><NavItem>
-                            <NavLink to={`/users/${user.id}`}>Profile</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to='/logout'>Logout</NavLink>
-                        </NavItem></>
+            </div>
+            <div>
+                {user ? 
+                        <ul>
+                            <li><NavLink to={`/users/${user.id}`}>Your Party</NavLink></li>
+                            <li><NavLink to='/logout'>Check-Out</NavLink></li>
+                        </ul>
                     : 
-                        <><NavItem>
-                            <NavLink to='/login'>Login</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to='/register'>Register</NavLink>
-                        </NavItem></> 
+                        <ul>
+                            <li><NavLink to='/login'>Check-In</NavLink></li>
+                            <li><NavLink to='/register'>Book a Room</NavLink></li>
+                        </ul> 
                     }
-                </Nav>
-            </Navbar>
+            </div>    
+
+                    
         </div>
     )
 }
