@@ -1,10 +1,14 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 
 import NewTraitForm from "./NewTraitForm";
 import EditTraitForm from "./EditTraitForm";
 import CharacterTraitBox from "./CharacterTraitBox";
+import CharacterContext from "./CharacterContext";
 
-const CharacterTraits = ({character, saveCharacter, postTrait, patchTrait, deleteTrait})=>{
+const CharacterTraits = ({postTrait, patchTrait, deleteTrait})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
+
 
     const [showNewTraitForm, setShowNewTraitForm] = useState(false);
 

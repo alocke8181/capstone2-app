@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {NavLink} from 'react-router-dom';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import UserContext from "./UserContext";
 
 const NavBar = () =>{
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
-
-    useEffect(()=>{
-        setUser(JSON.parse(localStorage.getItem('user')))
-    },[])
+    const {user, setUser} = useContext(UserContext);
+    
     return(
         <div style={{borderBottom: '2px solid black'}}>
             <Navbar expand='md'>

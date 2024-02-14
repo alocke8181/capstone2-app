@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { Routes, Route } from "react-router";
 
 import UserContext from './UserContext';
+
 import Api from "./Api";
 
 import HeaderMenu from './HeaderMenu';
@@ -95,14 +96,6 @@ const Main = () =>{
         const resp = await Api.getCharacters(userID, token);
         return resp;
     }
-
-
-   
-
-    
-
-   
-
 
     return(
         <UserContext.Provider value={{user, setUser}}>

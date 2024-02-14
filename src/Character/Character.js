@@ -1,7 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useParams, useNavigate } from "react-router";
 import {checkAuthOrAdmin} from "../Helpers";
 import Api from "../Api";
+import UserContext from "../UserContext";
+import CharacterContext from "./CharacterContext";
 
 
 import StickyBox from "react-sticky-box";
@@ -31,7 +33,7 @@ const Character = ({getCharacter})=>{
 
 
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const {user, setUser} = useContext(UserContext);
     const [token, setToken] = useState(localStorage.getItem('token'));
 
     const {id} = useParams();
@@ -257,7 +259,7 @@ const Character = ({getCharacter})=>{
     
 
     return(
-        <>
+        <CharacterContext.Provider value={{character, formData, saveCharacter}}>
         <p>
             Character is auto-saved when adding, changing, or deleting alt resources, equipment, attacks, traits, features, and spells.
             Upon leveling up, save the character to update proficieny bonus, spell slots, etc...
@@ -266,29 +268,25 @@ const Character = ({getCharacter})=>{
             <div id="character-page">
                 
                 <div>
-                    <CharacterBasic character={character} formData={formData} handleChange={handleChange} />
-                    <CharacterCoreStats character={character} formData={formData} handleStatChange={handleStatChange} />
-                    <CharacterCombatStats character={character} formData={formData} handleChange={handleChange} />
+                    <CharacterBasic handleChange={handleChange} />
+                    <CharacterCoreStats handleStatChange={handleStatChange} />
+                    <CharacterCombatStats handleChange={handleChange} />
                     <div id="character-skill-cont">
-                        <CharacterProfBonusBox character={character} formData={formData} handleChange={handleChange} />
-                        <CharacterSaveThrows character={character} formData={formData} handleSavingThrowChange={handleSavingThrowChange}/>
-                        <CharacterSkills character={character} handleSkillChange={handleSkillChange} />
-                        <CharacterLanguages character={character} saveCharacter={saveCharacter}/>
-                        <CharacterEquipProfs character={character} saveCharacter={saveCharacter}/>
+                        <CharacterProfBonusBox handleChange={handleChange} />
+                        <CharacterSaveThrows handleSavingThrowChange={handleSavingThrowChange}/>
+                        <CharacterSkills handleSkillChange={handleSkillChange} />
+                        <CharacterLanguages/>
+                        <CharacterEquipProfs/>
                     </div>
                     <div id="character-profs-altres-cont">
-                        <CharacterAltRes character={character} saveCharacter={saveCharacter}/>
-                        <CharacterEquipment character={character} handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
+                        <CharacterAltRes />
+                        <CharacterEquipment handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
                     </div>
-                    
-                    <CharacterAttacks character={character} saveCharacter={saveCharacter} 
-                        postAttack={postAttack} deleteAttack={deleteAttack} patchAttack={patchAttack}/>
-                    <CharacterTraits character={character} saveCharacter={saveCharacter} 
-                        postTrait={postTrait} patchTrait={patchTrait} deleteTrait={deleteTrait}/>
-                    <CharacterFeatures character={character} saveCharacter={saveCharacter} 
-                        postFeature={postFeature} patchFeature={patchFeature} deleteFeature={deleteFeature} />
-                    <CharacterSpells formData={formData} character={character} handleChange={handleChange} saveCharacter={saveCharacter} />    
-                    <CharacterBio character={character} setCharacter={setCharacter}/>
+                    <CharacterAttacks postAttack={postAttack} patchAttack={patchAttack} deleteAttack={deleteAttack} />
+                    <CharacterTraits postTrait={postTrait} patchTrait={patchTrait} deleteTrait={deleteTrait}/>
+                    <CharacterFeatures postFeature={postFeature} patchFeature={patchFeature} deleteFeature={deleteFeature} />
+                    <CharacterSpells handleChange={handleChange}/>    
+                    <CharacterBio setCharacter={setCharacter}/>
                     <button onClick={handleDeleteCharacter}>Delete Character</button>
                 </div>
                 <div id="sidebar">
@@ -311,7 +309,7 @@ const Character = ({getCharacter})=>{
                 </div>
             </div>
             } {/* This bracket is to close the loading conditional*/}
-        </>
+        </CharacterContext.Provider>
     )
 
 }

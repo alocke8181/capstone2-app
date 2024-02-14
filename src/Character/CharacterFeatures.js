@@ -1,9 +1,12 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import NewFeatureForm from "./NewFeatureForm";
 import EditFeatureForm from "./EditFeatureForm";
 import CharacterFeatureBox from "./CharacterFeatureBox";
+import CharacterContext from "./CharacterContext";
 
-const CharacterFeatures = ({character, saveCharacter, postFeature, patchFeature, deleteFeature})=>{
+const CharacterFeatures = ({postFeature, patchFeature, deleteFeature})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
 
     const [showNewFeatureForm, setShowNewFeatureForm] = useState(false);
 

@@ -1,9 +1,11 @@
-import React, {useState} from "react";
-
+import React, {useContext} from "react";
+import CharacterContext from "./CharacterContext";
 import { capFirstLetter } from "../Helpers";
 import { CORESTATS } from "../data";
 
-const CharacterCoreStats = ({character, formData, handleStatChange})=>{
+const CharacterCoreStats = ({handleStatChange})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext);
 
     return(
         <form>

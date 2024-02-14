@@ -1,9 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import NewAttackForm from "./NewAttackForm";
 import EditAttackForm from "./EditAttackForm";
 import CharacterAttackBox from "./CharacterAttackBox";
+import CharacterContext from "./CharacterContext";
 
-const CharacterAttacks = ({character, saveCharacter, postAttack, deleteAttack, patchAttack})=>{
+const CharacterAttacks = ({postAttack, patchAttack, deleteAttack})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
+
 
     const [showNewAttackForm, setShowNewAttackForm] = useState(false);
 

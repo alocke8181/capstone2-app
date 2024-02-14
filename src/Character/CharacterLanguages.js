@@ -1,9 +1,11 @@
-import React,{useState} from "react";
+import React,{useState, useContext} from "react";
+import CharacterContext from "./CharacterContext";
 
-const CharacterLanguages = ({character, saveCharacter})=>{
+const CharacterLanguages = ()=>{
 
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
 
-    const [formData, setFormData] = useState({
+    const [langFormData, setFormData] = useState({
         newLang : ''
     })
 
@@ -17,11 +19,11 @@ const CharacterLanguages = ({character, saveCharacter})=>{
 
     const handleAddLang = async (evt)=>{
         evt.preventDefault();
-        if(!formData.newLang || formData.newLang ===''){
+        if(!langFormData.newLang || langFormData.newLang ===''){
             alert('Enter a language');
             return;
         }else{
-            character.languages.push(formData.newLang);
+            character.languages.push(langFormData.newLang);
             character.languages.sort();
             setFormData({newLang : ''});
             await saveCharacter();
@@ -45,7 +47,7 @@ const CharacterLanguages = ({character, saveCharacter})=>{
                     id="newLang"
                     name="newLang"
                     onChange={handleChange}
-                    value={formData.newLang}
+                    value={langFormData.newLang}
                 />
                 <button onClick={handleAddLang}>Add</button>
             </form>

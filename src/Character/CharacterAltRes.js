@@ -1,8 +1,12 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import CharacterAltResBox from "./CharacterAltResBox";
 import './CharacterAltRes.css'
+import CharacterContext from "./CharacterContext";
 
-const CharacterAltRes = ({character, saveCharacter})=>{
+const CharacterAltRes = ()=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
+
 
     const defaultForm = {
         name : '',
@@ -10,7 +14,7 @@ const CharacterAltRes = ({character, saveCharacter})=>{
         curr : ''
     }
 
-    const [formData, setFormData] = useState(defaultForm)
+    const [resFormData, setFormData] = useState(defaultForm)
 
     const [showForm, setShowForm] = useState(false);
 
@@ -24,14 +28,14 @@ const CharacterAltRes = ({character, saveCharacter})=>{
 
     const handleAddAltRes = async (evt)=>{
         evt.preventDefault()
-        if(character.altResources.some((resource)=>(resource.name === formData.name))){
-            alert(`Cannot have duplicate Alt Resource: ${formData.name}`);
+        if(character.altResources.some((resource)=>(resource.name === resFormData.name))){
+            alert(`Cannot have duplicate Alt Resource: ${resFormData.name}`);
             return;
         }else{
             character.altResources.push({
-                name : formData.name,
-                max : formData.max,
-                curr : formData.curr
+                name : resFormData.name,
+                max : resFormData.max,
+                curr : resFormData.curr
             });
             setShowForm(false);
             setFormData(defaultForm);
@@ -60,7 +64,7 @@ const CharacterAltRes = ({character, saveCharacter})=>{
                         type="text"
                         id="name"
                         name="name"
-                        value={formData.name}
+                        value={resFormData.name}
                         onChange={handleChange}
                     />
                     <label htmlFor="max">Max : </label>
@@ -69,7 +73,7 @@ const CharacterAltRes = ({character, saveCharacter})=>{
                         min='0'
                         id="max"
                         name="max"
-                        value={formData.max}
+                        value={resFormData.max}
                         onChange={handleChange}
                     />
                     <label htmlFor="curr">Current : </label>
@@ -78,7 +82,7 @@ const CharacterAltRes = ({character, saveCharacter})=>{
                         min='0'
                         id="curr"
                         name="curr"
-                        value={formData.curr}
+                        value={resFormData.curr}
                         onChange={handleChange}
                     />
                 <button onClick={handleAddAltRes}>Add</button>

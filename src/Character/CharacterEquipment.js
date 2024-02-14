@@ -1,8 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import './CharacterEquipment.css'
 import CharacterEquipForm from "./CharacterEquipForm";
+import CharacterContext from "./CharacterContext";
 
-const CharacterEquipment = ({character, handleAddEquipment, handleDeleteEquipment})=>{
+const CharacterEquipment = ({handleAddEquipment, handleDeleteEquipment})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
 
     const [showForm, setShowForm] = useState(false)
 

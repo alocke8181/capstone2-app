@@ -1,14 +1,15 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 
 import CharacterSpellCont from "./CharacterSpellCont";
 import { CORESTATS } from "../data";
-
+import CharacterContext from "./CharacterContext";
 import { capFirstLetter } from "../Helpers";
 
 import Api from "../Api";
 
-const CharacterSpells = ({formData, character, handleChange, saveCharacter})=>{
+const CharacterSpells = ({handleChange})=>{
 
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
 
     const handleNewSpellSubmit = async (choice, levelProp)=>{
         if(character[levelProp].some((spell)=>(spell.index === choice))){

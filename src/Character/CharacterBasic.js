@@ -1,8 +1,12 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
+import CharacterContext from "./CharacterContext";
 
 import { capFirstLetter } from "../Helpers";
 
-const CharacterBasic = ({character, formData, handleChange})=>{
+const CharacterBasic = ({handleChange})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
+
         return(
             <div id="character-basic-cont">
                         <div className="character-basic-box">

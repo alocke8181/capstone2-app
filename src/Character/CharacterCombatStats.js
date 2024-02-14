@@ -1,7 +1,11 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
+import CharacterContext from "./CharacterContext";
 import { capFirstLetter } from "../Helpers";
 
-const CharacterCombatStats = ({character, formData, handleChange})=>{
+const CharacterCombatStats = ({handleChange})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
+
     return(
         <div id="character-combat-stats-cont">
                         <div className="character-combat-stat-box">

@@ -1,7 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import CharacterContext from "./CharacterContext";
 
-const CharacterEquipProfs = ({character, saveCharacter})=>{
-    const [formData, setFormData] = useState({
+const CharacterEquipProfs = ()=>{
+    
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
+    
+    const [equipFormData, setFormData] = useState({
         newProf : ''
     })
 
@@ -15,12 +19,12 @@ const CharacterEquipProfs = ({character, saveCharacter})=>{
 
     const handleAddProf = async (evt)=>{
         evt.preventDefault();
-        if(!formData.newProf || formData.newProf ===''){
+        if(!equipFormData.newProf || equipFormData.newProf ===''){
             alert('Enter a proficiency');
             return;
         }else{
 
-            character.equipProfs.push(formData.newProf.replace(' ','-'));
+            character.equipProfs.push(equipFormData.newProf.replace(' ','-'));
             character.equipProfs.sort();
             setFormData({newProf : ''});
             await saveCharacter();
@@ -44,7 +48,7 @@ const CharacterEquipProfs = ({character, saveCharacter})=>{
                     id="newProf"
                     name="newProf"
                     onChange={handleChange}
-                    value={formData.newProf}
+                    value={equipFormData.newProf}
                 />
                 <button onClick={handleAddProf}>Add</button>
             </form>

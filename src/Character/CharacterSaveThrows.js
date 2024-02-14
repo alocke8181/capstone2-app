@@ -1,9 +1,12 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import { CORESTATS } from "../data";
-
+import CharacterContext from "./CharacterContext";
 import { capFirstLetter } from "../Helpers";
 
-const CharacterSaveThrows = ({character, formData, handleSavingThrowChange})=>{
+const CharacterSaveThrows = ({handleSavingThrowChange})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
+
     return(
         <div className="character-skill-box-small">
                             <h3>Saving Throws</h3>

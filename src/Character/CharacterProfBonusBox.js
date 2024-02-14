@@ -1,6 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
+import CharacterContext from "./CharacterContext";
 
-const CharacterProfBonusBox = ({character, formData, handleChange})=>{
+const CharacterProfBonusBox = ({handleChange})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
+
     return(
         <div className="character-skill-box-small">
                             <div className="character-skill-box-subbox">

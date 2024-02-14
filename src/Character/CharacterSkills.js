@@ -1,9 +1,12 @@
-import React, {useState} from "react";
-
+import React, {useContext} from "react";
+import CharacterContext from "./CharacterContext";
 import { SKILLS } from "../data";
 import { capFirstLetter } from "../Helpers";
 
-const CharacterSkills = ({character, handleSkillChange})=>{
+const CharacterSkills = ({handleSkillChange})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
+
     return(
             <div className="character-skill-box-large">
                             <h3>Skills</h3>

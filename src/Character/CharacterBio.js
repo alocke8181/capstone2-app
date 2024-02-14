@@ -1,10 +1,12 @@
-import React,{useState} from "react";
+import React,{useState, useContext} from "react";
 import './CharacterBio.css';
+import CharacterContext from "./CharacterContext";
 
+const CharacterBio = ({setCharacter})=>{
 
-const CharacterBio = ({character, setCharacter})=>{
+    const {character, formData, saveCharacter} = useContext(CharacterContext)
 
-    const [formData, setFormData] = useState(character);
+    const [bioFormData, setFormData] = useState(character);
 
     const handleChange = (evt)=>{
         const {name, value} = evt.target;
@@ -28,7 +30,7 @@ const CharacterBio = ({character, setCharacter})=>{
                             <textarea
                                 id="personality"
                                 name="personality"
-                                value={formData.personality}
+                                value={bioFormData.personality}
                                 onChange={handleChange}
                             />
                         </p>
@@ -39,7 +41,7 @@ const CharacterBio = ({character, setCharacter})=>{
                             <textarea
                                 id="ideals"
                                 name="ideals"
-                                value={formData.ideals}
+                                value={bioFormData.ideals}
                                 onChange={handleChange}
                             />
                         </p>
@@ -50,7 +52,7 @@ const CharacterBio = ({character, setCharacter})=>{
                             <textarea
                                 id="bonds"
                                 name="bonds"
-                                value={formData.bonds}
+                                value={bioFormData.bonds}
                                 onChange={handleChange}
                             />
                         </p>
@@ -61,7 +63,7 @@ const CharacterBio = ({character, setCharacter})=>{
                             <textarea
                                 id="flaws"
                                 name="flaws"
-                                value={formData.flaws}
+                                value={bioFormData.flaws}
                                 onChange={handleChange}
                             />
                         </p>
@@ -75,7 +77,7 @@ const CharacterBio = ({character, setCharacter})=>{
                                 type="number"
                                 id="age"
                                 name="age"
-                                value={formData.age}
+                                value={bioFormData.age}
                                 onChange={handleChange}
                             />
                         </p>
@@ -85,7 +87,7 @@ const CharacterBio = ({character, setCharacter})=>{
                                 type="text"
                                 id="height"
                                 name="height"
-                                value={formData.height}
+                                value={bioFormData.height}
                                 onChange={handleChange}
                             />
                         </p>
@@ -95,7 +97,7 @@ const CharacterBio = ({character, setCharacter})=>{
                                 type="text"
                                 id="weight"
                                 name="weight"
-                                value={formData.weight}
+                                value={bioFormData.weight}
                                 onChange={handleChange}
                             />
                         </p>
@@ -106,7 +108,7 @@ const CharacterBio = ({character, setCharacter})=>{
                             <textarea
                                 id="appearance"
                                 name="appearance"
-                                value={formData.appearance}
+                                value={bioFormData.appearance}
                                 onChange={handleChange}
                             />
                         </p>
@@ -118,7 +120,7 @@ const CharacterBio = ({character, setCharacter})=>{
                             <textarea
                                 id="backstory"
                                 name="backstory"
-                                value={formData.backstory}
+                                value={bioFormData.backstory}
                                 onChange={handleChange}
                             />
                         </p>
@@ -129,7 +131,7 @@ const CharacterBio = ({character, setCharacter})=>{
                         <textarea
                             id="allies"
                             name="allies"
-                            value={formData.allies}
+                            value={bioFormData.allies}
                             onChange={handleChange}
                         />
                     </p>
