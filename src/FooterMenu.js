@@ -7,7 +7,9 @@ const FooterMenu = ()=>{
         <div style={{borderTop: '2px solid black'}}>
             <p>Created by Alex Locke for the Springboard Software Engineering Program, February 2024</p>
             <p>
-                <Link to='https://www.linkedin.com/in/alex-locke-2019/'>LinkedIn</Link> | alocke_8181@yahoo.com
+                <Link to='https://www.linkedin.com/in/alex-locke-2019/'>LinkedIn</Link>
+                | alocke_8181@yahoo.com | 
+                <Link to='https://github.com/alocke8181/capstone2-app'>GitHub</Link>
             </p>
         </div>
 

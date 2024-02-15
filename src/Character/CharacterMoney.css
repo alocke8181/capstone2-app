@@ -1,0 +1,7 @@
+#character-money{
+    border: 2px ridge gold;
+}
+
+#character-money input{
+    width: 25%;
+}

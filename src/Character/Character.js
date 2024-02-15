@@ -23,6 +23,7 @@ import CharacterAttacks from "./CharacterAttacks";
 import CharacterTraits from "./CharacterTraits";
 import CharacterFeatures from "./CharacterFeatures";
 import CharacterEquipment from "./CharacterEquipment";
+import CharacterMoney from "./CharacterMoney";
 import CharacterAltRes from "./CharacterAltRes";
 import CharacterSpells from "./CharacterSpells";
 import CharacterBio from "./CharacterBio";
@@ -281,6 +282,7 @@ const Character = ({getCharacter})=>{
                     <div id="character-profs-altres-cont">
                         <CharacterAltRes />
                         <CharacterEquipment handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
+                        <CharacterMoney handleChange={handleChange}/>
                     </div>
                     <CharacterAttacks postAttack={postAttack} patchAttack={patchAttack} deleteAttack={deleteAttack} />
                     <CharacterTraits postTrait={postTrait} patchTrait={patchTrait} deleteTrait={deleteTrait}/>

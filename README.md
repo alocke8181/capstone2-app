@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+# Capstone 2 Front-End App
+This is the front-end application for my 2nd capstone project for the Springboard Software Engineering Bootcamp. This allows users to create characters for Dungeons & Dragons. The back-end server repository can be found [here](https://github.com/alocke8181/capstone2-server). The goal of this project is to demonstrate everything I've learned in the second half of this course.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The entire front-end is made with React. The website allows users to register an account and create characters for D&D. The bulk of the work has been spent on the character sheets. Users first fill out a small form to create a new character, and then that starting data is sent to the server. The server saves the starting data, and then builds a character object to send back to the app. Many parts of the character use data pulled from [this external API](https://www.dnd5eapi.co/). Users can then edit their character sheets and save them to the server.
 
-## Available Scripts
+## User Flow
+When a user connects they are first brought to the home page. This is a brief explanation of the website and its features. The header menu allows users to log in to an existing account, or register to create a new one.
 
-In the project directory, you can run:
+### User Pages
+When a user registers, their information is sent to the server. Passwords are encrypted with Bcrypt. After registering or logging in, the server returns a `user` object and a JSON Web Token of the `user` object. Both of these are saved to `localstorage`. This allows the user to be able to leave the website and come back without having to log in again. The `user` is saved in a `UserContext` to allow easy access from any component. Users are then redirected to their profile page.
 
-### `npm start`
+From the profile page, users can see their account information, as well as a list of any characters they've made. Each character is only shown as a brief description with their name, level, race, and class. User's can click on a character to be taken to the character sheet. They can also create a new character, edit their account, or delete their account from this page. If they wish, they may change their password or their email. A user is only able to view another user's page if they are an administrator, otherwise they will be redirected to a `403 Forbidden` page. This will also happen if they try to view a character they don't own.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Character Sheets
+When creating a character, a few key pieces of information are needed. Characters must have a Name, Class, Race, and Level. This is because the server uses these properties to query the external API to fill in information. A character's Proficiency Bonus, for example, is determined by both the character's Class and their Level. After completing the form, they are redirected to the new character's sheet.
 
-### `npm test`
+The character sheet makes up the bulk of the website and is where user's will spend most of their time. To someone who has never played D&D, the amount of information can be overwhelming, but there is a method to the madness. The first row is the core information about the character: Name, Race, Class, Background, Level, and Experience Points. Next are the six core stats of D&D: Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma. These stats range between 0 and 20 (but can sometimes be higher) and their modifier values ((stat-10)/2 rounded down) are used throughout the sheet.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The next row is the combat stats: all the important numbers used during fights such as AC (Armor Class), Initiative, Speed, Hit Points (HP), etc. Below these are the character Skills and Proficiencies. The Saving Throws and Skills all use a corresponding core stat modifier. When a player wants to make a Skill Check or Saving Throw, they roll a 20-sided die (D20) and add the corresponding modifier to the result. For example, if a character wanted to make an Acrobatics skill check, they would roll a D20 and then add their Dexterity modifier to the result. If a Skill or Saving Throw is checked, that means they are proficient with that and can add their Proficiency Bonus to the roll. The Proficiency Bonus is determined by the character's class and level. Languages are simply any language the character can speak and understand fluently. Equipment Proficiencies mean the player can add their Proficiency Bonus to any rolls involving a listed equipment or type. Passive Perception is how easily the character can notice things about their environment that might not be obvious. Inspiration is a point system that players can use to re-roll dice at any time.
 
-### `npm run build`
+The next row is alternate resources, equipment, and money. An Alternate Resource could be something like Bardic Inspiration (allows players to add a D6 to any skill checks). Basically, any resource the player needs to track that isn't an equipment item or spell slot. Equipment is simple: any items the character has and their quantity. Users can easily add or delete equipment from their inventory. The Money is how many Copper, Silver, and Gold pieces the character has. 1 Gold = 10 Silver = 100 Copper.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The next row are any physical attacks that the character can do. These usually involve any weapons the player has in their equipment. **This section does not include spells!** Those are further down the page. Attacks can have four main properties: their attack roll, their damage, their alternate damage, and a saving throw. The attack roll is what the player does to determine if they hit their target. They roll a D20, add the corresponding stat modifier, their Proficiency Bonus (if they are proficient with the weapon), and any additional bonuses/penalties that may be included (a magic sword could have an additional +1 to the attack roll). If the attack hits, the player then rolls for damage. They roll a number of a specified die (D4, D6, D8, D10, or D12), and add their stat modifier and any additional bonuses/penalties. Some weapons can also deal an alternative damage. For example, a flaming sword could deal 1D6 Slashing damage and an additional 1D4 Fire damage. Some attacks can also require the target to make a Saving Throw. The target rolls a D20 and adds their corresponding stat modifier. If they succeed, then a specified effect happens. For example, the flaming sword may require the target to make a Dexterity Saving Throw and if they succeed, they don't take the additional fire damage. The character sheet is automatically saved when adding, editing, or deleting an attack.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The next two sections are Racial Traits and Class Features. These primarily come from the character's Race and Class, but some can also be given as results from gameplay decisions. Because of this, users have two options when adding traits/features. They can choose from standard ones that are sourced from the external API, or they can create a custom one. Custom Traits/Features are saved on the database and retrieved when the character is being send out. The character is automatically saved when a Trait/Feature is added, edited, or deleted.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The next large section is for spells. In D&D, spells are broken up by their level. The higher level the spell, the more powerful it is. Cantrips are the lowest level. These are simple spells that the player can cast at any point and any amount of times. Classes that depend on spells will have Spell Slots for every level. Spell Slots represent how many times a player can cast a spell of that level until they need to long rest. As the character levels up, the number of Spell Slots at each level will increase. When casting a spell, players will use their Spellcasting Ability. This is determined by their class. The Spellcasting Modifier and Spell Save DC use the modifier from their ability. The Spellcasting Modifier is the number that is added when casting certain spells to determine if they hit their target. The Spell Save DC represents the number that must be exceeded when a target has to make a Saving Throw. Only some spells require the target to make a Saving Throw, and they will specify what type of throw must be done.
 
-### `npm run eject`
+The final section is the Character Bio. This is where players can describe their character. What they look like, what their backstory is, their personality and morals, and any allies or associations they may have. This is also where they put the character's age, height, and weight.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+At the bottom of the page, user's can delete their character.

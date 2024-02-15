@@ -1,18 +1,19 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useParams, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import {checkAuthOrAdmin, capFirstLetter} from "./Helpers";
 import './UserPage.css';
+import UserContext from "./UserContext";
 
 import { Oval } from "react-loader-spinner";
 
 const UserPage = ({getUser, getCharacters}) =>{
 
-    const [localUser, setLocalUser] = useState(JSON.parse(localStorage.getItem('user')))
+    const {user, setUser} = useContext(UserContext);
     const {id} = useParams();
     const nav = useNavigate()
 
-    const [user, setUser] = useState({});
+    const [userView, setUserView] = useState({});
 
     const [loading, setLoading] = useState(true); 
 
@@ -21,19 +22,30 @@ const UserPage = ({getUser, getCharacters}) =>{
 
     useEffect(()=>{
 
-        if(!checkAuthOrAdmin(localUser, id)){
+        if(!checkAuthOrAdmin(user, id)){
             nav('/403');
         }
         const fetchCharacters = async (id) =>{
-            setLoading(true);
-            const userData = await getUser(id);
-            setUser(userData);
-            const resp = await getCharacters(id);
-            setCharacters(resp.data.characters);
-            setLoading(false);
+            if(id === user.id){
+                setUserView(user);
+                const resp = await getCharacters(id);
+                setCharacters(resp.data.characters);
+                return;
+            }else{
+                try{
+                    setLoading(true);
+                    const userData = await getUser(id);
+                    setUserView(userData);
+                    const resp = await getCharacters(id);
+                    setCharacters(resp.data.characters);
+                    setLoading(false);
+                }catch(e){
+                    console.log(e);
+                }
+            }
         }
         fetchCharacters(id);
-    },[])
+    },[id])
 
 
     return(
@@ -47,8 +59,8 @@ const UserPage = ({getUser, getCharacters}) =>{
                     wrapperStyle={{}}
                     wrapperClass=""/> 
             :<></>}
-            <h1>{user.username}</h1>
-            <p>Email : {user.email}</p>
+            <h1>{userView.username}</h1>
+            <p>Email : {userView.email}</p>
             <div id="user-chars">
                 {loading? <p><b>Loading Characters...</b></p> :
                 <>
