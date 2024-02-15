@@ -1,3 +1,6 @@
+import React from "react";
+import { useNavigate } from "react-router";
+
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
@@ -6,6 +9,22 @@ const EXTERNAL_URL = 'https://www.dnd5eapi.co/api';
 
 class Api{
 
+    //Method to handle errors
+    static handleErrors(e){
+        if(e.response.status === 404){
+            const error = new Error(e.message);
+            error.status = 404;
+            throw error;
+        }else if(e.response.status === 401){
+            const error = new Error(e.message);
+            error.status = 401;
+            throw error;
+        }else{
+            console.error(e.message);
+            let msg = e.response.data.error.message;
+            throw Array.isArray(msg) ? msg : [msg];
+        }
+    };
 
     //Register, login, and return the token and user
     static async register(data){
@@ -16,9 +35,7 @@ class Api{
             const user = resp.data.user;
             return {token, user};
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         }
     }
 
@@ -31,9 +48,7 @@ class Api{
             const user = resp.data.user;
             return {token, user};
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 
@@ -46,9 +61,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 
@@ -61,9 +74,7 @@ class Api{
             })
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 
@@ -76,9 +87,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 
@@ -91,9 +100,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     }
 
@@ -106,9 +113,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 
@@ -121,9 +126,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 
@@ -136,9 +139,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         }
     }
 
@@ -151,9 +152,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         }
     }
 
@@ -166,9 +165,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 
@@ -181,9 +178,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     }
 
@@ -196,9 +191,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     }
 
@@ -211,9 +204,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 
@@ -226,9 +217,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 
@@ -239,9 +228,7 @@ class Api{
             let resp = await axios.get(`${EXTERNAL_URL}/traits/${index}`);
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     }
 
@@ -254,9 +241,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     }
 
@@ -269,9 +254,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 
@@ -284,9 +267,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     }
 
@@ -297,9 +278,7 @@ class Api{
             let resp = await axios.get(`${EXTERNAL_URL}/features/${index}`);
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     }
 
@@ -312,9 +291,7 @@ class Api{
             });
             return resp;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     }
 
@@ -342,9 +319,7 @@ class Api{
             }
             return spell;
         }catch(e){
-            console.error(e.message);
-            let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            this.handleErrors(e)
         };
     };
 

@@ -24,57 +24,58 @@ const CharacterSpellBox = ({spell, deleteSpell})=>{
                             {spell.ritual ? <>Ritual, </> : <></>}{spell.concentration ? <>Concentration, </> : <></>}{spell.school.name}
                         </i>
                     </p>
-                    <ul>
+                    <br/>
                         {spell.damage ? 
-                        <li key='damage'>
+                        <>
                             Damage : {spell.damage_at_slot_level? 
                                 <>{spell.damage.damage_at_slot_level[Object.keys(spell.damage.damage_at_slot_level)[0]]} {spell.damage.damage_type.name}</> : 
                                 <>{spell.damage.damage_at_character_level[Object.keys(spell.damage.damage_at_character_level)[0]]} {spell.damage.damage_type.name}</>}
-                        </li> 
+                        <br/></> 
                         : <></>}
-
+                        
                         {spell.heal_at_slot_level ? 
-                        <li key='healing'>
+                        <>
                             Healing : {spell.damage.heal_at_slot_level[Object.keys(spell.damage.heal_at_slot_level)[0]]}
-                        </li> 
+                        <br/></> 
                         : <></>}
-
+                        
                         {spell.attackType ? 
-                        <li key='attacktype'>
+                        <>
                             Attack Type : {spell.attackType}
-                        </li> 
+                        <br/></> 
                         : <></>}
-
-                        <li key='range'>
+                        
+                        <>
                             Range : {spell.range}
-                        </li>
-
+                        <br/></>
+                        
                         {spell.areaOfAffect ? 
-                        <li key='areaofaffect'>
+                        <>
                             Area of Affect : {spell.areaOfAffect.size} ft {spell.areaOfAffect.type}
-                        </li> 
+                        <br/></> 
                         : <></>}
-
-                        <li key='castingtime'>
+                        
+                        <>
                             Casting Time : {spell.castingTime}
-                        </li>
-
-                        <li key='duration'>
+                        <br/></>
+                        
+                        <>
                             Duration : {spell.duration}
-                        </li>
-
+                        <br/></>
+                        
                         {spell.dc ? 
                         <>
-                            <li key='dctype'>
+                            <>
                                 Saving Throw : {spell.dc.dc_type.name}
-                            </li>
-                            <li key='dceffect'>
+                            <br/></>
+                            
+                            <>
                                 On Success : {spell.dc.dc_success}
-                            </li>
+                            <br/></>
                         </> 
                         : <></>}
 
-                    </ul>
+                    <br/>
                     <p>
                         <button onClick={toggleDesc}>Toggle Description</button>
                     </p>

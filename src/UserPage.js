@@ -40,7 +40,13 @@ const UserPage = ({getUser, getCharacters}) =>{
                     setCharacters(resp.data.characters);
                     setLoading(false);
                 }catch(e){
-                    console.log(e);
+                    if(e.status === 404){
+                        nav('*');
+                    }else if(e.status === 401){
+                        nav('/403');
+                    }else{
+                        console.error(e);
+                    }
                 }
             }
         }

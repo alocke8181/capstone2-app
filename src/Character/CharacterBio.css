@@ -3,10 +3,15 @@ h2, h3, h4{
 }
 
 
+
 #character-bio-cont{
     border: 2px ridge gold;
     width: 100%;
     margin: auto;
+}
+
+#character-bio-cont textarea{
+    background-color: rgba(255,255,255,0.5);
 }
 
 #character-bio-pibf{
