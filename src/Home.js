@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './Home.css';
 
 const Home = () =>{
+
+    useEffect(()=>{document.title = 'The Starting Tavern'},[])
+
     return(
         <div id="home">
             <h2>Welcome to The Starting Tavern</h2>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router";
 import { CLASSES, RACES, BACKGROUNDS } from "./data";
 import { capFirstLetter } from "./Helpers";
@@ -18,6 +18,8 @@ const CharacterCreate = ({postCharacter})=>{
         exp : 0
 
     });
+
+    useEffect(()=>{document.title = 'Create Character'; },[]);
 
     const handleSubmit = async (evt)=>{
         evt.preventDefault();

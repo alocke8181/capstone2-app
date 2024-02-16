@@ -186,6 +186,11 @@ h2, h3, h4{
     text-align: center;
 }
 
+.character-attack-box h3:hover{
+    color: red;
+    cursor: pointer;
+}
+
 #character-trait-big-cont{
     border: 2px ridge gold;
     text-align: center;

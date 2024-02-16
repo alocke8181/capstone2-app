@@ -15,7 +15,9 @@ const UserPage = ({getUser, getCharacters}) =>{
 
     const [userView, setUserView] = useState({});
 
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
+    
+    const [loadingChars, setLoadingChars] = useState(true)
 
     const [characters, setCharacters] = useState([]);
 
@@ -26,19 +28,24 @@ const UserPage = ({getUser, getCharacters}) =>{
             nav('/403');
         }
         const fetchCharacters = async (id) =>{
-            if(id === user.id){
+            if(parseInt(id) === user.id){
                 setUserView(user);
+                setLoading(false)
+                setLoadingChars(true);
                 const resp = await getCharacters(id);
                 setCharacters(resp.data.characters);
+                setLoadingChars(false);
                 return;
             }else{
                 try{
                     setLoading(true);
                     const userData = await getUser(id);
                     setUserView(userData);
+                    setLoading(false);
+                    setLoadingChars(true);
                     const resp = await getCharacters(id);
                     setCharacters(resp.data.characters);
-                    setLoading(false);
+                    setLoadingChars(false);
                 }catch(e){
                     if(e.status === 404){
                         nav('*');
@@ -51,6 +58,8 @@ const UserPage = ({getUser, getCharacters}) =>{
             }
         }
         fetchCharacters(id);
+        document.title = user.username;
+        
     },[id])
 
 
@@ -68,7 +77,7 @@ const UserPage = ({getUser, getCharacters}) =>{
             <h1>{userView.username}</h1>
             <p>Email : {userView.email}</p>
             <div id="user-chars">
-                {loading? <p><b>Loading Characters...</b></p> :
+                {loadingChars? <p><b>Loading Characters...</b></p> :
                 <>
                     {characters.map((character)=>(
                         <div className="char-box" key={character.id}>

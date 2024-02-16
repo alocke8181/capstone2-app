@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router";
 import { Card, CardBody, CardHeader} from "react-bootstrap";
 
@@ -11,6 +11,8 @@ const Register = ({register}) =>{
         password : '',
         email : ''
     })
+
+    useEffect(()=>{document.title = 'Register'; },[]);
 
     const [loading, setLoading] = useState(false);
 

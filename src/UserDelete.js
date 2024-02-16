@@ -13,6 +13,7 @@ const UserDelete = ({deleteUser}) =>{
         if(!checkAuthOrAdmin(user, id)){
             nav('/403');
         };
+        document.title = 'Delete Account'
     },[])
 
     async function onDelete(e){

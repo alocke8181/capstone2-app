@@ -52,26 +52,26 @@ const CharacterSpells = ({handleChange})=>{
                     Spell Save DC : {character[character.spellAbility + "Mod"] + character.profBonus + 8|| 0}
                 </p>
             </div>
-            <CharacterSpellCont spellLevelString={'cantrips'} formData={formData} character={character}  
-                handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
-            <CharacterSpellCont spellLevelString={'One'} formData={formData} character={character}  
-                handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
-            <CharacterSpellCont spellLevelString={'Two'} formData={formData} character={character}  
-                handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
-            <CharacterSpellCont spellLevelString={'Three'} formData={formData} character={character}  
-                handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
-            <CharacterSpellCont spellLevelString={'Four'} formData={formData} character={character}  
-                handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
-            <CharacterSpellCont spellLevelString={'Five'} formData={formData} character={character}  
-                handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
-            <CharacterSpellCont spellLevelString={'Six'} formData={formData} character={character}  
-                handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
-            <CharacterSpellCont spellLevelString={'Seven'} formData={formData} character={character}  
-                handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
-            <CharacterSpellCont spellLevelString={'Eight'} formData={formData} character={character}  
-                handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
-            <CharacterSpellCont spellLevelString={'Nine'} formData={formData} character={character}  
-                handleChange={handleChange} handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+            <CharacterSpellCont spellLevelString={'cantrips'} handleChange={handleChange} 
+                handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+            <CharacterSpellCont spellLevelString={'One'} handleChange={handleChange} 
+                handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+            <CharacterSpellCont spellLevelString={'Two'} handleChange={handleChange} 
+                handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+            <CharacterSpellCont spellLevelString={'Three'} handleChange={handleChange} 
+                handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+            <CharacterSpellCont spellLevelString={'Four'} handleChange={handleChange} 
+                handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+            <CharacterSpellCont spellLevelString={'Five'} handleChange={handleChange} 
+                handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+            <CharacterSpellCont spellLevelString={'Six'} handleChange={handleChange} 
+                handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+            <CharacterSpellCont spellLevelString={'Seven'} handleChange={handleChange} 
+                handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+            <CharacterSpellCont spellLevelString={'Eight'} handleChange={handleChange} 
+                handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
+            <CharacterSpellCont spellLevelString={'Nine'} handleChange={handleChange} 
+                handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
         </div>
     )
 

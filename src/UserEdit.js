@@ -19,6 +19,7 @@ const UserEdit = ({editUser}) =>{
         if(!checkAuthOrAdmin(user, id)){
             nav('/403');
         }
+        document.title = 'Edit Account';
     },[]);
 
     const [formData, setFormData] = useState({

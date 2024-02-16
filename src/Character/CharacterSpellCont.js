@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import CharacterSpellBox from "./CharacterSpellBox";
 import NewSpellForm from "./NewSpellForm";
 import './CharacterSpellCont.css';
+import CharacterContext from "./CharacterContext";
 
-const CharacterSpellCont = ({formData, character, spellLevelString, handleChange, handleNewSpellSubmit, handleDeleteSpell})=>{
+const CharacterSpellCont = ({spellLevelString, handleChange, handleNewSpellSubmit, handleDeleteSpell})=>{
 
     let levelProp = 'level'+spellLevelString;
     let levelSlotsProp = 'level'+spellLevelString+'Slots';
@@ -16,7 +17,7 @@ const CharacterSpellCont = ({formData, character, spellLevelString, handleChange
         levelProp = 'cantrips';
     }
 
-    
+    const {character, formData, saveCharacter} = useContext(CharacterContext);
 
     const [showForm, setShowForm] = useState(false);
 

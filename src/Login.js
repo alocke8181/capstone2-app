@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router";
 import { Card, CardBody, CardHeader } from "react-bootstrap";
 
@@ -10,6 +10,8 @@ const Login = ({login}) =>{
         username : '',
         password : ''
     });
+
+    useEffect(()=>{document.title = 'Login'; },[]);
 
     const [errorMsg, setErrorMsg] = useState('');
     const [isError, setIsError] = useState(false);

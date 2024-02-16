@@ -4,11 +4,15 @@ import {checkAuthOrAdmin} from "../Helpers";
 import Api from "../Api";
 import UserContext from "../UserContext";
 import CharacterContext from "./CharacterContext";
+import RollContext from './RollContext';
 
+import {v4 as uuidv4} from 'uuid';
 
 import StickyBox from "react-sticky-box";
 
 import { Oval } from "react-loader-spinner";
+
+import AttackRollBox from "./AttackRollBox";
 
 import CharacterSticky from "./CharacterSticky";
 import CharacterBasic from "./CharacterBasic";
@@ -28,7 +32,8 @@ import CharacterAltRes from "./CharacterAltRes";
 import CharacterSpells from "./CharacterSpells";
 import CharacterBio from "./CharacterBio";
 
-import "./Character.css"
+import "./Character.css";
+import './RollBox.css';
 
 const Character = ({getCharacter})=>{
 
@@ -47,6 +52,8 @@ const Character = ({getCharacter})=>{
     const [character, setCharacter] = useState({});
 
     const [formData, setFormData] = useState({});
+
+    const [rollList, setRollList] = useState([]);
 
     //Set starter form data based on a character
     const resetFormData = (character)=>{
@@ -70,8 +77,11 @@ const Character = ({getCharacter})=>{
             resetFormData(resp.data.character);
             setLoading(false);
         }
-        fetchCharacter(id);   
+        fetchCharacter(id);
+           
     },[]);
+
+    useEffect(()=>{document.title = character.charName; },[character.charName]);
 
     //Function to save the character to the db
     const saveCharacter = async ()=>{
@@ -261,9 +271,13 @@ const Character = ({getCharacter})=>{
 
     return(
         <CharacterContext.Provider value={{character, formData, saveCharacter}}>
+        <RollContext.Provider value={{rollList, setRollList}} >
         <p>
             Character is auto-saved when adding, changing, or deleting alt resources, equipment, attacks, traits, features, and spells.
             Upon leveling up, save the character to update proficieny bonus, spell slots, etc...
+        </p>
+        <p>
+            Critical hits are calculated by rolling twice the number of damage dice, then adding any modifiers.
         </p>
             {loading ? <p><b>Loading Character...</b></p> : 
             <div id="character-page">
@@ -306,11 +320,17 @@ const Character = ({getCharacter})=>{
                             : <p><button onClick={saveCharacter}>Save Character</button></p>}
                             <CharacterSticky/>
                         </div>
-                        
+                        <div id="roll-cont">
+                            {rollList.map((attack)=>(
+                                <AttackRollBox attack={attack} key={uuidv4()}/>
+                            ))}
+                        </div>
                     </StickyBox>
                 </div>
+
             </div>
             } {/* This bracket is to close the loading conditional*/}
+            </RollContext.Provider>
         </CharacterContext.Provider>
     )
 
