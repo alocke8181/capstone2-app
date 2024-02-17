@@ -21,7 +21,7 @@ class Api{
             error.status = 401;
             throw error;
         }else{
-            console.error(e.message);
+            console.log(e);
             let msg = e.response.data.error.message;
             const error = new Error(msg);
             error.status = 400;
