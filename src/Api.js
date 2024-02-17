@@ -22,7 +22,9 @@ class Api{
         }else{
             console.error(e.message);
             let msg = e.response.data.error.message;
-            throw Array.isArray(msg) ? msg : [msg];
+            const error = new Error(msg);
+            error.status = 400;
+            throw error;
         }
     };
 

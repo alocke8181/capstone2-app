@@ -30,15 +30,28 @@ const Register = ({register}) =>{
 
     //Register and navigate to their profile page
     async function handleSubmit(evt){
+        evt.preventDefault();
+        if(!formData.username || formData.username === ''){
+            setIsError(true);
+            setErrorMsg('Username cannot be blank!');
+            return;
+        }else if(!formData.password || formData.password === ''){
+            setIsError(true);
+            setErrorMsg('Password cannot be blank!');
+            return;
+        }else if(!formData.email || formData.email === ''){
+            setIsError(true);
+            setErrorMsg('Email cannot be blank!');
+            return;
+        }
         try{
-            evt.preventDefault();
             setLoading(true);
             const id = await register(formData);
             nav(`/users/${id}`);
         }catch(err){
             setLoading(false)
             setIsError(true);
-            setErrorMsg(err)
+            setErrorMsg(err.message)
         }
     }
 
@@ -47,7 +60,7 @@ const Register = ({register}) =>{
         <Card>
             <CardHeader>
                 {loading ? <p><b>Registering...</b></p> : <p>Register</p>}
-                {isError ? <p>{errorMsg.join('! ')}</p> : <></>}
+                {isError ? <p className="error">{errorMsg}</p> : <></>}
             </CardHeader>
             <CardBody>
                 <form onSubmit={handleSubmit}>
@@ -59,6 +72,7 @@ const Register = ({register}) =>{
                         value={formData.username}
                         onChange={handleChange}
                     />
+                    <br/>
                     <label htmlFor="password">Password</label>
                     <input 
                         type="password"
@@ -67,6 +81,7 @@ const Register = ({register}) =>{
                         value={formData.password}
                         onChange={handleChange}
                     />
+                    <br/>
                     <label htmlFor="email">Email</label>
                     <input 
                         type="text"
@@ -75,6 +90,7 @@ const Register = ({register}) =>{
                         value={formData.email}
                         onChange={handleChange}
                     />
+                    <br/>
                     <button>Submit</button>
                 </form>
             </CardBody>
