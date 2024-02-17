@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import { CORESTATS } from "../data";
 import CharacterContext from "./CharacterContext";
 import { capFirstLetter } from "../Helpers";
+import CharacterSaveThrowBox from "./CharacterSaveThrowBox";
 
 const CharacterSaveThrows = ({handleSavingThrowChange})=>{
 
@@ -12,34 +13,7 @@ const CharacterSaveThrows = ({handleSavingThrowChange})=>{
                             <h3>Saving Throws</h3>
                             <ul id="character-saving-profs-list">
                                 {CORESTATS.map((stat)=>(
-                                    <li key={stat}>
-                                        {character.savingProfs.includes(stat) ? 
-                                            <>
-                                                <input
-                                                    type="checkbox"
-                                                    id={stat+"Save"}
-                                                    name={stat+"Save"}
-                                                    value={stat}
-                                                    onChange={handleSavingThrowChange}
-                                                    checked
-                                                />
-                                                <label htmlFor={stat+"Save"}>{capFirstLetter(stat)} : </label>
-                                                <b>{character[stat.slice(0,3)+"Mod"]+character.profBonus}</b>
-                                            </>
-                                            :
-                                            <>
-                                                <input
-                                                    type="checkbox"
-                                                    id={stat+"Save"}
-                                                    name={stat+"Save"}
-                                                    value={stat}
-                                                    onChange={handleSavingThrowChange}
-                                                />
-                                                <label htmlFor={stat+"Save"}>{capFirstLetter(stat)} : </label>
-                                                <b>{character[stat.slice(0,3)+"Mod"]}</b>
-                                            </>
-                                        }
-                                    </li>
+                                    <CharacterSaveThrowBox key={stat} stat={stat} handleSavingThrowChange={handleSavingThrowChange}/>
                                 ))}
                             </ul>
                         </div>

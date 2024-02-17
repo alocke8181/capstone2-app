@@ -2,6 +2,8 @@ h2, h3, h4{
     margin: 5px;
 }
 
+
+
 #character-page{
     width: 100%;
     margin: auto;
@@ -130,6 +132,15 @@ h2, h3, h4{
 
 #character-skill-list li{
     text-align: left;
+}
+
+section{
+    display: inline;
+}
+
+section:hover{
+    color: red;
+    cursor: pointer;
 }
 
 #character-profs-altres-cont{

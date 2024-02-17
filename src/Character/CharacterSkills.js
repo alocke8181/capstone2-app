@@ -1,11 +1,15 @@
 import React, {useContext} from "react";
 import CharacterContext from "./CharacterContext";
+import RollContext from "./RollContext";
 import { SKILLS } from "../data";
 import { capFirstLetter } from "../Helpers";
+import CharacterSkillBox from "./CharacterSkillBox";
 
 const CharacterSkills = ({handleSkillChange})=>{
 
     const {character, formData, saveCharacter} = useContext(CharacterContext)
+
+    const {rollList, setRollList} = useContext(RollContext);
 
     return(
             <div className="character-skill-box-large">
@@ -13,36 +17,7 @@ const CharacterSkills = ({handleSkillChange})=>{
                             {character.jackOfAllTrades ? <p><i>Jack of All Trades active!</i></p> : <></>}
                             <ul id="character-skill-list">
                                 {SKILLS.map((skill)=>(
-                                    <li key={skill.name}>
-                                        {character.skillProfs.includes(skill.name) ?
-                                            <>
-                                                <input
-                                                    type="checkbox"
-                                                    id={skill.name}
-                                                    name={skill.name}
-                                                    value={skill.name}
-                                                    onChange={handleSkillChange}
-                                                    checked
-                                                />
-                                                <label htmlFor={skill.name}>{skill.title} </label>
-                                                <i>{'(' + capFirstLetter(skill.skillAbility) + ')'} : </i>
-                                                <b>{character[skill.skillAbility+"Mod"]+character.profBonus}</b>
-                                            </>
-                                            :
-                                            <>
-                                                <input
-                                                    type="checkbox"
-                                                    id={skill.name}
-                                                    name={skill.name}
-                                                    value={skill.name}
-                                                    onChange={handleSkillChange}
-                                                />
-                                                <label htmlFor={skill.name}>{skill.title} </label>
-                                                <i>{'(' + capFirstLetter(skill.skillAbility) + ')'} : </i>
-                                                <b>{character[skill.skillAbility+"Mod"] + (character.jackOfAllTrades ? Math.floor(character.profBonus / 2) : 0)}</b>
-                                            </>
-                                        }
-                                    </li>
+                                    <CharacterSkillBox skill={skill} key={skill.name} handleSkillChange={handleSkillChange}/>
                                 ))}
                             </ul>
             </div>

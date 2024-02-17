@@ -34,7 +34,7 @@ const CharacterSpellBox = ({spell, deleteSpell})=>{
         let damage = 0;
         let dmgType = (spell.damage ? spell.damage.damage_type.name : 'Healing');
         if(spell.attackType){
-            attackDieRoll = 20;
+            attackDieRoll = Math.floor((Math.random() * 20)+1);
             attackRoll = attackDieRoll + spellMod;
         }
         if(spell.damage && spell.damage.damage_at_slot_level){

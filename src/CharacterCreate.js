@@ -42,17 +42,18 @@ const CharacterCreate = ({postCharacter})=>{
             setIsError(true);
             setErrorMsg('Character race cannot be blank!');
             return;
-        }if(!formData.level || formData.level === '0'){
+        }else if(!formData.level || formData.level === '0'){
             setIsError(true);
             setErrorMsg('Character cannot be level 0!');
             return;
+        }else{
+            formData.creatorID = user.id;
+            formData.userID = user.id;
+            const resp = await postCharacter(formData);
+            const id = resp.data.id.id;
+            console.log(id);
+            nav(`/characters/${id}`);
         }
-        formData.creatorID = user.id;
-        formData.userID = user.id;
-        const resp = await postCharacter(formData);
-        const id = resp.data.id.id;
-        console.log(id);
-        nav(`/characters/${id}`);
     }
 
     const handleChange = (evt)=>{
