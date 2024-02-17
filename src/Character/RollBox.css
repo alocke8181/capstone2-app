@@ -1,6 +1,6 @@
 #roll-cont{
     border: 2px ridge gold;
-    height: 500px;
+    height: 700px;
     overflow-y: scroll;
 }
 
@@ -19,4 +19,9 @@
 
 .attack-roll-box h2, h3{
     margin-bottom: 0px;
+}
+
+.attack-roll-box h2:hover{
+    color: red;
+    cursor: pointer;
 }

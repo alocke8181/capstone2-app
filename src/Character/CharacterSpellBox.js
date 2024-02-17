@@ -27,7 +27,7 @@ const CharacterSpellBox = ({spell, deleteSpell})=>{
                     <br/>
                         {spell.damage ? 
                         <>
-                            Damage : {spell.damage_at_slot_level? 
+                            Damage : {spell.damage.damage_at_slot_level ? 
                                 <>{spell.damage.damage_at_slot_level[Object.keys(spell.damage.damage_at_slot_level)[0]]} {spell.damage.damage_type.name}</> : 
                                 <>{spell.damage.damage_at_character_level[Object.keys(spell.damage.damage_at_character_level)[0]]} {spell.damage.damage_type.name}</>}
                         <br/></> 

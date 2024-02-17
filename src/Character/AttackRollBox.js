@@ -14,7 +14,7 @@ const AttackRollBox = ({attack})=>{
         if(attackDieRoll === 1){
             setClassName('fail');
         };
-    });
+    },[]);
 
     return(
         <div className="attack-roll-box">
@@ -22,13 +22,13 @@ const AttackRollBox = ({attack})=>{
                 <h2 className={className}>{attackRoll}</h2>
                 <i>{attackDieRoll}</i>
                 <br/>
-                {name}
+                <b>{name}</b>
             </div>
             {showDamage ? 
             <div>
                 <h3>{damage} {dmgType}</h3>
                 <i>{dmgDiceList.join(', ')}</i>
-                {altDamage !== 0 ? 
+                {altDmgDiceList.length !== 0 ? 
                 <div>
                     <h3>{altDamage} {altDmgType}</h3>
                     <i>{altDmgDiceList.join(', ')}</i>
