@@ -1,8 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import './CharacterSpellBox.css';
+import CharacterContext from "./CharacterContext";
 
 const CharacterSpellBox = ({spell, deleteSpell})=>{
+
+    const {character, formData, saveCharacter} = useContext(CharacterContext);
    
+    const spellMod = (character[character.spellAbility + "Mod"] + character.profBonus) || 0
+
     const [showDesc, setShowDesc] = useState(false)
 
     const deleteSelf = async (evt)=>{
@@ -33,9 +38,9 @@ const CharacterSpellBox = ({spell, deleteSpell})=>{
                         <br/></> 
                         : <></>}
                         
-                        {spell.heal_at_slot_level ? 
+                        {spell.healLevels ? 
                         <>
-                            Healing : {spell.damage.heal_at_slot_level[Object.keys(spell.damage.heal_at_slot_level)[0]]}
+                            Healing : {spell.healLevels[Object.keys(spell.healLevels)[0]].replace('MOD', spellMod)}
                         <br/></> 
                         : <></>}
                         
