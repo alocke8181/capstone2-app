@@ -39,14 +39,17 @@ const Main = () =>{
     //===================================================================
     //Send a login request to the backend, set user/token, add to localStorage
     async function login(data){
-        const {token, user} = await Api.login(data);
-        setUser(user);
-        setToken(token);
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('token', token);
-        return user.id;
-
-    }
+        try{
+            const {token, user} = await Api.login(data);
+            setUser(user);
+            setToken(token);
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('token', token);
+            return user.id;
+        }catch(err){
+            throw err;
+        };
+    };
 
     //Logout by clearing token, user, and localStorage
     function logout(){
