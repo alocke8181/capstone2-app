@@ -12,11 +12,11 @@ class Api{
     //Method to handle errors
     static handleErrors(e){
         if(e.response.status === 404){
-            const error = new Error(e.message);
+            const error = new Error(e.response.data.error.message);
             error.status = 404;
             throw error;
         }else if(e.response.status === 401){
-            const error = new Error(e.message);
+            const error = new Error(e.response.data.error.message);
             error.status = 401;
             throw error;
         }else{

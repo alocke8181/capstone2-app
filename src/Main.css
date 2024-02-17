@@ -18,3 +18,7 @@ button{
 option{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
+.error{
+    color: red;
+}

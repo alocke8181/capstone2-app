@@ -36,7 +36,7 @@ const Login = ({login}) =>{
         }catch(err){
             setLoading(false)
             setIsError(true);
-            setErrorMsg(err)
+            setErrorMsg(err.message);
         }
     };
 
@@ -44,7 +44,7 @@ const Login = ({login}) =>{
         <Card>
             <CardHeader>
                 {loading ? <p><b>Logging In...</b></p> : <p>Login</p>}
-                {isError ? <p>{errorMsg.join('! ')}</p> : <></>}
+                {isError ? <p className="error">{errorMsg}</p> : <></>}
             </CardHeader>
             <CardBody>
                 <form onSubmit={handleSubmit}>
