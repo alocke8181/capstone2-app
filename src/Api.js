@@ -24,7 +24,7 @@ class Api{
             console.log(e);
             let msg = e.response.data.error.message;
             const error = new Error(msg);
-            error.status = 400;
+            error.status = e.response.status;
             throw error;
         }
     };
