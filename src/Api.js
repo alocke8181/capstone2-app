@@ -23,7 +23,7 @@ class Api{
         }else{
             console.log(e);
             let msg = e.response.data.error.message;
-            const error = new Error(msg);
+            const error = new Error(e);
             error.status = e.response.status;
             throw error;
         }
