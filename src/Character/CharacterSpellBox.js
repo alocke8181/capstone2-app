@@ -1,10 +1,13 @@
 import React, {useState, useContext} from "react";
 import './CharacterSpellBox.css';
 import CharacterContext from "./CharacterContext";
+import RollContext from "./RollContext";
+import { splitDiceRollString } from "../Helpers";
 
 const CharacterSpellBox = ({spell, deleteSpell})=>{
 
     const {character, formData, saveCharacter} = useContext(CharacterContext);
+    const {rollList, setRollList} = useContext(RollContext);
    
     const spellMod = (character[character.spellAbility + "Mod"] + character.profBonus) || 0
 
@@ -21,9 +24,57 @@ const CharacterSpellBox = ({spell, deleteSpell})=>{
         setShowDesc(!showDesc);
     }
 
+    const rollDamage = ()=>{
+        if(!spell.damage && !spell.healLevels){
+            return;
+        }
+        let attackDieRoll = 0;
+        let attackRoll = 0;
+        let dmgDiceList = [];
+        let damage = 0;
+        let dmgType = (spell.damage ? spell.damage.damage_type.name : 'Healing');
+        if(spell.attackType){
+            attackDieRoll = 20;
+            attackRoll = attackDieRoll + spellMod;
+        }
+        if(spell.damage && spell.damage.damage_at_slot_level){
+            let [numDice, diceType, addMod] = splitDiceRollString(spell.damage.damage_at_slot_level[Object.keys(spell.damage.damage_at_slot_level)[0]]);
+            if (attackDieRoll === 20){
+                numDice = numDice * 2;
+            }
+            for(let i = 0; i < numDice; i++){
+                let dieRoll = Math.floor((Math.random() * diceType)+1);
+                dmgDiceList.push(dieRoll);
+                damage = damage + dieRoll
+            }
+            damage = damage + (addMod ? spellMod : 0);
+        }else if(spell.damage && spell.damage.damage_at_character_level){
+            let [numDice, diceType, addMod] = splitDiceRollString(spell.damage.damage_at_character_level[Object.keys(spell.damage.damage_at_character_level)[0]]);
+            if (attackDieRoll === 20){
+                numDice = numDice * 2;
+            }
+            for(let i = 0; i < numDice; i++){
+                let dieRoll = Math.floor((Math.random() * diceType)+1);
+                dmgDiceList.push(dieRoll);
+                damage = damage + dieRoll
+            }
+            damage = damage + (addMod ? spellMod : 0);
+        }else if(spell.healLevels){
+            let [numDice, diceType, addMod] = splitDiceRollString(spell.healLevels[Object.keys(spell.healLevels)[0]]);
+            for(let i = 0; i < numDice; i++){
+                let dieRoll = Math.floor((Math.random() * diceType)+1);
+                dmgDiceList.push(dieRoll);
+                damage = damage + dieRoll
+            }
+            damage = damage + (addMod ? spellMod : 0);
+        }
+        setRollList([...rollList, {name : spell.name, attackDieRoll, attackRoll, dmgDiceList, damage, 
+            dmgType, altDmgDiceList : [], altDamage : 0,  altDmgType : ''}])
+    }
+
     return (
         <div className="character-spell-box">
-                    <h4>{spell.name}</h4>
+                    <h4 onClick={rollDamage}>{spell.name}</h4>
                     <p>
                         <i>
                             {spell.ritual ? <>Ritual, </> : <></>}{spell.concentration ? <>Concentration, </> : <></>}{spell.school.name}

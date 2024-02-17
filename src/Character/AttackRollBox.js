@@ -7,6 +7,8 @@ const AttackRollBox = ({attack})=>{
 
     const [showDamage, setShowDamage] = useState(false);
     const [className, setClassName] = useState('');
+    const [showRoll, setShowRoll] = useState(true);
+
     useEffect(()=>{
         if(attackDieRoll === 20){
             setClassName('crit');
@@ -14,16 +16,22 @@ const AttackRollBox = ({attack})=>{
         if(attackDieRoll === 1){
             setClassName('fail');
         };
+        if(attackDieRoll === 0){
+            setShowRoll(false);
+            setShowDamage(true);
+        }
     },[]);
 
     return(
         <div className="attack-roll-box">
-            <div onClick={()=>{setShowDamage(true)}}>
-                <h2 className={className}>{attackRoll}</h2>
-                <i>{attackDieRoll}</i>
-                <br/>
-                <b>{name}</b>
-            </div>
+            {showRoll ? 
+                <div onClick={()=>{setShowDamage(true)}}>
+                    <h2 className={className}>{attackRoll}</h2>
+                    <i>{attackDieRoll}</i>
+                    <br/>
+                </div>
+            :<></>}
+            <b>{name}</b>
             {showDamage ? 
             <div>
                 <h3>{damage} {dmgType}</h3>

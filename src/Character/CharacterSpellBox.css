@@ -22,3 +22,8 @@
 .character-spell-box ul{
     list-style-type: none;
 }
+
+.character-spell-box h4:hover{
+    color: red;
+    cursor: pointer;
+}
