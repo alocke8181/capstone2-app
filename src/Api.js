@@ -45,12 +45,14 @@ class Api{
     //Login and return the token and user
     static async login(data){
         console.debug('POST','/login', data.username);
+        console.log(BASE_URL);
         try{
             const resp = await axios.post(`${BASE_URL}/auth/token`, data);
             const token = resp.data.token;
             const user = resp.data.user;
             return {token, user};
         }catch(e){
+            console.log(e);
             this.handleErrors(e)
         };
     };
