@@ -11,7 +11,7 @@ class Api{
 
     //Method to handle errors
     static handleErrors(e){
-        console.error(e);
+        console.log(e);
         if(e.response.status === 404){
             const error = new Error(e.response.data.error.message);
             error.status = 404;
