@@ -1,11 +1,16 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useNavigate } from "react-router";
 import { CLASSES, RACES, BACKGROUNDS } from "./data";
 import { capFirstLetter } from "./Helpers";
+import UserContext from "./UserContext";
 
 const CharacterCreate = ({postCharacter})=>{
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
+    const {user, setUser} = useContext(UserContext);
+
+    const [errorMsg, setErrorMsg] = useState('');
+    const [isError, setIsError] = useState(false);
+
 
     const nav = useNavigate();
 
@@ -23,6 +28,25 @@ const CharacterCreate = ({postCharacter})=>{
 
     const handleSubmit = async (evt)=>{
         evt.preventDefault();
+        setIsError(false);
+        setErrorMsg('');
+        if(!formData.charName || formData.charName === ''){
+            setIsError(true);
+            setErrorMsg('Character name cannot be blank!');
+            return;
+        }else if(!formData.className || formData.className === ''){
+            setIsError(true);
+            setErrorMsg('Character class cannot be blank!');
+            return;
+        }else if(!formData.race || formData.race === ''){
+            setIsError(true);
+            setErrorMsg('Character race cannot be blank!');
+            return;
+        }if(!formData.level || formData.level === '0'){
+            setIsError(true);
+            setErrorMsg('Character cannot be level 0!');
+            return;
+        }
         formData.creatorID = user.id;
         formData.userID = user.id;
         const resp = await postCharacter(formData);
@@ -41,6 +65,8 @@ const CharacterCreate = ({postCharacter})=>{
 
     return(
         <div>
+            <h2>Create a New Character</h2>
+            {isError ? <p className="error">{errorMsg}</p> : <></>}
             <form>
                 <p key='charName'><label htmlFor="charName">Name : </label>
                 <input
