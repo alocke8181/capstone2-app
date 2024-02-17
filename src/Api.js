@@ -34,6 +34,7 @@ class Api{
         console.debug('POST','/register',data.username);
         try{
             const resp = await axios.post(`${BASE_URL}/auth/register`,data);
+            console.log(resp);
             const token = resp.data.token;
             const user = resp.data.user;
             return {token, user};
