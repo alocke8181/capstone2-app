@@ -49,6 +49,7 @@ class Api{
         console.log(BASE_URL);
         try{
             const resp = await axios.post(`${BASE_URL}/auth/token`, data);
+            console.log(resp);
             const token = resp.data.token;
             const user = resp.data.user;
             return {token, user};
