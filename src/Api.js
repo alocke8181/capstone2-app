@@ -11,7 +11,6 @@ class Api{
 
     //Method to handle errors
     static handleErrors(e){
-        console.log(e);
         if(e.response.status === 404){
             const error = new Error(e.response.data.error.message);
             error.status = 404;
@@ -21,9 +20,8 @@ class Api{
             error.status = 401;
             throw error;
         }else{
-            console.log(e);
             let msg = e.response.data.error.message;
-            const error = new Error(e);
+            const error = new Error(msg);
             error.status = e.response.status;
             throw error;
         }
@@ -31,10 +29,9 @@ class Api{
 
     //Register, login, and return the token and user
     static async register(data){
-        console.debug('POST','/register',data.username);
+        //console.debug('POST','/register',data.username);
         try{
             const resp = await axios.post(`${BASE_URL}/auth/register`,data);
-            console.log(resp);
             const token = resp.data.token;
             const user = resp.data.user;
             return {token, user};
@@ -45,23 +42,20 @@ class Api{
 
     //Login and return the token and user
     static async login(data){
-        console.debug('POST','/login', data.username);
-        console.log(BASE_URL);
+        //console.debug('POST','/login', data.username);
         try{
             const resp = await axios.post(`${BASE_URL}/auth/token`, data);
-            console.log(resp);
             const token = resp.data.token;
             const user = resp.data.user;
             return {token, user};
         }catch(e){
-            console.log(e);
             this.handleErrors(e)
         };
     };
 
     //Get a user
     static async getUser(id, token){
-        console.debug('GET','/users',id);
+        //console.debug('GET','/users',id);
         try{
             const resp = await axios.get(`${BASE_URL}/users/${id}`,{
                 headers:{Authorization: `Bearer ${token}`}
@@ -74,7 +68,7 @@ class Api{
 
     //Patch a user
     static async patchUser(data, id, token){
-        console.debug('PATCH','/users',id);
+        //console.debug('PATCH','/users',id);
         try{
             let resp = await axios.patch(`${BASE_URL}/users/${id}`, data, {
                 headers: {Authorization: `Bearer ${token}`}
@@ -87,7 +81,7 @@ class Api{
 
     //Delete a user
     static async deleteUser(id, token){
-        console.debug('DELETE','/users',id);
+        //console.debug('DELETE','/users',id);
         try{
             let resp = await axios.delete(`${BASE_URL}/users/${id}`,{
                 headers: {Authorization: `Bearer ${token}`}
@@ -100,7 +94,7 @@ class Api{
 
     //Post a new character
     static async postCharacter(data, token){
-        console.debug('POST','/characters');
+        //console.debug('POST','/characters');
         try{
             let resp = await axios.post(`${BASE_URL}/characters`,data,{
                 headers:{Authorization: `Bearer ${token}`}
@@ -113,7 +107,7 @@ class Api{
 
     //Get all the characters belonging to a user
     static async getCharacters(id, token){
-        console.debug('GET','/characters/user', id);
+        //console.debug('GET','/characters/user', id);
         try{
             let resp = await axios.get(`${BASE_URL}/characters/user/${id}`,{
                 headers : {Authorization: `Bearer ${token}`}
@@ -126,7 +120,7 @@ class Api{
 
     //Get a character
     static async getCharacter(id, token){
-        console.debug('GET','/characters', id);
+        //console.debug('GET','/characters', id);
         try{
             let resp = await axios.get(`${BASE_URL}/characters/${id}`,{
                 headers : {Authorization: `Bearer ${token}`}
@@ -139,7 +133,7 @@ class Api{
 
     //Patch a character
     static async patchCharacter(data, token){
-        console.debug('PATCH', '/characters', data.id);
+        //console.debug('PATCH', '/characters', data.id);
         try{
             let resp = await axios.patch(`${BASE_URL}/characters/${data.id}`, data,{
                 headers : {Authorization: `Bearer ${token}`}
@@ -152,7 +146,7 @@ class Api{
 
     //Delete a character
     static async deleteCharacter(id, data, token){
-        console.debug('DELETE','/characters',id);
+        //console.debug('DELETE','/characters',id);
         try{
             let resp = await axios.delete(`${BASE_URL}/characters/${id}`,{
                 headers:{Authorization: `Bearer ${token}`}, data: data
@@ -165,7 +159,7 @@ class Api{
 
     //Post an attack
     static async postAttack(data, token){
-        console.debug('POST','/attacks');
+        //console.debug('POST','/attacks');
         try{
             let resp = await axios.post(`${BASE_URL}/attacks`, data,{
                 headers:{Authorization: `Bearer ${token}`}
@@ -178,7 +172,7 @@ class Api{
 
     //Patch an attack
     static async patchAttack(data, token){
-        console.debug('PATCH','/attacks',data.id);
+        //console.debug('PATCH','/attacks',data.id);
         try{
             let resp = await axios.patch(`${BASE_URL}/attacks/${data.id}`,data,{
                 headers:{Authorization: `Bearer ${token}`}
@@ -191,7 +185,7 @@ class Api{
 
     //Delete an attack
     static async deleteAttack(attackID, data, token){
-        console.debug('DELETE','/attacks',attackID);
+        //console.debug('DELETE','/attacks',attackID);
         try{
             let resp = await axios.delete(`${BASE_URL}/attacks/${attackID}`,{
                 headers:{Authorization: `Bearer ${token}`}, data : data
@@ -204,7 +198,7 @@ class Api{
 
     //Post a custom trait
     static async postTrait(data, token){
-        console.debug('POST','/traits');
+        //console.debug('POST','/traits');
         try{
             let resp = await axios.post(`${BASE_URL}/traits`, data,{
                 headers:{Authorization: `Bearer ${token}`}
@@ -217,7 +211,7 @@ class Api{
 
     //Patch a custom trait
     static async patchTrait(data, token){
-        console.debug('PATCH','/traits',data.id);
+        //console.debug('PATCH','/traits',data.id);
         try{
             let resp = await axios.patch(`${BASE_URL}/traits/${data.id}`,data,{
                 headers:{Authorization: `Bearer ${token}`}
@@ -230,7 +224,7 @@ class Api{
 
     //Get a trait from the external api
     static async getExternalTrait(index){
-        console.debug('EXTERNAL GET','/traits');
+        //console.debug('EXTERNAL GET','/traits');
         try{
             let resp = await axios.get(`${EXTERNAL_URL}/traits/${index}`);
             return resp;
@@ -241,7 +235,7 @@ class Api{
 
     //Delete a custom trait
     static async deleteTrait(traitID, data, token){
-        console.debug('DELETE','/traits',traitID);
+        //console.debug('DELETE','/traits',traitID);
         try{
             let resp = await axios.delete(`${BASE_URL}/traits/${traitID}`,{
                 headers:{Authorization: `Bearer ${token}`}, data : data
@@ -254,7 +248,7 @@ class Api{
 
     //Post a custom feature
     static async postFeature(data, token){
-        console.debug('POST','/features');
+        //console.debug('POST','/features');
         try{
             let resp = await axios.post(`${BASE_URL}/features`, data,{
                 headers:{Authorization: `Bearer ${token}`}
@@ -267,7 +261,7 @@ class Api{
 
     //Patch a custom feature
     static async patchFeature(data, token){
-        console.debug('PATCH','/features',data.id);
+        //console.debug('PATCH','/features',data.id);
         try{
             let resp = await axios.patch(`${BASE_URL}/features/${data.id}`,data,{
                 headers:{Authorization: `Bearer ${token}`}
@@ -280,7 +274,7 @@ class Api{
 
     //Get a feature from the external api
     static async getExternalFeature(index){
-        console.debug('EXTERNAL GET','/features', index);
+        //console.debug('EXTERNAL GET','/features', index);
         try{
             let resp = await axios.get(`${EXTERNAL_URL}/features/${index}`);
             return resp;
@@ -291,7 +285,7 @@ class Api{
 
     //Delete a custom feature
     static async deleteFeature(featureID, data,token){
-        console.debug('DELETE','/features',featureID);
+        //console.debug('DELETE','/features',featureID);
         try{
             let resp = await axios.delete(`${BASE_URL}/features/${featureID}`,{
                 headers:{Authorization: `Bearer ${token}`}, data : data
@@ -304,7 +298,7 @@ class Api{
 
     //Get a spell
     static async getSpell(index){
-        console.debug('EXTERNAL GET','/spells', index);
+        //console.debug('EXTERNAL GET','/spells', index);
         try{
             let resp = await axios.get(`${EXTERNAL_URL}/spells/${index}`);
             let spell = {
