@@ -68,13 +68,6 @@ const Main = () =>{
         return user.id;
     }
 
-    //Get a user
-    async function getUser(id){
-        const resp = await Api.getUser(id,token);
-        const user = resp.data.user;
-        return user;
-    };
-
     //Send a patch request to the backend, update user and localStorage
     async function editUser(data, id){
         const resp = await Api.patchUser(data, id, token);
@@ -97,12 +90,6 @@ const Main = () =>{
         return resp;
     };
 
-    //Send a request to the backend to get a list of characters for a user
-    async function getCharacters(userID){
-        const resp = await Api.getCharacters(userID, token);
-        return resp;
-    }
-
     return(
         <UserContext.Provider value={{user, token, setUser}}>
             <HeaderMenu />
@@ -112,7 +99,7 @@ const Main = () =>{
                 <Route path="/login" element={<Login login={login}/>}/>
                 <Route path="/logout" element={<Logout logout={logout}/>}/>
                 <Route path="/register" element={<Register register={register}/>}/>
-                <Route path="/users/:id" element={<UserPage getUser={getUser} getCharacters={getCharacters}/>}/>
+                <Route path="/users/:id" element={<UserPage/>}/>
                 <Route path="/users/:id/edit" element={<UserEdit editUser={editUser}/>}/>
                 <Route path="/users/:id/delete" element={<UserDelete deleteUser={deleteUser}/>}/>
                 <Route path="/characters/new" element={<CharacterCreate postCharacter={postCharacter}/>}/>

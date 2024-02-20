@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import {checkAuthOrAdmin, capFirstLetter} from "./Helpers";
 import './UserPage.css';
 import UserContext from "./UserContext";
+import Api from "./Api";
 
 import { Oval } from "react-loader-spinner";
 
-const UserPage = ({getUser, getCharacters}) =>{
+const UserPage = () =>{
 
     const {user, token, setUser} = useContext(UserContext);
     const {id} = useParams();
@@ -32,18 +33,18 @@ const UserPage = ({getUser, getCharacters}) =>{
                 setUserView(user);
                 setLoading(false)
                 setLoadingChars(true);
-                const resp = await getCharacters(id);
+                const resp = await Api.getCharacters(id, token);
                 setCharacters(resp.data.characters);
                 setLoadingChars(false);
                 return;
             }else{
                 try{
                     setLoading(true);
-                    const userData = await getUser(id);
-                    setUserView(userData);
+                    const userData = await Api.getUser(id, token);
+                    setUserView(userData.data.user);
                     setLoading(false);
                     setLoadingChars(true);
-                    const resp = await getCharacters(id);
+                    const resp = await Api.getCharacters(id, token);
                     setCharacters(resp.data.characters);
                     setLoadingChars(false);
                 }catch(e){
