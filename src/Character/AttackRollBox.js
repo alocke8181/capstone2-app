@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-
+import './AttackRollBox.css';
 
 const AttackRollBox = ({attack})=>{
 

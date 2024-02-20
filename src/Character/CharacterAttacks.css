@@ -1,0 +1,11 @@
+#character-attack-big-cont{
+    border: 2px ridge gold;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+}
+
+#character-attack-cont{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}

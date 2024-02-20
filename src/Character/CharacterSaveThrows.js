@@ -3,6 +3,7 @@ import { CORESTATS } from "../data";
 import CharacterContext from "./CharacterContext";
 import { capFirstLetter } from "../Helpers";
 import CharacterSaveThrowBox from "./CharacterSaveThrowBox";
+import './CharacterSaveThrows.css';
 
 const CharacterSaveThrows = ({handleSavingThrowChange})=>{
 

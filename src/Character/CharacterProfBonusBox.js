@@ -1,5 +1,6 @@
 import React, {useContext} from "react";
 import CharacterContext from "./CharacterContext";
+import './CharacterProfBonusBox.css';
 
 const CharacterProfBonusBox = ({handleChange})=>{
 

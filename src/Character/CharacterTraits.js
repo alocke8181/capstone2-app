@@ -4,6 +4,7 @@ import NewTraitForm from "./NewTraitForm";
 import EditTraitForm from "./EditTraitForm";
 import CharacterTraitBox from "./CharacterTraitBox";
 import CharacterContext from "./CharacterContext";
+import './CharacterTraits.css';
 
 const CharacterTraits = ({postTrait, patchTrait, deleteTrait})=>{
 

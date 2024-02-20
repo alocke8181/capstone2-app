@@ -1,0 +1,11 @@
+.character-skill-box-large{
+    border: 2px ridge gold;
+}
+
+#character-skill-list{
+    column-count: 3;
+}
+
+#character-skill-list li{
+    text-align: left;
+}

@@ -1,0 +1,10 @@
+.character-trait-box{
+    border: 2px ridge gold;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(255,255,255,0.5);
+}
+
+.character-trait-box p{
+    font-size: x-small;
+}

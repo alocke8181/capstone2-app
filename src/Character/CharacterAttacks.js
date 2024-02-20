@@ -3,6 +3,7 @@ import NewAttackForm from "./NewAttackForm";
 import EditAttackForm from "./EditAttackForm";
 import CharacterAttackBox from "./CharacterAttackBox";
 import CharacterContext from "./CharacterContext";
+import './CharacterAttacks.css';
 
 const CharacterAttacks = ({postAttack, patchAttack, deleteAttack})=>{
 

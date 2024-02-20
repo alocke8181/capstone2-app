@@ -1,0 +1,14 @@
+#character-core-stat-cont{
+    margin: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.character-core-stat-box{
+    border: 2px ridge gold;
+}
+
+.character-core-stat-box p{
+    margin: 1px;
+}

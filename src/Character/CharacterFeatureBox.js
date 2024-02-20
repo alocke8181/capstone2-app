@@ -1,4 +1,5 @@
 import React from "react";
+import './CharacterFeatBox.css';
 
 const CharacterFeatureBox = ({feature, handleDeleteFeature, showEditFeatureFormFunc})=>{
     return(

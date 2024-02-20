@@ -1,0 +1,8 @@
+#character-equip-profs{
+    border: 2px ridge gold;
+}
+
+#character-equip-profs ul{
+    columns: 2;
+    text-align: left;
+}

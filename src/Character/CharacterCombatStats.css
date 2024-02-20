@@ -1,0 +1,18 @@
+#character-combat-stats-cont{
+    margin: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.character-combat-stat-box{
+    border: 2px ridge gold;
+}
+
+.character-combat-stat-box p{
+    margin: 1px;
+}
+
+#character-hp-box p{
+    margin: 5px;
+}

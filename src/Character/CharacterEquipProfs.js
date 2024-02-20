@@ -1,5 +1,6 @@
 import React, {useState, useContext} from "react";
 import CharacterContext from "./CharacterContext";
+import './CharacterEquipProfs.css'
 
 const CharacterEquipProfs = ()=>{
     

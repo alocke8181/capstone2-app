@@ -1,0 +1,14 @@
+#character-basic-cont{
+    margin: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.character-basic-box{
+    border: 2px ridge gold;
+}
+
+.character-basic-box p{
+    margin: 5px;
+}

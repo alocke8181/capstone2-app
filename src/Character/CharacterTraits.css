@@ -1,0 +1,10 @@
+#character-trait-big-cont{
+    border: 2px ridge gold;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+}
+#character-trait-cont{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

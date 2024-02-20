@@ -1,0 +1,12 @@
+.character-skill-box-small{
+    border: 2px ridge gold;
+}
+
+.character-skill-box-subbox{
+    width: 100%;
+    border: 2px ridge gold;
+}
+
+.character-skill-box-subbox p{
+    margin: 5px;
+}

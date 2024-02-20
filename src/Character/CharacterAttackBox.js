@@ -1,6 +1,8 @@
 import React, {useContext} from "react";
 import { capFirstLetter } from "../Helpers";
 import RollContext from "./RollContext";
+import './AttackBox.css'
+
 
 const CharacterAttackBox = ({character, attack, handleDeleteAttack, showEditAttackFormFunc})=>{
 

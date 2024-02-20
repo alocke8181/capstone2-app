@@ -1,6 +1,7 @@
 import React, {useContext} from "react";
 import CharacterContext from "./CharacterContext";
 import { capFirstLetter } from "../Helpers";
+import './CharacterCombatStats.css';
 
 const CharacterCombatStats = ({handleChange})=>{
 

@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import CharacterContext from "./CharacterContext";
 import { capFirstLetter } from "../Helpers";
 import { CORESTATS } from "../data";
+import './CharacterCoreStats.css';
 
 const CharacterCoreStats = ({handleStatChange})=>{
 

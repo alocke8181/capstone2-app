@@ -1,5 +1,6 @@
 import React, {useContext} from "react";
 import CharacterContext from "./CharacterContext";
+import './CharacterBasic.css';
 
 import { capFirstLetter } from "../Helpers";
 

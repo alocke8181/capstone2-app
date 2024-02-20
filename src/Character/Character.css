@@ -2,7 +2,14 @@ h2, h3, h4{
     margin: 5px;
 }
 
+section{
+    display: inline;
+}
 
+section:hover{
+    color: red;
+    cursor: pointer;
+}
 
 #character-page{
     width: 100%;
@@ -50,55 +57,6 @@ h2, h3, h4{
     text-align: center;
 }
 
-#character-basic-cont{
-    margin: auto;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-}
-
-.character-basic-box{
-    border: 2px ridge gold;
-}
-
-.character-basic-box p{
-    margin: 5px;
-}
-
-#character-core-stat-cont{
-    margin: auto;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-}
-
-.character-core-stat-box{
-    border: 2px ridge gold;
-}
-
-.character-core-stat-box p{
-    margin: 1px;
-}
-
-#character-combat-stats-cont{
-    margin: auto;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-}
-
-.character-combat-stat-box{
-    border: 2px ridge gold;
-}
-
-.character-combat-stat-box p{
-    margin: 1px;
-}
-
-#character-hp-box p{
-    margin: 5px;
-}
-
 #character-skill-cont{
     margin: auto;
     width: 100%;
@@ -118,130 +76,15 @@ h2, h3, h4{
     margin: 5px;
 }
 
-#character-saving-profs-list{
-    text-align: left;
-}
-
 .character-skill-box-large{
     border: 2px ridge gold;
-}
-
-#character-skill-list{
-    column-count: 3;
-}
-
-#character-skill-list li{
-    text-align: left;
-}
-
-section{
-    display: inline;
-}
-
-section:hover{
-    color: red;
-    cursor: pointer;
 }
 
 #character-profs-altres-cont{
     width: 100%;
     margin: auto;
-    display: grid;
-    
+    display: grid; 
     grid-template-columns: 2fr 4fr 1fr;
-}
-
-#character-languages{
-    border: 2px ridge gold;
-}
-
-#character-languages input{
-    width: 50%;
-}
-
-#character-languages ul{
-    list-style: none;
-    text-align: left;
-    margin-left: 1%;
-}
-
-#character-equip-profs{
-    border: 2px ridge gold;
-}
-
-#character-equip-profs ul{
-    columns: 2;
-    text-align: left;
-}
-
-#character-attack-big-cont{
-    border: 2px ridge gold;
-    text-align: center;
-    margin: auto;
-    width: 100%;
-}
-
-#character-attack-cont{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-}
-
-.character-attack-box{
-    border: 2px ridge gold;
-    text-align: left;
-    font-size: small;
-    background-color: rgba(255,255,255,0.5);
-}
-
-.character-attack-box h3{
-    text-align: center;
-}
-
-.character-attack-box h3:hover{
-    color: red;
-    cursor: pointer;
-}
-
-#character-trait-big-cont{
-    border: 2px ridge gold;
-    text-align: center;
-    margin: auto;
-    width: 100%;
-}
-#character-trait-cont{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-.character-trait-box{
-    border: 2px ridge gold;
-    text-align: center;
-    padding: 10px;
-    background-color: rgba(255,255,255,0.5);
-}
-
-.character-trait-box p{
-    font-size: x-small;
-}
-
-#character-feat-big-cont{
-    border: 2px ridge gold;
-    text-align: center;
-    margin: auto;
-    width: 100%;
-}
-#character-feat-cont{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-.character-feat-box{
-    border: 2px ridge gold;
-    text-align: center;
-    padding: 10px;
-    background-color: rgba(255,255,255,0.5);
-}
-
-.character-feat-box p{
-    font-size: x-small;
 }
 
 #character-spell-big-cont{

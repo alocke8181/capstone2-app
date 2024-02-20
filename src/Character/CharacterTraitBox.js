@@ -1,4 +1,5 @@
 import React from "react";
+import './CharacterTraitBox.css';
 
 const CharacterTraitBox = ({trait, handleDeleteTrait, showEditTraitFormFunc})=>{
 

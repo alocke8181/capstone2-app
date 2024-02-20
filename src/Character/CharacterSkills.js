@@ -4,6 +4,7 @@ import RollContext from "./RollContext";
 import { SKILLS } from "../data";
 import { capFirstLetter } from "../Helpers";
 import CharacterSkillBox from "./CharacterSkillBox";
+import './CharacterSkills.css'
 
 const CharacterSkills = ({handleSkillChange})=>{
 

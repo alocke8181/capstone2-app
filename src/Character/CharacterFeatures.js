@@ -3,6 +3,7 @@ import NewFeatureForm from "./NewFeatureForm";
 import EditFeatureForm from "./EditFeatureForm";
 import CharacterFeatureBox from "./CharacterFeatureBox";
 import CharacterContext from "./CharacterContext";
+import './CharacterFeats.css';
 
 const CharacterFeatures = ({postFeature, patchFeature, deleteFeature})=>{
 

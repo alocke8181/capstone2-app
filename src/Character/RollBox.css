@@ -12,16 +12,3 @@
     color: green;
 }
 
-.attack-roll-box{
-    border: 2px ridge gold;
-    text-align: center;
-}
-
-.attack-roll-box h2, h3{
-    margin-bottom: 0px;
-}
-
-.attack-roll-box h2:hover{
-    color: red;
-    cursor: pointer;
-}
