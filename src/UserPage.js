@@ -9,7 +9,7 @@ import { Oval } from "react-loader-spinner";
 
 const UserPage = ({getUser, getCharacters}) =>{
 
-    const {user, setUser} = useContext(UserContext);
+    const {user, token, setUser} = useContext(UserContext);
     const {id} = useParams();
     const nav = useNavigate()
 

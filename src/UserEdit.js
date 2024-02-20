@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
+import UserContext from "./UserContext";
 import { useParams, useNavigate } from "react-router";
 import {Card, CardBody, CardHeader} from 'react-bootstrap';
 import { Link } from "react-router-dom";
 import { checkAuthOrAdmin } from "./Helpers";
 
 const UserEdit = ({editUser}) =>{
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const {user, token, setUser} = useContext(UserContext);
     const {id} = useParams();
     const nav = useNavigate();
 

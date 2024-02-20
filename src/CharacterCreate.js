@@ -6,7 +6,7 @@ import UserContext from "./UserContext";
 
 const CharacterCreate = ({postCharacter})=>{
 
-    const {user, setUser} = useContext(UserContext);
+    const {user, token, setUser} = useContext(UserContext);
 
     const [errorMsg, setErrorMsg] = useState('');
     const [isError, setIsError] = useState(false);

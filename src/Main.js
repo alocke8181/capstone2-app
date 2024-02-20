@@ -104,7 +104,7 @@ const Main = () =>{
     }
 
     return(
-        <UserContext.Provider value={{user, setUser}}>
+        <UserContext.Provider value={{user, token, setUser}}>
             <HeaderMenu />
             <br/>
             <Routes>

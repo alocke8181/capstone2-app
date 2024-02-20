@@ -35,12 +35,9 @@ import CharacterBio from "./CharacterBio";
 import "./Character.css";
 import './RollBox.css';
 
-const Character = ({getCharacter})=>{
+const Character = ()=>{
 
-
-
-    const {user, setUser} = useContext(UserContext);
-    const [token, setToken] = useState(localStorage.getItem('token'));
+    const {user, token, setUser} = useContext(UserContext);
 
     const {id} = useParams();
     const nav = useNavigate();
