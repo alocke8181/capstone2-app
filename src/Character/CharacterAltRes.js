@@ -7,7 +7,6 @@ const CharacterAltRes = ()=>{
 
     const {character, formData, saveCharacter} = useContext(CharacterContext)
 
-
     const defaultForm = {
         name : '',
         max : '',
@@ -26,6 +25,7 @@ const CharacterAltRes = ()=>{
         }));
     }
 
+    //Add an alternate resource
     const handleAddAltRes = async (evt)=>{
         evt.preventDefault()
         if(character.altResources.some((resource)=>(resource.name === resFormData.name))){
@@ -44,6 +44,7 @@ const CharacterAltRes = ()=>{
         
     }
 
+    //Delete an alternate resource
     const handleDeleteAltRes = async (resName)=>{
         let newAltRes = character.altResources.filter((resource)=>(resource.name !== resName));
         character.altResources = newAltRes;
@@ -53,11 +54,8 @@ const CharacterAltRes = ()=>{
     return(
         <div id="character-altres-cont">
             <h2>Alternate Resources</h2>
-            
             {showForm ? 
-            
             <p>
-                
                 <form>
                     <label htmlFor="name">Name : </label>
                     <input
@@ -94,8 +92,7 @@ const CharacterAltRes = ()=>{
             </p>
             :
             <p>
-                <button onClick={()=>{setShowForm(true)}}>New Resource</button>
-                
+                <button onClick={()=>{setShowForm(true)}}>New Resource</button>  
             </p>}
             <div id="character-altres-subcont">
                 {character.altResources.map((resource)=>(
@@ -104,8 +101,6 @@ const CharacterAltRes = ()=>{
             </div>
         </div>
     )
-
-
 }
 
 export default CharacterAltRes;

@@ -11,13 +11,13 @@ const CharacterSaveThrows = ({handleSavingThrowChange})=>{
 
     return(
         <div className="character-skill-box-small">
-                            <h3>Saving Throws</h3>
-                            <ul id="character-saving-profs-list">
-                                {CORESTATS.map((stat)=>(
-                                    <CharacterSaveThrowBox key={stat} stat={stat} handleSavingThrowChange={handleSavingThrowChange}/>
-                                ))}
-                            </ul>
-                        </div>
+            <h3>Saving Throws</h3>
+            <ul id="character-saving-profs-list">
+                {CORESTATS.map((stat)=>(
+                    <CharacterSaveThrowBox key={stat} stat={stat} handleSavingThrowChange={handleSavingThrowChange}/>
+                ))}
+            </ul>
+        </div>
     )
 }
 

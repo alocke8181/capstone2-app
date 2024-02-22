@@ -3,34 +3,54 @@ import NewFeatureForm from "./NewFeatureForm";
 import EditFeatureForm from "./EditFeatureForm";
 import CharacterFeatureBox from "./CharacterFeatureBox";
 import CharacterContext from "./CharacterContext";
+import UserContext from "../UserContext";
+import Api from "../Api";
 import './CharacterFeats.css';
 
-const CharacterFeatures = ({postFeature, patchFeature, deleteFeature})=>{
+const CharacterFeatures = ()=>{
 
-    const {character, formData, saveCharacter} = useContext(CharacterContext)
+    const {character, formData, saveCharacter} = useContext(CharacterContext);
+    const {user, token, setUser} = useContext(UserContext);
 
     const [showNewFeatureForm, setShowNewFeatureForm] = useState(false);
+    const [editingFeature, setEditingFeature] = useState(null);
+    const [showEditFeatureForm, setShowEditFeatureForm] = useState(false);
 
     const showFeatureForm = ()=>{
         setShowNewFeatureForm(true);
     };
 
+    //Post a new feature to the backend OR get external data
     const handleNewFeatureSubmit = async (data, isCustom)=>{
+        let feature;
         if(isCustom){
+            delete data.choice
             data.charID = character.id;
+            data.userID = user.id;
+            const resp = await Api.postFeature(data, token);
+            feature = resp.data.feature;
+        }else{
+            if(character.features.some((feature)=>(feature.index && data.choice && (feature.index === data.choice)))){
+                alert('Cannot have duplicate preset features!');
+                return;
+            }else{
+                const resp = await Api.getExternalFeature(data.choice);
+                feature = {
+                    index : resp.data.index,
+                    name : resp.data.name,
+                    description : resp.data.desc.join(' ')
+                };
+            }
         }
-        let resp = await postFeature(data, isCustom);
-        character.features.push(resp);
+        character.features.push(feature);
         await saveCharacter();
-        return resp;
     }
 
-    const [editingFeature, setEditingFeature] = useState(null);
-    const [showEditFeatureForm, setShowEditFeatureForm] = useState(false);
-
+    //Patch a custom feature
     const handleEditFeatureSubmit = async (data)=>{
         data.charID = character.id;
-        let resp = await patchFeature(data);
+        data.userID = user.id;
+        let resp = await Api.patchFeature(data, token);
         hideEditFeatureForm();
         await saveCharacter();
     }
@@ -47,13 +67,15 @@ const CharacterFeatures = ({postFeature, patchFeature, deleteFeature})=>{
         setEditingFeature(null);
     }
 
+    //Delete a feature
     const handleDeleteFeature = async (evt)=>{
         if(evt.target.dataset.featureid){
+            const data = {userID : user.id}
             const featureID = parseInt(evt.target.dataset.featureid);
             let newCharacterFeatures = character.features.filter((feature) =>(!feature.id || (feature.id && feature.id !== featureID)));
             character.features = newCharacterFeatures;
             await saveCharacter();
-            await deleteFeature(featureID);
+            await Api.deleteFeature(featureID, data, token);
         }else if(evt.target.dataset.featureindex){
             const featureIndex = evt.target.dataset.featureindex;
             let newCharacterFeatures = character.features.filter((feature)=>(!feature.index || (feature.index && feature.index !== featureIndex)));

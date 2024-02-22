@@ -8,34 +8,39 @@ const CharacterAttackBox = ({character, attack, handleDeleteAttack, showEditAtta
 
     const {rollList, setRollList} = useContext(RollContext);
 
+    //Roll for the hit and damage
     const rollAttack = ()=>{
         const name = attack.name;
         const dmgType = attack.dmgType;
-        const altDmgType = attack.altDmgType
+        const altDmgType = attack.altDmgType;
+
         const attackDieRoll = Math.floor((Math.random() * 20)+1);
         const attackRoll = attackDieRoll + character[attack.attackSkill + "Mod"] + 
-            (attack.isProf ? character.profBonus : 0) + attack.attackMod
+            (attack.isProf ? character.profBonus : 0) + attack.attackMod;
+
         let diceToRoll = (attackDieRoll === 20 ? 2 * attack.numDice : attack.numDice);
         let altDiceToRoll = (attackDieRoll === 20 ? 2 * attack.altNumDice : attack.altNumDice);
         let dmgDiceList = [];
         let damage = 0;
         let altDmgDiceList = []
         let altDamage = 0;
+
         for(let i = 0; i < diceToRoll; i++){
             let roll = Math.floor((Math.random() * attack.dmgDice)+1);
             damage = damage + roll;
             dmgDiceList.push(roll);
         }
         damage = damage + character[attack.dmgSkill + "Mod"] + attack.dmgMod;
+
         for(let j = 0; j < altDiceToRoll; j++){
             let altRoll = Math.floor((Math.random() * attack.altDmgDice)+1);
             altDamage = altDamage + altRoll;
             altDmgDiceList.push(altRoll);
         }
         altDamage = altDamage + character[attack.altDmgSkill + "Mod"] + attack.altDmgMod;
+
         setRollList([...rollList, {name, attackDieRoll, attackRoll, dmgDiceList, damage, dmgType, altDmgDiceList, altDamage, altDmgType}])
     }
-
 
     return(
         <div className="character-attack-box" key={attack.id}>
@@ -77,7 +82,6 @@ const CharacterAttackBox = ({character, attack, handleDeleteAttack, showEditAtta
             </p>
         </div>
     )
-
 }
 
 export default CharacterAttackBox;

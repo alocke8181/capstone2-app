@@ -13,15 +13,15 @@ const CharacterSkills = ({handleSkillChange})=>{
     const {rollList, setRollList} = useContext(RollContext);
 
     return(
-            <div className="character-skill-box-large">
-                            <h3>Skills</h3>
-                            {character.jackOfAllTrades ? <p><i>Jack of All Trades active!</i></p> : <></>}
-                            <ul id="character-skill-list">
-                                {SKILLS.map((skill)=>(
-                                    <CharacterSkillBox skill={skill} key={skill.name} handleSkillChange={handleSkillChange}/>
-                                ))}
-                            </ul>
-            </div>
+        <div className="character-skill-box-large">
+            <h3>Skills</h3>
+            {character.jackOfAllTrades ? <p><i>Jack of All Trades active!</i></p> : <></>}
+            <ul id="character-skill-list">
+                {SKILLS.map((skill)=>(
+                    <CharacterSkillBox skill={skill} key={skill.name} handleSkillChange={handleSkillChange}/>
+                ))}
+            </ul>
+        </div>
     )
 }
 

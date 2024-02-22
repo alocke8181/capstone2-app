@@ -74,6 +74,5 @@ const CharacterSpells = ({handleChange})=>{
                 handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
         </div>
     )
-
 }
 export default CharacterSpells;

@@ -1,19 +1,17 @@
 import React, {useState, useEffect, useContext} from "react";
 import { useParams, useNavigate } from "react-router";
 import {checkAuthOrAdmin} from "../Helpers";
+
+import {v4 as uuidv4} from 'uuid';
+import StickyBox from "react-sticky-box";
+import { Oval } from "react-loader-spinner";
 import Api from "../Api";
+
 import UserContext from "../UserContext";
 import CharacterContext from "./CharacterContext";
 import RollContext from './RollContext';
 
-import {v4 as uuidv4} from 'uuid';
-
-import StickyBox from "react-sticky-box";
-
-import { Oval } from "react-loader-spinner";
-
 import AttackRollBox from "./AttackRollBox";
-
 import CharacterSticky from "./CharacterSticky";
 import CharacterBasic from "./CharacterBasic";
 import CharacterCoreStats from "./CharacterCoreStats";
@@ -53,6 +51,7 @@ const Character = ()=>{
     const [rollList, setRollList] = useState([]);
 
     //Set starter form data based on a character
+    //Automatically generates the keys
     const resetFormData = (character)=>{
         let startFormData = {};
         const keys = Object.keys(character);
@@ -74,10 +73,10 @@ const Character = ()=>{
             resetFormData(resp.data.character);
             setLoading(false);
         }
-        fetchCharacter(id);
-           
+        fetchCharacter(id);     
     },[]);
 
+    //Set the title of the page to match the character name
     useEffect(()=>{document.title = character.charName; },[character.charName]);
 
     //Function to save the character to the db
@@ -120,7 +119,7 @@ const Character = ()=>{
         }));
     };
 
-    //Special handle to update the character saving throw proficiencies
+    //Special handler to update the character saving throw proficiencies
     const handleSavingThrowChange = (evt)=>{
         const {name, value} = evt.target;
         let currSavingProfs = character.savingProfs;
@@ -136,7 +135,7 @@ const Character = ()=>{
         }));
     };
 
-    //Special handle to update the character skill proficiencies
+    //Special handler to update the character skill proficiencies
     const handleSkillChange = (evt)=>{
         const {name, value} = evt.target;
         let currSkillProfs = character.skillProfs;
@@ -152,27 +151,7 @@ const Character = ()=>{
         }));
     };
 
-     //Post an attack to the backend
-     async function postAttack(data){
-        data.userID = user.id;
-        const resp = await Api.postAttack(data, token);
-        return resp;
-    }
-
-    //Patch an attack
-    async function patchAttack(data){
-        data.userID = user.id;
-        const resp = await Api.patchAttack(data, token);
-        return resp;
-    }
-
-    //Delete an attack from the backend
-    async function deleteAttack(attackID){
-        const data ={userID : user.id}
-        const resp = await Api.deleteAttack(attackID, data, token);
-        return resp;
-    }
-
+    //Add an equipment item
     const handleAddEquipment = async (formData)=>{
         const itemName = formData.name;
         if(character.equipment.some((item)=>(item.name === itemName))){
@@ -187,73 +166,14 @@ const Character = ()=>{
         }
     };
 
+    //Remove an equipment item
     const handleDeleteEquipment = async (itemName)=>{
         let newEquip = character.equipment.filter((item)=>(item.name !== itemName))
         character.equipment = newEquip;
         await saveCharacter();
     }
 
-    //Post a trait to the backend OR get external data from the API
-    async function postTrait(data, isCustom){
-        if(isCustom){
-            delete data.choice;
-            data.userID = user.id;
-            const resp = await Api.postTrait(data, token);
-            return resp.data.trait;
-        }else{
-            const resp = await Api.getExternalTrait(data.choice)
-            return({
-                index : resp.data.index,
-                name : resp.data.name,
-                description : resp.data.desc.join(' ')
-            });
-        };
-    };
-
-    //Patch a trait to the backend
-    async function patchTrait(data){
-        data.userID = user.id;
-        const resp = await Api.patchTrait(data, token);
-        return resp;
-    }
-
-    //Delete a trait from the backend
-    async function deleteTrait(traitID){
-        const data = {userID : user.id}
-        const resp = await Api.deleteTrait(traitID, data, token);
-        return resp;
-    }
-
-     //Post a feature to the backend OR get external data from the API
-     async function postFeature(data, isCustom){
-        if(isCustom){
-            delete data.choice;
-            data.userID = user.id;
-            const resp = await Api.postFeature(data, token);
-            return resp.data.feature;
-        }else{
-            const resp = await Api.getExternalFeature(data.choice)
-            return({
-                index : resp.data.index,
-                name : resp.data.name,
-                description : resp.data.desc.join(' ')
-            });
-        };
-    };
-
-    async function patchFeature(data){
-        data.userID = user.id
-        const resp = await Api.patchFeature(data,token);
-        return resp;
-    };
-
-    //Delete a feature from the backend
-    async function deleteFeature(featureID){
-        const data = {userID : user.id}
-        const resp = await Api.deleteFeature(featureID, data, token);
-        return resp;
-    }
-
+    //Delete the character
     const handleDeleteCharacter = async()=>{
         if(window.confirm(`Are you sure you want to delete ${character.charName}? This action cannot be undone.`)===true){
             const data = {userID : user.id}
@@ -265,72 +185,68 @@ const Character = ()=>{
     };
     
     
-
     return(
         <CharacterContext.Provider value={{character, formData, saveCharacter}}>
-        <RollContext.Provider value={{rollList, setRollList}} >
-        <p>
-            Character is auto-saved when adding, changing, or deleting alt resources, equipment, attacks, traits, features, and spells.
-            Upon leveling up, save the character to update proficieny bonus, spell slots, etc...
-        </p>
-        <p>
-            Critical hits are calculated by rolling twice the number of damage dice, then adding any modifiers.
-        </p>
-            {loading ? <p><b>Loading Character...</b></p> : 
-            <div id="character-page">
-                
-                <div>
-                    <CharacterBasic handleChange={handleChange} />
-                    <CharacterCoreStats handleStatChange={handleStatChange} />
-                    <CharacterCombatStats handleChange={handleChange} />
-                    <div id="character-skill-cont">
-                        <CharacterProfBonusBox handleChange={handleChange} />
-                        <CharacterSaveThrows handleSavingThrowChange={handleSavingThrowChange}/>
-                        <CharacterSkills handleSkillChange={handleSkillChange} />
-                        <CharacterLanguages/>
-                        <CharacterEquipProfs/>
-                    </div>
-                    <div id="character-profs-altres-cont">
-                        <CharacterAltRes />
-                        <CharacterEquipment handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
-                        <CharacterMoney handleChange={handleChange}/>
-                    </div>
-                    <CharacterAttacks postAttack={postAttack} patchAttack={patchAttack} deleteAttack={deleteAttack} />
-                    <CharacterTraits postTrait={postTrait} patchTrait={patchTrait} deleteTrait={deleteTrait}/>
-                    <CharacterFeatures postFeature={postFeature} patchFeature={patchFeature} deleteFeature={deleteFeature} />
-                    <CharacterSpells handleChange={handleChange}/>    
-                    <CharacterBio setCharacter={setCharacter}/>
-                    <button onClick={handleDeleteCharacter}>Delete Character</button>
-                </div>
-                <div id="sidebar">
-                    <StickyBox>
-                        <div id="sidebar-content">
-                            {saving ? <>
-                                <Oval
-                                    width='25'
-                                    height="25"
-                                    color="green"
-                                    ariaLabel="oval-loading"
-                                    wrapperStyle={{}}
-                                    wrapperClass=""/> 
-                                <p><button disabled>Saving Character</button></p></>
-                            : <p><button onClick={saveCharacter}>Save Character</button></p>}
-                            <CharacterSticky/>
+            <RollContext.Provider value={{rollList, setRollList}} >
+                <p>
+                    Character is auto-saved when adding, changing, or deleting alt resources, equipment, attacks, traits, features, and spells.
+                    Upon leveling up, save the character to update proficieny bonus, spell slots, etc...
+                </p>
+                <p>
+                    Critical hits are calculated by rolling twice the number of damage dice, then adding any modifiers.
+                </p>
+                    {loading ? <p><b>Loading Character...</b></p> : 
+                    <div id="character-page">
+                        <div>
+                            <CharacterBasic handleChange={handleChange} />
+                            <CharacterCoreStats handleStatChange={handleStatChange} />
+                            <CharacterCombatStats handleChange={handleChange} />
+                            <div id="character-skill-cont">
+                                <CharacterProfBonusBox handleChange={handleChange} />
+                                <CharacterSaveThrows handleSavingThrowChange={handleSavingThrowChange}/>
+                                <CharacterSkills handleSkillChange={handleSkillChange} />
+                                <CharacterLanguages/>
+                                <CharacterEquipProfs/>
+                            </div>
+                            <div id="character-profs-altres-cont">
+                                <CharacterAltRes />
+                                <CharacterEquipment handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
+                                <CharacterMoney handleChange={handleChange}/>
+                            </div>
+                            <CharacterAttacks/>
+                            <CharacterTraits/>
+                            <CharacterFeatures/>
+                            <CharacterSpells handleChange={handleChange}/>    
+                            <CharacterBio setCharacter={setCharacter}/>
+                            <button onClick={handleDeleteCharacter}>Delete Character</button>
                         </div>
-                        <div id="roll-cont">
-                            {rollList.map((attack)=>(
-                                <AttackRollBox attack={attack} key={uuidv4()}/>
-                            ))}
+                        <div id="sidebar">
+                            <StickyBox>
+                                <div id="sidebar-content">
+                                    {saving ? <>
+                                        <Oval
+                                            width='25'
+                                            height="25"
+                                            color="green"
+                                            ariaLabel="oval-loading"
+                                            wrapperStyle={{}}
+                                            wrapperClass=""/> 
+                                        <p><button disabled>Saving Character</button></p></>
+                                    : <p><button onClick={saveCharacter}>Save Character</button></p>}
+                                    <CharacterSticky/>
+                                </div>
+                                <div id="roll-cont">
+                                    {rollList.map((attack)=>(
+                                        <AttackRollBox attack={attack} key={uuidv4()}/>
+                                    ))}
+                                </div>
+                            </StickyBox>
                         </div>
-                    </StickyBox>
-                </div>
-
-            </div>
-            } {/* This bracket is to close the loading conditional*/}
+                    </div>
+                    }
             </RollContext.Provider>
         </CharacterContext.Provider>
     )
-
 }
 
 export default Character;

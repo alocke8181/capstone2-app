@@ -71,7 +71,6 @@ const CharacterSpellCont = ({spellLevelString, handleChange, handleNewSpellSubmi
             : <></> }
         </div>
     )
-
 }
 
 export default CharacterSpellCont;

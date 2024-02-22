@@ -47,7 +47,6 @@ const CharacterAltResBox = ({resource, handleDeleteAltRes})=>{
             
         </div>
     )
-
 }
 
 export default CharacterAltResBox;

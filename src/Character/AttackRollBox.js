@@ -37,20 +37,19 @@ const AttackRollBox = ({attack})=>{
             :<></>}
             <b>{name}</b>
             {showDamage ? 
-            <div>
-                <h3>{damage} {dmgType}</h3>
-                <i>{dmgDiceList.join(', ')}</i>
-                {altDmgDiceList.length !== 0 ? 
                 <div>
-                    <h3>{altDamage} {altDmgType}</h3>
-                    <i>{altDmgDiceList.join(', ')}</i>
+                    <h3>{damage} {dmgType}</h3>
+                    <i>{dmgDiceList.join(', ')}</i>
+                    {altDmgDiceList.length !== 0 ? 
+                    <div>
+                        <h3>{altDamage} {altDmgType}</h3>
+                        <i>{altDmgDiceList.join(', ')}</i>
+                    </div>
+                    : <></>}
                 </div>
-                : <></>}
-            </div>
             : <></>}
         </div>
     )
-
 }
 
 export default AttackRollBox

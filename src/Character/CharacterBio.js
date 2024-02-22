@@ -139,7 +139,6 @@ const CharacterBio = ({setCharacter})=>{
             </form>
         </div>
     )
-
 }
 
 export default CharacterBio;

@@ -4,11 +4,14 @@ import NewTraitForm from "./NewTraitForm";
 import EditTraitForm from "./EditTraitForm";
 import CharacterTraitBox from "./CharacterTraitBox";
 import CharacterContext from "./CharacterContext";
+import UserContext from "../UserContext";
+import Api from "../Api";
 import './CharacterTraits.css';
 
-const CharacterTraits = ({postTrait, patchTrait, deleteTrait})=>{
+const CharacterTraits = ()=>{
 
-    const {character, formData, saveCharacter} = useContext(CharacterContext)
+    const {character, formData, saveCharacter} = useContext(CharacterContext);
+    const {user, token, setUser} = useContext(UserContext);
 
 
     const [showNewTraitForm, setShowNewTraitForm] = useState(false);
@@ -21,35 +24,34 @@ const CharacterTraits = ({postTrait, patchTrait, deleteTrait})=>{
     const [showEditTraitForm, setShowEditTraitForm] = useState(false);
 
     const handleNewTraitSubmit = async (data, isCustom)=>{
-        if(!isCustom){
+        let trait;
+        if(isCustom){
+            delete data.choice;
+            data.charID = character.id;
+            data.userID = user.id;
+            let resp = await Api.postTrait(data, token);
+            trait = resp.data.trait;
+        }else{
             if(character.traits.some((trait)=>(trait.index && data.choice && (trait.index === data.choice)))){
                 alert('Cannot have duplicate preset traits');
                 return;
             }else{
-                if(isCustom){
-                    data.charID = character.id;
-                }
-                
-                let resp = await postTrait(data, isCustom);
-                character.traits.push(resp);
-                await saveCharacter();
-                return resp;
-            }
-        }else{
-            if(isCustom){
-                data.charID = character.id;
-            }
-            
-            let resp = await postTrait(data, isCustom);
-            character.traits.push(resp);
-            await saveCharacter();
-            return resp;
-        }
+                let resp = await Api.getExternalTrait(data.choice)
+                trait = {
+                    index : resp.data.index,
+                    name : resp.data.name,
+                    description : resp.data.desc.join(' ')
+                };
+            };
+        };
+        character.traits.push(trait);
+        await saveCharacter();
     }
 
     const handleEditTraitSubmit = async (data)=>{
         data.charID = character.id;
-        let resp = await patchTrait(data);
+        data.userID = user.id;
+        let resp = await Api.patchTrait(data, token);
         hideEditTraitForm();
         await saveCharacter();
     }
@@ -68,11 +70,12 @@ const CharacterTraits = ({postTrait, patchTrait, deleteTrait})=>{
 
     const handleDeleteTrait = async (evt)=>{
         if(evt.target.dataset.traitid){
+            const data = {userID : user.id}
             const traitID = parseInt(evt.target.dataset.traitid);
             let newCharacterTraits = character.traits.filter((trait) =>(!trait.id || (trait.id && trait.id !== traitID)));
             character.traits = newCharacterTraits;
             await saveCharacter();
-            await deleteTrait(traitID);
+            await Api.deleteTrait(traitID, data, token);
         }else if(evt.target.dataset.traitindex){
             const traitIndex = evt.target.dataset.traitindex;
             let newCharacterTraits = character.traits.filter((trait)=>(!trait.index || (trait.index && trait.index !== traitIndex)));
