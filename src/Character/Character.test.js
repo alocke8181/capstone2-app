@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor, queryAllByText, getByLabelText } from "@testing-library/react";
+import { render, waitFor, fireEvent } from "@testing-library/react";
 import React from "react";
 import { mockUser, mockToken } from '../../tests/MockData'
 import UserContext from "../UserContext";
@@ -12,7 +12,7 @@ const setUserMock = ()=>{
 }
 
 test('Character page rendering', async ()=>{
-    const {getByText, getByDisplayValue, getByLabelText, getByRole, getAllByRole} = render(
+    const {getByText, getByDisplayValue, getByLabelText,getAllByRole} = render(
         <UserContext.Provider value={{user : mockUser, token : mockToken, setUser : setUserMock}}>
             <MemoryRouter initialEntries={['/characters/1']}>
                 <CharacterTest/>
@@ -47,5 +47,24 @@ test('Character page rendering', async ()=>{
         expect(getByText('Fire Bolt')).toBeInTheDocument();
         expect(getByText('Charm Person')).toBeInTheDocument();
 
+    })
+})
+
+test('Updating and saving character works', async ()=>{
+    const {getByText, getByLabelText} = render(
+        <UserContext.Provider value={{user : mockUser, token : mockToken, setUser : setUserMock}}>
+            <MemoryRouter initialEntries={['/characters/1']}>
+                <CharacterTest/>
+            </MemoryRouter>
+        </UserContext.Provider>
+    )
+    await waitFor(()=>{
+        let strStat = getByLabelText('Strength');
+        expect(strStat.value).toEqual('9');
+        fireEvent.change(strStat, {target: {value: '10'}})
+        expect(getByLabelText('Strength').value).toEqual('10');
+        expect(getByText('Save Character')).toBeInTheDocument();
+        fireEvent.click(getByText('Save Character'));
+        expect(getByLabelText('Strength').value).toEqual('10');
     })
 })

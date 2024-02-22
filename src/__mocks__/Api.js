@@ -76,17 +76,9 @@ class Api{
     };
 
     //Patch a character
-    // static async patchCharacter(data, token){
-    //     //console.debug('PATCH', '/characters', data.id);
-    //     try{
-    //         let resp = await axios.patch(`${BASE_URL}/characters/${data.id}`, data,{
-    //             headers : {Authorization: `Bearer ${token}`}
-    //         });
-    //         return resp;
-    //     }catch(e){
-    //         this.handleErrors(e)
-    //     }
-    // }
+    static async patchCharacter(data, token){
+        return {data: {character : data}}
+    }
 
     //Delete a character
     // static async deleteCharacter(id, data, token){
