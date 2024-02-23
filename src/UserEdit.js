@@ -40,7 +40,7 @@ const UserEdit = ({editUser}) =>{
         try{
             evt.preventDefault();
             if(!formData.password || formData.password.length < 5){
-                throw Error('Password must be greater than 5 characters long!');
+                throw new Error('Password must be longer than 5 characters');
             }
             setLoading(true);
             const userIDReturn = await editUser(formData, id);
@@ -60,7 +60,7 @@ const UserEdit = ({editUser}) =>{
             </CardHeader>
             <CardBody>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="password"> New Password: </label>
+                    <label htmlFor="password">New Password: </label>
                     <input 
                         type="password"
                         id="password"
