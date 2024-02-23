@@ -192,7 +192,7 @@ const Character = ()=>{
                 <p>
                     Character is auto-saved when adding, changing, or deleting alt resources, equipment, attacks, traits, features, and spells.
                     Upon leveling up, save the character to update proficieny bonus, spell slots, etc...
-                    <img src="../images/dice.png" id="dice-icon" width='64' height='64'/>
+                    <img src="dice.png" width='64' height='64'/>
                 </p>
                 <p>
                     Critical hits are calculated by rolling twice the number of damage dice, then adding any modifiers.
