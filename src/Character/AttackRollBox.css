@@ -13,8 +13,6 @@
 }
 
 .dice-icon{
-    width: 32px;
-    height: 32px;
     animation-name: spin;
     animation-duration: 1000ms;
     animation-iteration-count: infinite;

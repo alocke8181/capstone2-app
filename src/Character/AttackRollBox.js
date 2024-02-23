@@ -36,7 +36,7 @@ const AttackRollBox = ({attack})=>{
         <div className="attack-roll-box">
             {showImage ? 
             <>
-                <img src="../images/dice.webp" id="dice-icon"/>
+                <img src="../images/dice.png" id="dice-icon"/>
             </> 
             : <></>}
             {showRoll ? 
