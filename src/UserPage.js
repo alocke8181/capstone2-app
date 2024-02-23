@@ -59,7 +59,7 @@ const UserPage = () =>{
             }
         }
         fetchCharacters(id);
-        document.title = user.username;
+        document.title = userView.username;
         
     },[id])
 
