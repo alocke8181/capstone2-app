@@ -36,7 +36,9 @@ import './RollBox.css';
 
 const Character = ()=>{
 
-    const {user, token, setUser} = useContext(UserContext);
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('token');
+
 
     const {id} = useParams();
     const nav = useNavigate();

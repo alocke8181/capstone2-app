@@ -10,7 +10,9 @@ import { Oval } from "react-loader-spinner";
 
 const UserPage = () =>{
 
-    const {user, token, setUser} = useContext(UserContext);
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('token');
+
     const {id} = useParams();
     const nav = useNavigate()
 
@@ -29,6 +31,7 @@ const UserPage = () =>{
             nav('/403');
         }
         const fetchCharacters = async (id) =>{
+            console.log(user);
             if(parseInt(id) === user.id){
                 setUserView(user);
                 setLoading(false)
