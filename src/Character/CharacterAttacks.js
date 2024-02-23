@@ -6,6 +6,7 @@ import CharacterContext from "./CharacterContext";
 import UserContext from "../UserContext";
 import Api from "../Api";
 import './CharacterAttacks.css';
+import Collapsible from "react-collapsible";
 
 const CharacterAttacks = ()=>{
 
@@ -63,19 +64,20 @@ const CharacterAttacks = ()=>{
     }
 
     return(
-        <div id="character-attack-big-cont">
-            <h2>Attacks</h2>
-            <button onClick={showAttackForm}>Add Attack</button>
-            {showNewAttackForm ? <NewAttackForm setShowNewAttackForm={setShowNewAttackForm} handleNewAttackSubmit={handleNewAttackSubmit}/> : <></>}
-            {showEditAttackForm ? <EditAttackForm  editingAttack={editingAttack} 
-                handleEditAttackSubmit={handleEditAttackSubmit} hideEditAttackForm={hideEditAttackForm}/> : <></>}
-            <div id="character-attack-cont">
-                {character.attacks.map((attack)=>(
-                    <CharacterAttackBox character={character} attack={attack} 
-                        handleDeleteAttack={handleDeleteAttack} key={attack.name} showEditAttackFormFunc={showEditAttackFormFunc}/>
-                ))}
+        <Collapsible trigger='Attacks'>
+            <div id="character-attack-big-cont">
+                <button onClick={showAttackForm}>Add Attack</button>
+                {showNewAttackForm ? <NewAttackForm setShowNewAttackForm={setShowNewAttackForm} handleNewAttackSubmit={handleNewAttackSubmit}/> : <></>}
+                {showEditAttackForm ? <EditAttackForm  editingAttack={editingAttack} 
+                    handleEditAttackSubmit={handleEditAttackSubmit} hideEditAttackForm={hideEditAttackForm}/> : <></>}
+                <div id="character-attack-cont">
+                    {character.attacks.map((attack)=>(
+                        <CharacterAttackBox character={character} attack={attack} 
+                            handleDeleteAttack={handleDeleteAttack} key={attack.name} showEditAttackFormFunc={showEditAttackFormFunc}/>
+                    ))}
+                </div>
             </div>
-        </div>
+        </Collapsible>
     )
 
 }

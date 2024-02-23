@@ -6,6 +6,7 @@ import CharacterContext from "./CharacterContext";
 import UserContext from "../UserContext";
 import Api from "../Api";
 import './CharacterFeats.css';
+import Collapsible from "react-collapsible";
 
 const CharacterFeatures = ()=>{
 
@@ -85,19 +86,20 @@ const CharacterFeatures = ()=>{
     };
 
     return(
-        <div id="character-feat-big-cont">
-            <h2>Class Features</h2>
-            <button onClick={showFeatureForm}>Add Feature</button>
-            {showNewFeatureForm ? <NewFeatureForm setShowFeatureForm = {setShowNewFeatureForm} handleNewFeatureSubmit={handleNewFeatureSubmit} />: <></>}
-            {showEditFeatureForm ? <EditFeatureForm editingFeature={editingFeature} hideEditFeatureForm={hideEditFeatureForm}
-                handleEditFeatureSubmit={handleEditFeatureSubmit} />: <></>}
-            <div id="character-feat-cont">
-                {character.features.map((feature)=>(
-                    <CharacterFeatureBox feature={feature} handleDeleteFeature={handleDeleteFeature} key={feature.name}
-                        showEditFeatureFormFunc={showEditFeatureFormFunc}/>
-                ))}
+        <Collapsible trigger='Class Features'>
+            <div id="character-feat-big-cont">
+                <button onClick={showFeatureForm}>Add Feature</button>
+                {showNewFeatureForm ? <NewFeatureForm setShowFeatureForm = {setShowNewFeatureForm} handleNewFeatureSubmit={handleNewFeatureSubmit} />: <></>}
+                {showEditFeatureForm ? <EditFeatureForm editingFeature={editingFeature} hideEditFeatureForm={hideEditFeatureForm}
+                    handleEditFeatureSubmit={handleEditFeatureSubmit} />: <></>}
+                <div id="character-feat-cont">
+                    {character.features.map((feature)=>(
+                        <CharacterFeatureBox feature={feature} handleDeleteFeature={handleDeleteFeature} key={feature.name}
+                            showEditFeatureFormFunc={showEditFeatureFormFunc}/>
+                    ))}
+                </div>
             </div>
-        </div>
+        </Collapsible>
     )
 
 }

@@ -4,6 +4,7 @@ import CharacterSpellCont from "./CharacterSpellCont";
 import { CORESTATS } from "../data";
 import CharacterContext from "./CharacterContext";
 import { capFirstLetter } from "../Helpers";
+import Collapsible from "react-collapsible";
 
 import Api from "../Api";
 
@@ -30,8 +31,8 @@ const CharacterSpells = ({handleChange})=>{
     };
 
     return(
+        <Collapsible trigger='Spells'>
         <div id="character-spell-big-cont">
-            <h2>Spells</h2>
             <div>
                 <form>
                     <label htmlFor="spellAbility">Spellcasting Ability : </label>
@@ -72,7 +73,7 @@ const CharacterSpells = ({handleChange})=>{
                 handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
             <CharacterSpellCont spellLevelString={'Nine'} handleChange={handleChange} 
                 handleNewSpellSubmit={handleNewSpellSubmit} handleDeleteSpell={handleDeleteSpell}/>
-        </div>
+        </div></Collapsible>
     )
 }
 export default CharacterSpells;

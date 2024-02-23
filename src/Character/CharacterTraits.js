@@ -7,6 +7,7 @@ import CharacterContext from "./CharacterContext";
 import UserContext from "../UserContext";
 import Api from "../Api";
 import './CharacterTraits.css';
+import Collapsible from "react-collapsible";
 
 const CharacterTraits = ()=>{
 
@@ -86,19 +87,20 @@ const CharacterTraits = ()=>{
 
 
     return(
-        <div id="character-trait-big-cont">
-            <h2>Racial Traits </h2>
-            <button onClick={showTraitForm}>Add Trait</button>
-            {showNewTraitForm ? <NewTraitForm setShowTraitForm = {setShowNewTraitForm} handleNewTraitSubmit={handleNewTraitSubmit} />: <></>}
-            {showEditTraitForm ? <EditTraitForm editingTrait={editingTrait} hideEditTraitForm={hideEditTraitForm}
-                handleEditTraitSubmit={handleEditTraitSubmit} />: <></>}
-            <div id="character-trait-cont">
-                {character.traits.map((trait)=>(
-                    <CharacterTraitBox trait={trait} handleDeleteTrait={handleDeleteTrait} key={trait.name} 
-                        showEditTraitFormFunc={showEditTraitFormFunc}/>
-                ))}
+        <Collapsible trigger='Racial Traits'>
+            <div id="character-trait-big-cont">
+                <button onClick={showTraitForm}>Add Trait</button>
+                {showNewTraitForm ? <NewTraitForm setShowTraitForm = {setShowNewTraitForm} handleNewTraitSubmit={handleNewTraitSubmit} />: <></>}
+                {showEditTraitForm ? <EditTraitForm editingTrait={editingTrait} hideEditTraitForm={hideEditTraitForm}
+                    handleEditTraitSubmit={handleEditTraitSubmit} />: <></>}
+                <div id="character-trait-cont">
+                    {character.traits.map((trait)=>(
+                        <CharacterTraitBox trait={trait} handleDeleteTrait={handleDeleteTrait} key={trait.name} 
+                            showEditTraitFormFunc={showEditTraitFormFunc}/>
+                    ))}
+                </div>
             </div>
-        </div>
+        </Collapsible>
     )
 }
 

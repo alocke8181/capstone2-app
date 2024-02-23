@@ -5,6 +5,7 @@ import {checkAuthOrAdmin} from "../Helpers";
 import {v4 as uuidv4} from 'uuid';
 import StickyBox from "react-sticky-box";
 import { Oval } from "react-loader-spinner";
+import Collapsible from "react-collapsible";
 import Api from "../Api";
 
 import UserContext from "../UserContext";
@@ -201,18 +202,22 @@ const Character = ()=>{
                             <CharacterBasic handleChange={handleChange} />
                             <CharacterCoreStats handleStatChange={handleStatChange} />
                             <CharacterCombatStats handleChange={handleChange} />
-                            <div id="character-skill-cont">
-                                <CharacterProfBonusBox handleChange={handleChange} />
-                                <CharacterSaveThrows handleSavingThrowChange={handleSavingThrowChange}/>
-                                <CharacterSkills handleSkillChange={handleSkillChange} />
-                                <CharacterLanguages/>
-                                <CharacterEquipProfs/>
-                            </div>
-                            <div id="character-profs-altres-cont">
-                                <CharacterAltRes />
-                                <CharacterEquipment handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
-                                <CharacterMoney handleChange={handleChange}/>
-                            </div>
+                            <Collapsible trigger='Skills & Proficiencies'>
+                                <div id="character-skill-cont">
+                                    <CharacterProfBonusBox handleChange={handleChange} />
+                                    <CharacterSaveThrows handleSavingThrowChange={handleSavingThrowChange}/>
+                                    <CharacterSkills handleSkillChange={handleSkillChange} />
+                                    <CharacterLanguages/>
+                                    <CharacterEquipProfs/>
+                                </div>
+                            </Collapsible>
+                            <Collapsible trigger='Equipment & Resources'>
+                                <div id="character-profs-altres-cont">
+                                    <CharacterAltRes />
+                                    <CharacterEquipment handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />
+                                    <CharacterMoney handleChange={handleChange}/>
+                                </div>
+                            </Collapsible>
                             <CharacterAttacks/>
                             <CharacterTraits/>
                             <CharacterFeatures/>

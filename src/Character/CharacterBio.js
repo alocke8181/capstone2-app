@@ -1,6 +1,7 @@
 import React,{useState, useContext} from "react";
 import './CharacterBio.css';
 import CharacterContext from "./CharacterContext";
+import Collapsible from "react-collapsible";
 
 const CharacterBio = ({setCharacter})=>{
 
@@ -21,6 +22,7 @@ const CharacterBio = ({setCharacter})=>{
     };
 
     return (
+        <Collapsible trigger='Bio'>
         <div id="character-bio-cont">
             <form>
                 <div id="character-bio-pibf">
@@ -137,7 +139,7 @@ const CharacterBio = ({setCharacter})=>{
                     </p>
                 </div>
             </form>
-        </div>
+        </div></Collapsible>
     )
 }
 
