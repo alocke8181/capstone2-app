@@ -31,7 +31,6 @@ const UserPage = () =>{
             nav('/403');
         }
         const fetchCharacters = async (id) =>{
-            console.log(user);
             if(parseInt(id) === user.id){
                 setUserView(user);
                 setLoading(false)
