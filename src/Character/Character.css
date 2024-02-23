@@ -2,6 +2,10 @@ h2, h3, h4{
     margin: 5px;
 }
 
+.Collapsible__trigger{
+    text-align: center;
+}
+
 section{
     display: inline;
 }
