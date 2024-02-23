@@ -6,6 +6,10 @@ h2, h3, h4{
     text-align: center;
 }
 
+.Collapsible{
+    border: 2px ridge gold;
+}
+
 section{
     display: inline;
 }
