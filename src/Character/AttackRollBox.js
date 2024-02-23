@@ -10,11 +10,7 @@ const AttackRollBox = ({attack})=>{
     const [className, setClassName] = useState('');
     const [showRoll, setShowRoll] = useState(true);
 
-    const [showImage, setShowImage] = useState(true);
 
-    useEffect(()=>{
-        setTimeout(()=>{setShowImage(false)},1000);
-    },[]);
 
     useEffect(()=>{
         if(dmgDiceList.length === 0){
@@ -30,14 +26,10 @@ const AttackRollBox = ({attack})=>{
             setShowRoll(false);
             setShowDamage(true);
         }
-    },[showImage]);
+    },[]);
 
     return(
         <div className="attack-roll-box">
-            {showImage ? 
-            <>
-            </> 
-            : <></>}
             {showRoll ? 
                 <div onClick={()=>{if(hasDamage){setShowDamage(true)}}}>
                     <h2 className={className}>{attackRoll}</h2>

@@ -30,6 +30,7 @@ import CharacterMoney from "./CharacterMoney";
 import CharacterAltRes from "./CharacterAltRes";
 import CharacterSpells from "./CharacterSpells";
 import CharacterBio from "./CharacterBio";
+import RollList from "./RollList";
 
 import "./Character.css";
 import './RollBox.css';
@@ -242,11 +243,7 @@ const Character = ()=>{
                                     : <p><button onClick={saveCharacter}>Save Character</button></p>}
                                     <CharacterSticky/>
                                 </div>
-                                <div id="roll-cont">
-                                    {rollList.map((attack)=>(
-                                        <AttackRollBox attack={attack} key={uuidv4()}/>
-                                    ))}
-                                </div>
+                                <RollList/>
                             </StickyBox>
                         </div>
                     </div>
