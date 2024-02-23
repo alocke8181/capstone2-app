@@ -202,15 +202,15 @@ const Character = ()=>{
                             <CharacterBasic handleChange={handleChange} />
                             <CharacterCoreStats handleStatChange={handleStatChange} />
                             <CharacterCombatStats handleChange={handleChange} />
-                            <Collapsible trigger='Skills & Proficiencies'>
-                                <div id="character-skill-cont">
+                            <div id="character-skill-cont">
+                                <Collapsible trigger={(<h2>Skills & Proficienies</h2>)}>
                                     <CharacterProfBonusBox handleChange={handleChange} />
                                     <CharacterSaveThrows handleSavingThrowChange={handleSavingThrowChange}/>
                                     <CharacterSkills handleSkillChange={handleSkillChange} />
                                     <CharacterLanguages/>
                                     <CharacterEquipProfs/>
-                                </div>
-                            </Collapsible>
+                                </Collapsible>
+                            </div>
                             <Collapsible trigger='Equipment & Resources'>
                                 <div id="character-profs-altres-cont">
                                     <CharacterAltRes />
