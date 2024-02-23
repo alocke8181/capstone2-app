@@ -211,7 +211,7 @@ const Character = ()=>{
                                     <CharacterEquipProfs/>
                                 </div>
                             </Collapsible>
-                            <Collapsible trigger='Equipment & Resources'>
+                            <Collapsible trigger={(<h2>Equipment & Resources ▼</h2>)} triggerWhenOpen={(<h2>Equipment and Resources ▲</h2>)}>
                                 <div id="character-profs-altres-cont">
                                     <CharacterAltRes />
                                     <CharacterEquipment handleAddEquipment={handleAddEquipment} handleDeleteEquipment={handleDeleteEquipment} />

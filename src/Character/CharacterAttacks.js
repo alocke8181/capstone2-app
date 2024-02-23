@@ -64,7 +64,7 @@ const CharacterAttacks = ()=>{
     }
 
     return(
-        <Collapsible trigger='Attacks'>
+        <Collapsible trigger={(<h2>Attacks ▼</h2>)} triggerWhenOpen={(<h2>Attacks ▲</h2>)}>
             <div id="character-attack-big-cont">
                 <button onClick={showAttackForm}>Add Attack</button>
                 {showNewAttackForm ? <NewAttackForm setShowNewAttackForm={setShowNewAttackForm} handleNewAttackSubmit={handleNewAttackSubmit}/> : <></>}

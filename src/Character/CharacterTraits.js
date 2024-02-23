@@ -87,7 +87,7 @@ const CharacterTraits = ()=>{
 
 
     return(
-        <Collapsible trigger='Racial Traits'>
+        <Collapsible trigger={(<h2>Racial Traits ▼</h2>)} triggerWhenOpen={(<h2>Racial Traits ▲</h2>)}>
             <div id="character-trait-big-cont">
                 <button onClick={showTraitForm}>Add Trait</button>
                 {showNewTraitForm ? <NewTraitForm setShowTraitForm = {setShowNewTraitForm} handleNewTraitSubmit={handleNewTraitSubmit} />: <></>}

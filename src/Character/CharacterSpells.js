@@ -31,7 +31,7 @@ const CharacterSpells = ({handleChange})=>{
     };
 
     return(
-        <Collapsible trigger='Spells'>
+        <Collapsible trigger={(<h2>Spells ▼</h2>)} triggerWhenOpen={(<h2>Spells ▲</h2>)}>
         <div id="character-spell-big-cont">
             <div>
                 <form>

@@ -86,7 +86,7 @@ const CharacterFeatures = ()=>{
     };
 
     return(
-        <Collapsible trigger='Class Features'>
+        <Collapsible trigger={(<h2>Class Features ▼</h2>)} triggerWhenOpen={(<h2>Class Features ▲</h2>)}>
             <div id="character-feat-big-cont">
                 <button onClick={showFeatureForm}>Add Feature</button>
                 {showNewFeatureForm ? <NewFeatureForm setShowFeatureForm = {setShowNewFeatureForm} handleNewFeatureSubmit={handleNewFeatureSubmit} />: <></>}

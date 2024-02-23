@@ -6,6 +6,10 @@ h2, h3, h4{
     text-align: center;
 }
 
+.Collapsible__trigger:hover{
+    cursor: pointer;
+}
+
 .Collapsible{
     border: 2px ridge gold;
 }

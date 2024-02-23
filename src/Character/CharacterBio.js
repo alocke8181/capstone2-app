@@ -22,7 +22,7 @@ const CharacterBio = ({setCharacter})=>{
     };
 
     return (
-        <Collapsible trigger='Bio'>
+        <Collapsible trigger={(<h2>Bio ▼</h2>)} triggerWhenOpen={(<h2>Bio ▲</h2>)}>
         <div id="character-bio-cont">
             <form>
                 <div id="character-bio-pibf">
