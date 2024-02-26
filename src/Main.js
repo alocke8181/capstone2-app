@@ -14,7 +14,6 @@ import Logout from './Logout';
 import Register from './Register';
 import UserPage from "./UserPage";
 import UserEdit from './UserEdit';
-import UserDelete from './UserDelete';
 import CharacterCreate from "./CharacterCreate";
 import Character from "./Character/Character";
 import NotFound from './NotFound';
@@ -99,9 +98,8 @@ const Main = () =>{
                 <Route path="/login" element={<Login login={login}/>}/>
                 <Route path="/logout" element={<Logout logout={logout}/>}/>
                 <Route path="/register" element={<Register register={register}/>}/>
-                <Route path="/users/:id" element={<UserPage/>}/>
+                <Route path="/users/:id" element={<UserPage deleteUser={deleteUser}/>}/>
                 <Route path="/users/:id/edit" element={<UserEdit editUser={editUser}/>}/>
-                <Route path="/users/:id/delete" element={<UserDelete deleteUser={deleteUser}/>}/>
                 <Route path="/characters/new" element={<CharacterCreate postCharacter={postCharacter}/>}/>
                 <Route path="/characters/:id" element={<Character/>}/>
                 <Route path="/403" element={<Forbidden />}/>

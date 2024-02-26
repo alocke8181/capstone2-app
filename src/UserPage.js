@@ -8,7 +8,7 @@ import Api from "./Api";
 
 import { Oval } from "react-loader-spinner";
 
-const UserPage = () =>{
+const UserPage = ({deleteUser}) =>{
 
     const user = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token');
@@ -64,6 +64,14 @@ const UserPage = () =>{
         
     },[])
 
+    const deleteAccount = async (evt)=>{
+        evt.preventDefault();
+        if(window.confirm('Are you sure you want to delete your account? This cannot be undone!')){
+            await deleteUser();
+            nav('/');
+        }
+    }
+
 
     return(
         <div id="user-page">
@@ -97,7 +105,7 @@ const UserPage = () =>{
                 <Link to={`/users/${userView.id}/edit`}>Edit Account</Link>
             </p>
             <p>
-                <Link to={`/users/${userView.id}/delete`}>Delete Account</Link>
+                <button onClick={deleteAccount}>Delete Account</button>
             </p>
         </div>
     )

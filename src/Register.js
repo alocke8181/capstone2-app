@@ -31,17 +31,17 @@ const Register = ({register}) =>{
     //Register and navigate to their profile page
     async function handleSubmit(evt){
         evt.preventDefault();
-        if(!formData.username || formData.username === ''){
+        if(!formData.username || formData.username === '' || formData.username.length > 30){
             setIsError(true);
-            setErrorMsg('Username cannot be blank!');
+            setErrorMsg('Username must between 1 and 30 characters long!');
             return;
-        }else if(!formData.password || formData.password === ''){
+        }else if(!formData.password || formData.password === '' || formData.password.length < 5 || formData.password.length > 20){
             setIsError(true);
-            setErrorMsg('Password cannot be blank!');
+            setErrorMsg('Password must be between 5 & 20 characters long!');
             return;
-        }else if(!formData.email || formData.email === ''){
+        }else if(!formData.email || formData.email === '' || formData.email.length < 6){
             setIsError(true);
-            setErrorMsg('Email cannot be blank!');
+            setErrorMsg('Email must be at least 6 characters long!');
             return;
         }
         try{

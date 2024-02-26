@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { checkAuthOrAdmin } from "./Helpers";
 
 const UserEdit = ({editUser}) =>{
-    const {user, token, setUser} = useContext(UserContext);
+    const user = JSON.parse(localStorage.getItem('user'));
     const {id} = useParams();
     const nav = useNavigate();
 
@@ -39,8 +39,14 @@ const UserEdit = ({editUser}) =>{
     async function handleSubmit(evt){
         try{
             evt.preventDefault();
-            if(!formData.password || formData.password.length < 5){
-                throw new Error('Password must be longer than 5 characters');
+            if(!formData.password || formData.password === '' || formData.password.length < 5 || formData.password.length > 20){
+                setIsError(true);
+                setErrorMsg('Password must be between 5 & 20 characters long!');
+                return;
+            }else if(!formData.email || formData.email === '' || formData.email.length < 6){
+                setIsError(true);
+                setErrorMsg('Email must be at least 6 characters long!');
+                return;
             }
             setLoading(true);
             const userIDReturn = await editUser(formData, id);
@@ -56,7 +62,7 @@ const UserEdit = ({editUser}) =>{
         <Card>
             <CardHeader>
                 {loading ? <p><b>Updating...</b></p> : <p>Edit Profile</p>}
-                {isError ? <p>{errorMsg.join('! ')}</p> : <></>}
+                {isError ? <p className="error">{errorMsg}</p> : <></>}
             </CardHeader>
             <CardBody>
                 <form onSubmit={handleSubmit}>
