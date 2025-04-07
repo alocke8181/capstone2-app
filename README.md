@@ -3,7 +3,7 @@ This is the front-end application for my 2nd capstone project for the Springboar
 
 The entire front-end is made with React. The website allows users to register an account and create characters for D&D. The bulk of the work has been spent on the character sheets. Users first fill out a small form to create a new character, and then that starting data is sent to the server. The server saves the starting data, and then builds a character object to send back to the app. Many parts of the character use data pulled from [this external API](https://www.dnd5eapi.co/). Users can then edit their character sheets and save them to the server.
 
-The website is live [here](https://the-starting-tavern.onrender.com/). If it seems to be taking a long time to load it's because Render.com spins down free web pages and servers. So give it time to spin the app and server back up.
+The website not live anymore.
 
 ## User Flow
 When a user connects they are first brought to the home page. This is a brief explanation of the website and its features. The header menu allows users to log in to an existing account, or register to create a new one.
